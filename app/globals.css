@@ -63,6 +63,7 @@
 html {
   scroll-behavior: smooth;
   background: var(--ink);
+  overflow-x: hidden;
 }
 
 body {
@@ -485,24 +486,11 @@ body {
 }
 
 /* --- trusted-by marks ----------------------------------------------------- */
-/* The source SVGs are ~1.7:1 with the badge on the left and decorative
-   artwork beside it, so each mark is clipped to a square at its left edge. */
-
-.brand-clip {
-  display: inline-flex;
-  width: 34px;
-  height: 34px;
-  overflow: hidden;
-  flex: none;
-}
+/* Marks are cropped to their badge in the SVG itself, so sizing is plain CSS.
+   Grey by default, full brand colour on hover. */
 
 .brand-img {
-  height: 34px;
-  width: auto;
-  max-width: none;
-  object-fit: cover;
-  object-position: left center;
-  filter: grayscale(1) brightness(1.45) opacity(0.55);
+  filter: grayscale(1) brightness(1.4) opacity(0.5);
   transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 

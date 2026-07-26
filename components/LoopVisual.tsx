@@ -30,7 +30,7 @@ function RowShell({
   };
 
   return (
-    <div className="loop-row px-4 py-4" style={style}>
+    <div className="loop-row overflow-hidden px-4 py-4" style={style}>
       <div className="flex items-center gap-3">
         <span className="loop-node shrink-0" style={style} aria-hidden />
         <span
@@ -53,7 +53,7 @@ function RowShell({
 
 function Caption({ children }: { children: React.ReactNode }) {
   return (
-    <span className="ml-2 truncate font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.14em] text-fg-dim">
+    <span className="ml-2 hidden truncate font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.14em] text-fg-dim sm:inline">
       {children}
     </span>
   );
@@ -62,7 +62,7 @@ function Caption({ children }: { children: React.ReactNode }) {
 export function LoopVisual() {
   return (
     <div className="panel relative rounded-[20px] p-4 md:p-6">
-      <div className="mb-5 flex items-center justify-between">
+      <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim">
           one conversation, three layers
         </span>
@@ -105,7 +105,7 @@ export function LoopVisual() {
           label="AI-to-AI regression"
           meta="before every release"
         >
-          <div className="flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-1.5">
             {Array.from({ length: 14 }).map((_, i) => (
               <span
                 key={i}
@@ -130,7 +130,7 @@ export function LoopVisual() {
 
         {/* 03 — the fix the system proposes for itself */}
         <RowShell index={2} label="Learns automatically" meta="regression-gated">
-          <div className="bars flex h-[26px] items-end gap-1.5">
+          <div className="bars flex h-[26px] flex-wrap items-end gap-1.5">
             {["14px", "22px", "10px", "26px", "18px", "24px"].map((h, i) => (
               <i
                 key={h + i}

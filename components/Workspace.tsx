@@ -34,7 +34,7 @@ function Frame({
 }) {
   return (
     <div className="light-frame overflow-hidden rounded-xl">
-      <div className="flex items-center gap-3 border-b border-cream-line px-4 py-2.5">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-cream-line px-4 py-2.5">
         <span aria-hidden className="flex gap-1.5">
           {[0.18, 0.13, 0.09].map((o) => (
             <span
@@ -51,7 +51,7 @@ function Frame({
           </span>
         ) : null}
         {meta ? (
-          <span className="ml-auto flex items-center gap-2">{meta}</span>
+          <span className="flex flex-wrap items-center gap-2 sm:ml-auto">{meta}</span>
         ) : null}
       </div>
       {children}
