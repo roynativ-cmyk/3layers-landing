@@ -596,8 +596,9 @@ function ProposalFrame() {
           <span className="xv-chip xv-chip-handoff">all handed to a person</span>
         </div>
         <p className="mt-3 text-[12.5px] leading-relaxed">
-          Customers keep asking how to reconnect after a firmware update, and
-          nothing in the knowledge base answers it.
+          Your agents answered the same thing every time — re-pair the app after
+          a firmware update. Nothing in the knowledge base says it, so the AI
+          kept handing the conversation over.
         </p>
 
         <div

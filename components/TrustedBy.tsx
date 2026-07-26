@@ -6,23 +6,33 @@
  */
 
 const brands = [
-  { name: "ExpressVPN", file: "Express-d.svg" },
+  { name: "ExpressVPN", file: "Express-d.svg", dark: true },
   { name: "Private Internet Access", file: "pia-brand.svg" },
   { name: "CyberGhost", file: "cg-brand.svg" },
   { name: "Intego", file: "intego-brand.svg" },
 ];
 
-function Item({ name, file }: { name: string; file: string }) {
+function Item({
+  name,
+  file,
+  dark,
+}: {
+  name: string;
+  file: string;
+  dark?: boolean;
+}) {
   return (
     <span className="brand group flex shrink-0 items-center gap-4 px-6 sm:gap-5 sm:px-10">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`/logos/${file}`}
-        alt={`${name} logo`}
-        width={72}
-        height={72}
-        className="brand-img h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]"
-      />
+      <span className="brand-badge h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={`/logos/${file}`}
+          alt={`${name} logo`}
+          width={72}
+          height={72}
+          className={`brand-img h-full w-full ${dark ? "brand-img-dark" : ""}`}
+        />
+      </span>
       <span className="text-[13px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[14px]">
         {name}
       </span>

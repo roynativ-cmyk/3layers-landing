@@ -34,10 +34,10 @@ const layers = [
     accent: "var(--c-learn)",
     name: "ML that learns automatically",
     claim: "Verified failures turn themselves into the next improvement.",
-    body: "The third layer mines the verification outcomes, escalations and regression results for the pattern behind them — a missing knowledge-base article, a retrieval blind spot, a rule the agent keeps tripping over — and writes the concrete fix. Each proposal goes straight back through the regression layer and waits for a human approval. Your people approve improvements instead of hand-authoring them, and the same failure stops coming back.",
+    body: "The third layer reads every conversation a human had to take over and compares what your agent answered with what the AI had available. That gap is the lesson: a missing knowledge-base article, a source the agent was never given access to, a retrieval blind spot, a rule it keeps tripping over. It writes the concrete fix. Each proposal goes straight back through the regression layer and waits for a human approval. Your people approve improvements instead of hand-authoring them, and the same failure stops coming back.",
     bullets: [
-      "Failure clustering across conversations, not one-off patches",
-      "Proposed knowledge-base, retrieval and policy changes",
+      "Mines escalated chats: what the human answered, what the AI lacked",
+      "Proposes the data, the extra source or the rule that closes the gap",
       "Every proposal regression-gated and human-approved",
       "A quality curve that moves weekly instead of per quarter",
     ],

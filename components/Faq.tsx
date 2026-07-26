@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "Does the automatic learning change answers without approval?",
-    a: "No. The third layer proposes — a knowledge-base edit, a retrieval change, a policy rule — and every proposal has to pass the regression gate and a human approval before it reaches production. The agent never edits itself into your live queue.",
+    a: "No. The third layer proposes — a knowledge-base edit, access to a source the agent never had, a policy rule — and it learns those proposals from the conversations your human agents took over: what they answered, and what the AI was missing when it stopped. Every proposal has to pass the regression gate and a human approval before it reaches production. The agent never edits itself into your live queue.",
   },
   {
     q: "Which models does it use?",

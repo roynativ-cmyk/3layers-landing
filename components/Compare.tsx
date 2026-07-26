@@ -23,6 +23,11 @@ const rows = [
     theirs: "Ship it and watch the dashboard",
   },
   {
+    q: "What happens to the chats a human had to take over?",
+    ours: "We read what your agent answered, find what the AI was missing, and propose the data or source that closes it",
+    theirs: "They leave the funnel — the AI never learns from them",
+  },
+  {
     q: "How does it get better?",
     ours: "Your verified failures become proposed fixes, gated and approved",
     theirs: "The vendor's roadmap",
