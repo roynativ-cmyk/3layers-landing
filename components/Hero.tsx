@@ -30,17 +30,15 @@ export function Hero() {
             </Reveal>
 
             <Reveal delay={60}>
-              <h1 className="mt-7 max-w-[24ch] text-[clamp(2.25rem,4.4vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-balance">
-                Reduce support costs without reducing service quality
+              <h1 className="mt-7 max-w-[20ch] text-[clamp(2.4rem,4.8vw,3.6rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-balance">
+                Cut support costs. Keep the service.
               </h1>
             </Reveal>
 
             <Reveal delay={120}>
-              <p className="mt-7 max-w-[58ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
-                3Layers.ai gives your business a complete customer-support
-                operation powered by three intelligent layers: AI automation,
-                AI-assisted agents, and experienced human support — with one
-                console monitoring all three.
+              <p className="mt-7 max-w-[52ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
+                An AI bot, AI-assisted agents and human specialists — three
+                layers in one support operation, monitored in one console.
               </p>
             </Reveal>
 
