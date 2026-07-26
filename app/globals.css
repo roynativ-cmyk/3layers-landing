@@ -87,34 +87,25 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 72px 72px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 88px 88px;
   background-position: center top;
 }
 
 .fade-b {
-  -webkit-mask-image: linear-gradient(to bottom, #000 5%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 5%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
 }
 
 .glow {
-  background:
-    radial-gradient(
-      52% 46% at 42% 0%,
-      color-mix(in srgb, var(--c-machine) 16%, transparent) 0%,
-      transparent 68%
-    ),
-    radial-gradient(
-      46% 42% at 76% 8%,
-      color-mix(in srgb, var(--c-learn) 13%, transparent) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      60% 55% at 50% 0%,
-      rgba(255, 255, 255, 0.07) 0%,
-      transparent 72%
-    );
+  /* one soft neutral light from the top — no tinted gradients */
+  background: radial-gradient(
+    120% 70% at 50% -10%,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 38%,
+    transparent 72%
+  );
 }
 
 /* accent wash for a card, driven by its own --accent */
