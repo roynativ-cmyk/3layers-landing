@@ -7,6 +7,8 @@
  * than the same pixel height.
  */
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 type Brand = { name: string; file: string; h: number };
 
 const brands: Brand[] = [
@@ -23,7 +25,7 @@ function Item({ name, file, h }: Brand) {
     <span className="brand flex shrink-0 items-center px-7 sm:px-10">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={`/logos/${file}`}
+        src={`${BASE}/logos/${file}`}
         alt={`${name} logo`}
         className="brand-img w-auto"
         style={{ height: `${h}px` }}
