@@ -242,24 +242,16 @@ function Rail() {
   );
 }
 
-function ReviewFrame() {
+function QueuePane({
+  rows = QUEUE,
+  className = "",
+}: {
+  rows?: Row[];
+  className?: string;
+}) {
   return (
-    <Frame
-      app="3layers.ai"
-      title="Live review"
-      meta={
-        <>
-          <span className="xv-chip">Today · 1,284</span>
-          <span className="xv-chip xv-chip-handoff">12 need a human</span>
-        </>
-      }
-    >
-      <div className="grid grid-cols-[186px_300px_minmax(0,1fr)]">
-        <Rail />
-
-        {/* the queue — a ~300px pane in the console, same here */}
         <div
-          className="border-r"
+          className={className}
           style={{
             borderColor: "var(--xv-border)",
             background: "var(--xv-surface)",
@@ -289,7 +281,7 @@ function ReviewFrame() {
           </div>
 
           <ul>
-            {QUEUE.map((row) => (
+            {rows.map((row) => (
               <li
                 key={row.t}
                 className="flex items-start gap-3 border-b px-3.5 py-3"
@@ -329,7 +321,11 @@ function ReviewFrame() {
           </ul>
         </div>
 
-        {/* the conversation pane — the wide one, as in the console */}
+  );
+}
+
+function ConversationPane() {
+  return (
         <div
           className="flex min-w-0 flex-col"
           style={{
@@ -483,6 +479,44 @@ function ReviewFrame() {
             </span>
           </div>
         </div>
+  );
+}
+
+function ReviewFrame() {
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Live review"
+      meta={
+        <>
+          <span className="xv-chip">Today · 1,284</span>
+          <span className="xv-chip xv-chip-handoff">12 need a human</span>
+        </>
+      }
+    >
+      <div className="grid grid-cols-[186px_300px_minmax(0,1fr)]">
+        <Rail />
+        <QueuePane className="border-r" />
+        <ConversationPane />
+      </div>
+    </Frame>
+  );
+}
+
+/** Small screens get the console's own mobile composition, not a shrunk desktop. */
+function ReviewFrameMobile() {
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Live review"
+      meta={<span className="xv-chip xv-chip-handoff">12 need a human</span>}
+    >
+      <ConversationPane />
+      <div
+        className="border-t"
+        style={{ borderColor: "var(--xv-border)" }}
+      >
+        <QueuePane rows={QUEUE.slice(0, 4)} />
       </div>
     </Frame>
   );
@@ -693,10 +727,13 @@ export function Workspace() {
             Every answer verified, every turn reviewable — a human only where one
             is needed.
           </FrameCaption>
-          <div className="-mx-1 overflow-x-auto px-1 pb-1">
+          <div className="hidden md:block">
             <div className="app-scale">
               <ReviewFrame />
             </div>
+          </div>
+          <div className="md:hidden">
+            <ReviewFrameMobile />
           </div>
 
           <div className="mt-8 grid items-stretch gap-8 md:mt-10 md:grid-cols-2 md:gap-6">
