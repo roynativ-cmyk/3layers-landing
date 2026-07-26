@@ -14,16 +14,16 @@ const brands = [
 
 function Item({ name, file }: { name: string; file: string }) {
   return (
-    <span className="brand group flex shrink-0 items-center gap-4 px-6 sm:px-9">
+    <span className="brand group flex shrink-0 items-center gap-4 px-6 sm:gap-5 sm:px-10">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`/logos/${file}`}
         alt={`${name} logo`}
-        width={56}
-        height={56}
-        className="brand-img h-12 w-12 shrink-0 sm:h-14 sm:w-14"
+        width={72}
+        height={72}
+        className="brand-img h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]"
       />
-      <span className="text-[15px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[17px]">
+      <span className="text-[16px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[19px]">
         {name}
       </span>
     </span>
