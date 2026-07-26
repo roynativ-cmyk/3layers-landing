@@ -170,25 +170,31 @@ function StateChip({ state }: { state: Row["state"] }) {
   return <span className="xv-chip xv-chip-handoff">→ human agent</span>;
 }
 
-function Rail() {
+function Rail({ collapsed = false }: { collapsed?: boolean }) {
   return (
     <div
-      className="flex flex-col justify-between border-r px-3 py-3.5"
+      className={`flex flex-col justify-between border-r py-3.5 ${
+        collapsed ? "items-center px-2" : "px-3"
+      }`}
       style={{
         background: "var(--xv-rail)",
         borderColor: "var(--xv-rail-border)",
         color: "var(--xv-rail-text)",
       }}
     >
-      <div>
-        <span className="flex items-center gap-2 px-1.5 pb-3.5">
+      <div className={collapsed ? "flex flex-col items-center" : undefined}>
+        <span
+          className={`flex items-center gap-2 pb-3.5 ${collapsed ? "" : "px-1.5"}`}
+        >
           <Mark className="h-[15px] w-[15px]" />
-          <span
-            className="text-[12px] font-semibold tracking-[-0.01em]"
-            style={{ color: "var(--xv-rail-text-strong)" }}
-          >
-            3layers
-          </span>
+          {collapsed ? null : (
+            <span
+              className="text-[12px] font-semibold tracking-[-0.01em]"
+              style={{ color: "var(--xv-rail-text-strong)" }}
+            >
+              3layers
+            </span>
+          )}
         </span>
 
         <div className="flex flex-col gap-[3px]">
@@ -197,7 +203,12 @@ function Rail() {
             return (
               <span
                 key={item.label}
-                className="flex items-center gap-2 rounded-lg px-2 py-[7px] text-[12.5px] font-medium"
+                title={item.label}
+                className={`relative flex items-center rounded-lg text-[12.5px] font-medium ${
+                  collapsed
+                    ? "h-8 w-8 justify-center"
+                    : "gap-2 px-2 py-[7px]"
+                }`}
                 style={{
                   background: active ? "var(--xv-rail-active)" : "transparent",
                   color: active
@@ -206,19 +217,29 @@ function Rail() {
                 }}
               >
                 <RailIcon glyph={item.glyph} />
-                <span className="truncate">{item.label}</span>
+                {collapsed ? null : (
+                  <span className="truncate">{item.label}</span>
+                )}
                 {item.badge ? (
-                  <span
-                    className="ml-auto inline-flex h-[15px] min-w-[15px] items-center justify-center rounded-full px-1 text-[9px] font-bold"
-                    style={{
-                      background: active
-                        ? "var(--xv-mint)"
-                        : "var(--xv-surface-2)",
-                      color: active ? "var(--xv-on-mint)" : "var(--xv-muted)",
-                    }}
-                  >
-                    {item.badge}
-                  </span>
+                  collapsed ? (
+                    <span
+                      className="absolute -right-[1px] -top-[1px] h-[7px] w-[7px] rounded-full"
+                      style={{ background: "var(--xv-mint)" }}
+                      aria-hidden
+                    />
+                  ) : (
+                    <span
+                      className="ml-auto inline-flex h-[15px] min-w-[15px] items-center justify-center rounded-full px-1 text-[9px] font-bold"
+                      style={{
+                        background: active
+                          ? "var(--xv-mint)"
+                          : "var(--xv-surface-2)",
+                        color: active ? "var(--xv-on-mint)" : "var(--xv-muted)",
+                      }}
+                    >
+                      {item.badge}
+                    </span>
+                  )
                 ) : null}
               </span>
             );
@@ -227,7 +248,9 @@ function Rail() {
       </div>
 
       <div
-        className="mt-6 flex items-center gap-2 border-t pt-3"
+        className={`mt-6 flex items-center gap-2 border-t pt-3 ${
+          collapsed ? "justify-center" : ""
+        }`}
         style={{ borderColor: "var(--xv-rail-border)" }}
       >
         <span
@@ -236,7 +259,7 @@ function Rail() {
         >
           3L
         </span>
-        <span className="text-[11px]">Reviewer</span>
+        {collapsed ? null : <span className="text-[11px]">Reviewer</span>}
       </div>
     </div>
   );
@@ -503,20 +526,26 @@ function ReviewFrame() {
   );
 }
 
-/** Small screens get the console's own mobile composition, not a shrunk desktop. */
+/**
+ * The phone gets the same screen, not a different one: the console's collapsed
+ * icon rail buys width, and the frame is scaled to fit (see .app-scale-sm).
+ */
 function ReviewFrameMobile() {
   return (
     <Frame
       app="3layers.ai"
       title="Live review"
-      meta={<span className="xv-chip xv-chip-handoff">12 need a human</span>}
+      meta={
+        <>
+          <span className="xv-chip">Today · 1,284</span>
+          <span className="xv-chip xv-chip-handoff">12 need a human</span>
+        </>
+      }
     >
-      <ConversationPane />
-      <div
-        className="border-t"
-        style={{ borderColor: "var(--xv-border)" }}
-      >
-        <QueuePane rows={QUEUE.slice(0, 4)} />
+      <div className="grid grid-cols-[56px_252px_minmax(0,1fr)]">
+        <Rail collapsed />
+        <QueuePane className="border-r" rows={QUEUE.slice(0, 6)} />
+        <ConversationPane />
       </div>
     </Frame>
   );
@@ -733,7 +762,9 @@ export function Workspace() {
             </div>
           </div>
           <div className="md:hidden">
-            <ReviewFrameMobile />
+            <div className="app-scale-sm">
+              <ReviewFrameMobile />
+            </div>
           </div>
 
           <div className="mt-8 grid items-stretch gap-8 md:mt-10 md:grid-cols-2 md:gap-6">
