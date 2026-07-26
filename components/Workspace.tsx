@@ -33,7 +33,7 @@ function Frame({
   children: React.ReactNode;
 }) {
   return (
-    <div className="light-frame overflow-hidden rounded-xl">
+    <div className="light-frame flex h-full flex-col overflow-hidden rounded-xl">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-cream-line px-4 py-2.5">
         <span aria-hidden className="flex gap-1.5">
           {[0.18, 0.13, 0.09].map((o) => (
@@ -303,10 +303,11 @@ function RegressionFrame() {
       title="Regression · run 1284"
       meta={<span className="chip chip-fail">gate blocked</span>}
     >
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 border-b border-cream-line px-4 py-3 text-[11.5px]">
-        <span className="font-mono text-[10.5px] text-cream-muted">
+      <div className="border-b border-cream-line px-4 py-3">
+        <p className="font-mono text-[10.5px] text-cream-muted">
           candidate prompt-v37 → live
-        </span>
+        </p>
+        <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[11.5px]">
         <span>
           <strong className="text-[15px] font-semibold">214</strong>{" "}
           <span className="text-cream-muted">cases replayed</span>
@@ -325,9 +326,10 @@ function RegressionFrame() {
           />
           5 failed
         </span>
+        </div>
       </div>
 
-      <ul className="divide-y divide-cream-line/70">
+      <ul className="flex-1 divide-y divide-cream-line/70">
         {cases.map((c) => (
           <li key={c.name} className="flex items-start gap-3 px-4 py-2.5">
             <span
@@ -364,7 +366,7 @@ function ProposalFrame() {
       title="Proposal 42"
       meta={<span className="chip chip-learn">written by the system</span>}
     >
-      <div className="px-4 py-3.5">
+      <div className="flex flex-1 flex-col px-4 py-3.5">
         <p className="text-[12px]">
           18 conversations in 7 days ended with a human because no article
           covers re-pairing after a firmware update.
@@ -393,7 +395,7 @@ function ProposalFrame() {
           </div>
         </div>
 
-        <div className="mt-3.5 flex flex-wrap items-center gap-2">
+        <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
           <span className="chip chip-pass">re-tested · 214/214</span>
           <span className="chip chip-neutral">awaiting approval</span>
           <span className="ml-auto flex items-center gap-2">
@@ -436,14 +438,14 @@ export function Workspace() {
           </FrameCaption>
           <ReviewFrame />
 
-          <div className="mt-8 grid gap-8 md:mt-10 md:grid-cols-2 md:gap-6">
-            <div>
+          <div className="mt-8 grid items-stretch gap-8 md:mt-10 md:grid-cols-2 md:gap-6">
+            <div className="flex flex-col">
               <FrameCaption layer="Layer 02" accent="#14724c">
                 Nothing ships until your own history passes.
               </FrameCaption>
               <RegressionFrame />
             </div>
-            <div>
+            <div className="flex flex-col">
               <FrameCaption layer="Layer 03" accent="#4a2f9c">
                 The system proposes the fix; a person approves it.
               </FrameCaption>
