@@ -1,0 +1,36 @@
+import { Logo } from "@/components/Logo";
+
+const links = [
+  { href: "#layers", label: "The layers" },
+  { href: "#how", label: "How it works" },
+  { href: "#deploy", label: "Deployment" },
+  { href: "#compare", label: "Compare" },
+  { href: "#faq", label: "FAQ" },
+];
+
+export function Nav() {
+  return (
+    <header className="sticky top-0 z-50 border-b border-line bg-black/70 backdrop-blur-xl">
+      <nav className="mx-auto flex h-16 w-full max-w-[1120px] items-center gap-8 px-6 md:px-8">
+        <Logo />
+        <div className="ml-auto hidden items-center gap-7 lg:flex">
+          {links.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+        <a
+          href="#demo"
+          className="ml-auto inline-flex h-9 items-center rounded-full bg-white px-4 text-[13px] font-medium text-black transition-colors hover:bg-white/88 lg:ml-0"
+        >
+          Book a demo
+        </a>
+      </nav>
+    </header>
+  );
+}
