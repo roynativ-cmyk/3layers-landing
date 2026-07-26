@@ -512,12 +512,97 @@ body {
   color: var(--cream);
 }
 
+/* The product frames use the real console's own tokens, so the screens on the
+   page and the screens your team works in are the same design language.
+   Mirrored from tools/ui/app/globals.css (Support Console, light). */
+.xv {
+  --xv-surface: #ffffff;
+  --xv-surface-2: #f2f4f6;
+  --xv-hover: #edf0f2;
+  --xv-selected: #eceff2;
+  --xv-border: #dee9ec;
+  --xv-border-strong: #cbdadf;
+  --xv-text: #0a2231;
+  --xv-text-2: #3b5462;
+  --xv-muted: #677c88;
+  --xv-faint: #92a6b0;
+  --xv-mint: #1b1c1f;
+  --xv-on-mint: #ffffff;
+  --xv-rail: #f4f6f8;
+  --xv-rail-text: #5f727d;
+  --xv-rail-text-strong: #0a2231;
+  --xv-rail-active: rgba(10, 34, 49, 0.06);
+  --xv-rail-border: rgba(10, 34, 49, 0.07);
+  --xv-ai-bg: #eff2f5;
+  --xv-ai-fg: #16303f;
+  --xv-ai-border: #e6ebee;
+  --xv-cust-bg: #e9ecf6;
+  --xv-cust-fg: #2a3350;
+  --xv-review-bg: #fbf1da;
+  --xv-review-fg: #8a5a12;
+  --xv-handoff-bg: #e9eef3;
+  --xv-handoff-fg: #4a6378;
+  --xv-card-good: #eaeff2;
+  --xv-good: #3c7d6e;
+  --xv-warn: #b5731a;
+  --xv-danger: #dc2626;
+  --xv-danger-light: #fee2e2;
+
+  color: var(--xv-text);
+}
+
 .light-frame {
-  background: #ffffff;
-  border: 1px solid var(--cream-line);
+  background: var(--xv-surface);
+  border: 1px solid var(--xv-border);
   box-shadow:
-    0 1px 2px rgba(12, 12, 13, 0.05),
-    0 24px 60px -30px rgba(12, 12, 13, 0.35);
+    0 1px 2px rgba(13, 42, 60, 0.04),
+    0 6px 20px rgba(13, 42, 60, 0.06),
+    0 26px 60px -34px rgba(13, 42, 60, 0.3);
+}
+
+/* console chip: rounded-full, 10px, token-coloured */
+.xv-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--xv-surface-2);
+  border: 1px solid var(--xv-border);
+  color: var(--xv-text-2);
+}
+
+.xv-chip-good {
+  background: var(--xv-card-good);
+  border-color: transparent;
+  color: var(--xv-good);
+}
+
+.xv-chip-handoff {
+  background: var(--xv-review-bg);
+  border-color: transparent;
+  color: var(--xv-review-fg);
+}
+
+.xv-chip-warn {
+  background: var(--xv-review-bg);
+  border-color: transparent;
+  color: var(--xv-warn);
+}
+
+.xv-chip-danger {
+  background: var(--xv-danger-light);
+  border-color: transparent;
+  color: #9c2d1f;
+}
+
+.xv-chip-info {
+  background: var(--xv-handoff-bg);
+  border-color: transparent;
+  color: var(--xv-handoff-fg);
 }
 
 .light-dots {

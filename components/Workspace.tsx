@@ -1,24 +1,26 @@
 import { Reveal } from "@/components/Reveal";
 import { Mark } from "@/components/Logo";
 import { PlatformIcon, type Platform } from "@/components/PlatformIcon";
+import { RailIcon, type RailGlyph } from "@/components/RailIcon";
 
 /* ---------------------------------------------------------------------------
    The one light section on the page: the product itself.
 
-   The frames below mirror the real internal tool — the same navigation, the
-   same live-review queue, the same regression run — rebuilt in markup so the
-   page ships with zero customer data. To publish real captures instead, drop
-   redacted PNGs into public/screenshots/ and swap each frame body for an
-   <Image>; keep the chrome and the captions.
+   These frames are the support console rebuilt in markup — same rail, same
+   ~300px live queue beside a wide conversation pane, same design tokens (see
+   the .xv block in globals.css, mirrored from tools/ui). Nothing here contains
+   customer data. To publish real captures instead, drop redacted PNGs into
+   public/screenshots/ and swap each frame body for an <Image>, keeping the
+   chrome and the captions.
 --------------------------------------------------------------------------- */
 
-const NAV = [
-  "Dashboard",
-  "Inbox",
-  "Live review",
-  "Review tasks",
-  "Regression",
-  "Settings",
+const NAV: { label: string; glyph: RailGlyph; badge?: string }[] = [
+  { label: "Dashboard", glyph: "dashboard" },
+  { label: "Inbox", glyph: "inbox" },
+  { label: "Live review", glyph: "live", badge: "12" },
+  { label: "Review tasks", glyph: "review", badge: "4" },
+  { label: "Regression", glyph: "regression" },
+  { label: "Settings", glyph: "settings" },
 ];
 
 function Frame({
@@ -33,25 +35,38 @@ function Frame({
   children: React.ReactNode;
 }) {
   return (
-    <div className="light-frame flex h-full flex-col overflow-hidden rounded-xl">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-cream-line px-4 py-2.5">
+    <div className="light-frame xv flex h-full flex-col overflow-hidden rounded-xl">
+      <div
+        className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b px-4 py-2.5"
+        style={{
+          borderColor: "var(--xv-border)",
+          background: "var(--xv-surface-2)",
+        }}
+      >
         <span aria-hidden className="flex gap-1.5">
-          {[0.18, 0.13, 0.09].map((o) => (
+          {[0.2, 0.14, 0.09].map((o) => (
             <span
               key={o}
               className="h-[7px] w-[7px] rounded-full"
-              style={{ background: `rgba(12,12,13,${o})` }}
+              style={{ background: `rgba(10,34,49,${o})` }}
             />
           ))}
         </span>
-        <span className="font-mono text-[11px] text-cream-muted">{app}</span>
+        <span
+          className="font-mono text-[11px]"
+          style={{ color: "var(--xv-faint)" }}
+        >
+          {app}
+        </span>
         {title ? (
-          <span className="text-[12px] font-medium tracking-[-0.01em]">
+          <span className="text-[12px] font-semibold tracking-tight">
             {title}
           </span>
         ) : null}
         {meta ? (
-          <span className="flex flex-wrap items-center gap-2 sm:ml-auto">{meta}</span>
+          <span className="flex flex-wrap items-center gap-2 sm:ml-auto">
+            {meta}
+          </span>
         ) : null}
       </div>
       {children}
@@ -71,7 +86,7 @@ function FrameCaption({
   return (
     <div className="mb-3 flex items-baseline gap-3">
       <span
-        className="font-mono text-[10px] uppercase tracking-[0.2em]"
+        className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
         style={{ color: accent }}
       >
         {layer}
@@ -83,198 +98,388 @@ function FrameCaption({
   );
 }
 
-/* --- Layer 01: the live review queue + the trace behind one answer -------- */
+/* --- Layer 01: the live queue and the trace behind one answer -------------- */
+
+type Row = {
+  t: string;
+  ch: string;
+  platform: Platform;
+  snippet: string;
+  state: "verified" | "repaired" | "human";
+  active?: boolean;
+};
+
+const QUEUE: Row[] = [
+  {
+    t: "09:41",
+    ch: "WhatsApp",
+    platform: "whatsapp",
+    snippet: "Can I use it on my router?",
+    state: "verified",
+  },
+  {
+    t: "09:39",
+    ch: "Web",
+    platform: "web",
+    snippet: "Charged twice this month",
+    state: "verified",
+  },
+  {
+    t: "09:36",
+    ch: "iOS",
+    platform: "ios",
+    snippet: "I want to cancel and get a refund",
+    state: "human",
+    active: true,
+  },
+  {
+    t: "09:31",
+    ch: "Android",
+    platform: "android",
+    snippet: "Which locations work with streaming?",
+    state: "repaired",
+  },
+  {
+    t: "09:28",
+    ch: "Web",
+    platform: "web",
+    snippet: "App won't connect on 5 GHz",
+    state: "verified",
+  },
+  {
+    t: "09:24",
+    ch: "iOS",
+    platform: "ios",
+    snippet: "Do you keep any logs?",
+    state: "verified",
+  },
+  {
+    t: "09:19",
+    ch: "WhatsApp",
+    platform: "whatsapp",
+    snippet: "Need the invoice for last year",
+    state: "human",
+  },
+];
+
+function StateChip({ state }: { state: Row["state"] }) {
+  if (state === "verified")
+    return <span className="xv-chip xv-chip-good">verified</span>;
+  if (state === "repaired")
+    return <span className="xv-chip xv-chip-warn">rule fired · fixed</span>;
+  return <span className="xv-chip xv-chip-handoff">→ human agent</span>;
+}
+
+function Rail() {
+  return (
+    <div
+      className="hidden flex-col justify-between border-r px-3 py-3.5 md:flex"
+      style={{
+        background: "var(--xv-rail)",
+        borderColor: "var(--xv-rail-border)",
+        color: "var(--xv-rail-text)",
+      }}
+    >
+      <div>
+        <span className="flex items-center gap-2 px-1.5 pb-3.5">
+          <Mark className="h-[15px] w-[15px]" animated={false} />
+          <span
+            className="text-[12px] font-semibold tracking-[-0.01em]"
+            style={{ color: "var(--xv-rail-text-strong)" }}
+          >
+            3layers
+          </span>
+        </span>
+
+        <div className="flex flex-col gap-[3px]">
+          {NAV.map((item) => {
+            const active = item.label === "Live review";
+            return (
+              <span
+                key={item.label}
+                className="flex items-center gap-2 rounded-lg px-2 py-[7px] text-[12.5px] font-medium"
+                style={{
+                  background: active ? "var(--xv-rail-active)" : "transparent",
+                  color: active
+                    ? "var(--xv-rail-text-strong)"
+                    : "var(--xv-rail-text)",
+                }}
+              >
+                <RailIcon glyph={item.glyph} />
+                <span className="truncate">{item.label}</span>
+                {item.badge ? (
+                  <span
+                    className="ml-auto inline-flex h-[15px] min-w-[15px] items-center justify-center rounded-full px-1 text-[9px] font-bold"
+                    style={{
+                      background: active
+                        ? "var(--xv-mint)"
+                        : "var(--xv-surface-2)",
+                      color: active ? "var(--xv-on-mint)" : "var(--xv-muted)",
+                    }}
+                  >
+                    {item.badge}
+                  </span>
+                ) : null}
+              </span>
+            );
+          })}
+        </div>
+      </div>
+
+      <div
+        className="mt-6 flex items-center gap-2 border-t pt-3"
+        style={{ borderColor: "var(--xv-rail-border)" }}
+      >
+        <span
+          className="inline-flex h-5 w-5 items-center justify-center rounded-full text-[9px] font-bold"
+          style={{ background: "var(--xv-mint)", color: "var(--xv-on-mint)" }}
+        >
+          3L
+        </span>
+        <span className="text-[11px]">Reviewer</span>
+      </div>
+    </div>
+  );
+}
 
 function ReviewFrame() {
-  const queue: {
-    t: string;
-    ch: string;
-    platform: Platform;
-    snippet: string;
-    state: string;
-    active?: boolean;
-  }[] = [
-    {
-      t: "09:41",
-      ch: "WhatsApp",
-      platform: "whatsapp",
-      snippet: "Can I use it on my router?",
-      state: "ok",
-    },
-    {
-      t: "09:39",
-      ch: "Web",
-      platform: "web",
-      snippet: "Charged twice this month",
-      state: "ok",
-    },
-    {
-      t: "09:36",
-      ch: "iOS",
-      platform: "ios",
-      snippet: "I want to cancel and get a refund",
-      state: "human",
-      active: true,
-    },
-    {
-      t: "09:31",
-      ch: "Android",
-      platform: "android",
-      snippet: "Which locations work with streaming?",
-      state: "repaired",
-    },
-    {
-      t: "09:28",
-      ch: "Web",
-      platform: "web",
-      snippet: "App won't connect on 5 GHz",
-      state: "ok",
-    },
-  ];
-
   return (
     <Frame
       app="3layers.ai"
       title="Live review"
       meta={
         <>
-          <span className="chip chip-neutral">Today · 1,284</span>
-          <span className="chip chip-human">12 need a human</span>
+          <span className="xv-chip">Today · 1,284</span>
+          <span className="xv-chip xv-chip-handoff">12 need a human</span>
         </>
       }
     >
-      <div className="grid md:grid-cols-[132px_minmax(0,1fr)_minmax(0,300px)]">
-        {/* sidebar */}
-        <div className="hidden border-r border-cream-line px-3 py-3.5 md:block">
-          <span className="flex items-center gap-2 px-1.5 pb-3">
-            <Mark className="h-[14px] w-[14px] text-cream-ink" animated={false} />
-            <span className="text-[11.5px] font-semibold tracking-[-0.01em]">
-              3layers
-            </span>
-          </span>
-          {NAV.map((item) => (
-            <span
-              key={item}
-              className={`mt-0.5 flex items-center justify-between rounded-md px-1.5 py-1.5 text-[11.5px] ${
-                item === "Live review"
-                  ? "bg-black/[0.06] font-medium"
-                  : "text-cream-muted"
-              }`}
-            >
-              {item}
-              {item === "Live review" ? (
-                <span className="chip chip-human">12</span>
-              ) : null}
-            </span>
-          ))}
-        </div>
+      <div className="grid md:grid-cols-[172px_282px_minmax(0,1fr)]">
+        <Rail />
 
-        {/* queue */}
-        <div className="border-r border-cream-line">
-          <div className="flex flex-wrap items-center gap-1.5 border-b border-cream-line px-3 py-2.5">
-            {["All", "Unreviewed", "Escalated", "Source · all"].map((chip) => (
+        {/* the queue — a ~300px pane in the console, same here */}
+        <div
+          className="border-r"
+          style={{
+            borderColor: "var(--xv-border)",
+            background: "var(--xv-surface)",
+          }}
+        >
+          <div
+            className="border-b px-3.5 py-3"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <div className="flex items-center justify-between gap-2">
+              <h3 className="text-[13px] font-semibold tracking-tight">
+                Live queue
+              </h3>
               <span
-                key={chip}
-                className={`chip ${chip === "Unreviewed" ? "chip-machine" : "chip-neutral"}`}
+                className="text-[11px] tabular-nums"
+                style={{ color: "var(--xv-faint)" }}
               >
-                {chip}
+                7 of 1,284
               </span>
-            ))}
+            </div>
+            <div className="mt-2 flex flex-wrap items-center gap-1">
+              <span className="xv-chip">All</span>
+              <span className="xv-chip xv-chip-info">Unreviewed · 12</span>
+              <span className="xv-chip">Escalated</span>
+              <span className="xv-chip">Source</span>
+            </div>
           </div>
+
           <ul>
-            {queue.map((row) => (
+            {QUEUE.map((row) => (
               <li
                 key={row.t}
-                className={`flex items-start gap-3 border-b border-cream-line/70 px-3 py-2.5 last:border-0 ${
-                  row.active ? "bg-black/[0.04]" : ""
-                }`}
+                className="flex items-start gap-3 border-b px-3.5 py-3"
+                style={{
+                  borderColor: "var(--xv-border)",
+                  background: row.active ? "var(--xv-selected)" : "transparent",
+                  borderLeft: `2px solid ${
+                    row.active ? "var(--xv-mint)" : "transparent"
+                  }`,
+                }}
               >
-                <span className="font-mono text-[10.5px] text-cream-muted">
-                  {row.t}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block truncate text-[12px]">
-                    {row.snippet}
-                  </span>
-                  <span className="mt-1 flex items-center gap-2">
-                    <span className="flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.12em] text-cream-muted">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <span className="truncate text-[12.5px] font-medium">
+                      {row.snippet}
+                    </span>
+                    <span
+                      className="shrink-0 text-[10.5px] tabular-nums"
+                      style={{ color: "var(--xv-faint)" }}
+                    >
+                      {row.t}
+                    </span>
+                  </div>
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <span
+                      className="flex items-center gap-1 text-[10px] uppercase tracking-wide"
+                      style={{ color: "var(--xv-muted)" }}
+                    >
                       <PlatformIcon platform={row.platform} size={11} />
                       {row.ch}
                     </span>
-                    {row.state === "ok" ? (
-                      <span className="chip chip-pass">verified</span>
-                    ) : row.state === "repaired" ? (
-                      <span className="chip chip-fail">rule fired · fixed</span>
-                    ) : (
-                      <span className="chip chip-human">→ human agent</span>
-                    )}
-                  </span>
-                </span>
+                    <StateChip state={row.state} />
+                  </div>
+                </div>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* the trace for the selected conversation */}
-        <div className="border-t border-cream-line px-3.5 py-3 md:border-t-0">
-          <div className="flex items-center justify-between">
-            <span className="flex items-center gap-1.5 font-mono text-[11px]">
+        {/* the conversation pane — the wide one, as in the console */}
+        <div
+          className="flex min-w-0 flex-col border-t md:border-t-0"
+          style={{
+            borderColor: "var(--xv-border)",
+            background: "var(--xv-surface)",
+          }}
+        >
+          <div
+            className="flex flex-wrap items-center gap-2 border-b px-4 py-2.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <span className="flex items-center gap-1.5 font-mono text-[11.5px]">
               <PlatformIcon platform="ios" size={12} title="iOS" />
-              #48212 · iOS
+              #48212
             </span>
-            <span className="chip chip-human">escalated</span>
+            <span className="text-[11px]" style={{ color: "var(--xv-muted)" }}>
+              iOS · 4 turns · 09:36
+            </span>
+            <span className="flex items-center gap-2 sm:ml-auto">
+              <span className="xv-chip xv-chip-handoff">escalated</span>
+              <span className="xv-chip">unreviewed</span>
+            </span>
           </div>
 
-          <div className="mt-3 space-y-2">
-            <p className="max-w-[92%] rounded-lg rounded-bl-sm bg-black/[0.05] px-2.5 py-1.5 text-[11.5px]">
+          <div className="flex-1 space-y-2.5 px-4 py-3.5">
+            <p
+              className="max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
+              style={{
+                background: "var(--xv-cust-bg)",
+                color: "var(--xv-cust-fg)",
+              }}
+            >
               I want to cancel and get my money back.
             </p>
-            <p className="ml-auto max-w-[94%] rounded-lg rounded-br-sm bg-black/[0.02] px-2.5 py-1.5 text-[11.5px] ring-1 ring-cream-line">
+            <p
+              className="ml-auto max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
+              style={{
+                background: "var(--xv-ai-bg)",
+                color: "var(--xv-ai-fg)",
+                borderColor: "var(--xv-ai-border)",
+              }}
+            >
               Of course — may I ask what&apos;s prompting the cancellation? If
               it&apos;s a connection problem there is usually a quick fix, and
               your refund window stays open either way.
             </p>
-            <p className="max-w-[92%] rounded-lg rounded-bl-sm bg-black/[0.05] px-2.5 py-1.5 text-[11.5px]">
+            <p
+              className="max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
+              style={{
+                background: "var(--xv-cust-bg)",
+                color: "var(--xv-cust-fg)",
+              }}
+            >
               It keeps dropping on my router.
             </p>
+            <p
+              className="ml-auto max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
+              style={{
+                background: "var(--xv-ai-bg)",
+                color: "var(--xv-ai-fg)",
+                borderColor: "var(--xv-ai-border)",
+              }}
+            >
+              That is usually the firmware update: the app has to be re-paired
+              from Settings → Devices → Re-pair. If it drops again after that,
+              I&apos;ll bring in a specialist who can take the refund from here —
+              your window stays open until then.
+            </p>
+
+            <div
+              className="mt-3.5 grid gap-4 rounded-xl border p-3 sm:grid-cols-2"
+              style={{
+                borderColor: "var(--xv-border)",
+                background: "var(--xv-surface-2)",
+              }}
+            >
+              <div>
+                <p
+                  className="font-mono text-[10px] uppercase tracking-[0.14em]"
+                  style={{ color: "var(--xv-muted)" }}
+                >
+                  verification
+                </p>
+                <ul className="mt-2 space-y-1.5 text-[11px]">
+                  <li className="flex items-center gap-2">
+                    <span className="xv-chip xv-chip-good">grounded</span>
+                    every claim traced to a source
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="xv-chip xv-chip-good">on-policy</span>
+                    reason asked before refund
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="xv-chip xv-chip-handoff">handoff</span>
+                    account action needs a person
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <p
+                  className="font-mono text-[10px] uppercase tracking-[0.14em]"
+                  style={{ color: "var(--xv-muted)" }}
+                >
+                  retrieved
+                </p>
+                <ul
+                  className="mt-2 space-y-1.5 font-mono text-[10.5px]"
+                  style={{ color: "var(--xv-text-2)" }}
+                >
+                  <li>refund-policy.md · §30-day</li>
+                  <li>troubleshooting/router.md</li>
+                  <li>billing/cancellation.md</li>
+                </ul>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-3.5 rounded-lg border border-cream-line">
-            <div className="border-b border-cream-line px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-cream-muted">
-              verification
-            </div>
-            <ul className="space-y-1.5 px-2.5 py-2 text-[11px]">
-              <li className="flex items-center gap-2">
-                <span className="chip chip-pass">grounded</span>
-                every claim traced to a source
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="chip chip-pass">on-policy</span>
-                cancellation reason asked first
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="chip chip-pass">on-policy</span>
-                refund window stated, not promised
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="chip chip-human">handoff</span>
-                if the fix fails — account action
-              </li>
-            </ul>
-            <div className="border-t border-cream-line px-2.5 py-2 font-mono text-[10.5px] text-cream-muted">
-              sources · refund-policy.md · troubleshooting/router.md
-            </div>
-          </div>
-
-          <div className="mt-3 flex items-center gap-2">
-            <span className="rounded-full bg-cream-ink px-2.5 py-1.5 text-[11px] font-medium text-cream">
+          <div
+            className="flex flex-wrap items-center gap-2 border-t px-4 py-3"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <span
+              className="rounded-full px-3 py-1.5 text-[11.5px] font-medium"
+              style={{
+                background: "var(--xv-mint)",
+                color: "var(--xv-on-mint)",
+              }}
+            >
               ✓ Correct
             </span>
-            <span className="rounded-full border border-cream-line px-2.5 py-1.5 text-[11px] font-medium">
+            <span
+              className="rounded-full border px-3 py-1.5 text-[11.5px] font-medium"
+              style={{ borderColor: "var(--xv-border-strong)" }}
+            >
               ✗ Wrong
             </span>
-            <span className="rounded-full border border-cream-line px-2.5 py-1.5 text-[11px] font-medium">
+            <span
+              className="rounded-full border px-3 py-1.5 text-[11.5px] font-medium"
+              style={{ borderColor: "var(--xv-border-strong)" }}
+            >
               KB gap
+            </span>
+            <span
+              className="ml-auto hidden min-w-[180px] flex-1 rounded-full border px-3 py-1.5 text-[11.5px] lg:block"
+              style={{
+                borderColor: "var(--xv-border)",
+                color: "var(--xv-faint)",
+              }}
+            >
+              Add a note for the next reviewer…
             </span>
           </div>
         </div>
@@ -301,46 +506,61 @@ function RegressionFrame() {
     <Frame
       app="3layers.ai"
       title="Regression · run 1284"
-      meta={<span className="chip chip-fail">gate blocked</span>}
+      meta={<span className="xv-chip xv-chip-danger">gate blocked</span>}
     >
-      <div className="border-b border-cream-line px-4 py-3">
-        <p className="font-mono text-[10.5px] text-cream-muted">
+      <div
+        className="border-b px-4 py-3"
+        style={{ borderColor: "var(--xv-border)" }}
+      >
+        <p
+          className="font-mono text-[10.5px]"
+          style={{ color: "var(--xv-muted)" }}
+        >
           candidate prompt-v37 → live
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[11.5px]">
-        <span>
-          <strong className="text-[15px] font-semibold">214</strong>{" "}
-          <span className="text-cream-muted">cases replayed</span>
-        </span>
-        <span className="flex items-center gap-1.5">
-          <i
-            className="h-2 w-2 rounded-full"
-            style={{ background: "var(--c-pass)" }}
-          />
-          209 passed
-        </span>
-        <span className="flex items-center gap-1.5">
-          <i
-            className="h-2 w-2 rounded-full"
-            style={{ background: "var(--c-fail)" }}
-          />
-          5 failed
-        </span>
+          <span>
+            <strong className="text-[15px] font-semibold">214</strong>{" "}
+            <span style={{ color: "var(--xv-muted)" }}>cases replayed</span>
+          </span>
+          <span className="flex items-center gap-1.5">
+            <i
+              className="h-2 w-2 rounded-full"
+              style={{ background: "var(--xv-good)" }}
+            />
+            209 passed
+          </span>
+          <span className="flex items-center gap-1.5">
+            <i
+              className="h-2 w-2 rounded-full"
+              style={{ background: "var(--xv-danger)" }}
+            />
+            5 failed
+          </span>
         </div>
       </div>
 
-      <ul className="flex-1 divide-y divide-cream-line/70">
+      <ul className="flex-1">
         {cases.map((c) => (
-          <li key={c.name} className="flex items-start gap-3 px-4 py-2.5">
+          <li
+            key={c.name}
+            className="flex items-start gap-3 border-b px-4 py-2.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
             <span
-              className={`chip mt-[1px] ${c.state === "pass" ? "chip-pass" : "chip-fail"}`}
+              className={`xv-chip mt-[1px] ${
+                c.state === "pass" ? "xv-chip-good" : "xv-chip-danger"
+              }`}
             >
               {c.state}
             </span>
             <span className="min-w-0">
-              <span className="block text-[12px]">{c.name}</span>
+              <span className="block text-[12px] font-medium">{c.name}</span>
               {c.note ? (
-                <span className="mt-1 block font-mono text-[10.5px] text-cream-muted">
+                <span
+                  className="mt-1 block font-mono text-[10.5px]"
+                  style={{ color: "var(--xv-muted)" }}
+                >
                   {c.note}
                 </span>
               ) : null}
@@ -349,7 +569,10 @@ function RegressionFrame() {
         ))}
       </ul>
 
-      <div className="border-t border-cream-line px-4 py-2.5 text-[11px] text-cream-muted">
+      <div
+        className="border-t px-4 py-2.5 text-[11px]"
+        style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
+      >
         Simulated customers, judged against your team&apos;s verdicts. The
         release stays blocked until each failure is fixed or accepted.
       </div>
@@ -357,23 +580,33 @@ function RegressionFrame() {
   );
 }
 
-/* --- Layer 03: the fix the system writes for itself ----------------------- */
+/* --- Layer 03: the fix the system writes for itself ------------------------ */
 
 function ProposalFrame() {
   return (
     <Frame
       app="3layers.ai"
       title="Proposal 42"
-      meta={<span className="chip chip-learn">written by the system</span>}
+      meta={<span className="xv-chip xv-chip-info">written by the system</span>}
     >
       <div className="flex flex-1 flex-col px-4 py-3.5">
-        <p className="text-[12px]">
+        <p className="text-[12px] leading-relaxed">
           18 conversations in 7 days ended with a human because no article
           covers re-pairing after a firmware update.
         </p>
 
-        <div className="mt-3 overflow-hidden rounded-lg border border-cream-line font-mono text-[10.5px]">
-          <div className="border-b border-cream-line bg-black/[0.03] px-3 py-1.5 text-cream-muted">
+        <div
+          className="mt-3 overflow-hidden rounded-xl border font-mono text-[10.5px]"
+          style={{ borderColor: "var(--xv-border)" }}
+        >
+          <div
+            className="border-b px-3 py-1.5"
+            style={{
+              borderColor: "var(--xv-border)",
+              background: "var(--xv-surface-2)",
+              color: "var(--xv-muted)",
+            }}
+          >
             knowledge-base/router-setup.md
           </div>
           <div className="space-y-1 px-3 py-2.5">
@@ -383,10 +616,10 @@ function ProposalFrame() {
             ].map((line) => (
               <div
                 key={line}
-                className="rounded px-1.5 py-0.5"
+                className="rounded px-1.5 py-1 leading-relaxed"
                 style={{
-                  background:
-                    "color-mix(in srgb, var(--c-pass) 16%, transparent)",
+                  background: "var(--xv-card-good)",
+                  color: "var(--xv-good)",
                 }}
               >
                 {line}
@@ -396,13 +629,22 @@ function ProposalFrame() {
         </div>
 
         <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">
-          <span className="chip chip-pass">re-tested · 214/214</span>
-          <span className="chip chip-neutral">awaiting approval</span>
+          <span className="xv-chip xv-chip-good">re-tested · 214/214</span>
+          <span className="xv-chip">awaiting approval</span>
           <span className="ml-auto flex items-center gap-2">
-            <span className="rounded-full bg-cream-ink px-3 py-1.5 text-[11px] font-medium text-cream">
+            <span
+              className="rounded-full px-3 py-1.5 text-[11.5px] font-medium"
+              style={{
+                background: "var(--xv-mint)",
+                color: "var(--xv-on-mint)",
+              }}
+            >
               Approve
             </span>
-            <span className="rounded-full border border-cream-line px-3 py-1.5 text-[11px] font-medium">
+            <span
+              className="rounded-full border px-3 py-1.5 text-[11.5px] font-medium"
+              style={{ borderColor: "var(--xv-border-strong)" }}
+            >
               Reject
             </span>
           </span>
@@ -425,9 +667,10 @@ export function Workspace() {
           </h2>
           <p className="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-cream-muted">
             Not a chat log and a resolution percentage. A queue where every
-            conversation arrives with its verification result and its sources, a
-            release gate that replays your whole history before anything ships,
-            and fixes the system writes for its own failures — waiting for a yes.
+            conversation arrives with its verification result and the sources it
+            used, a release gate that replays your whole history before anything
+            ships, and fixes the system writes for its own failures — waiting for
+            a yes.
           </p>
         </div>
 
