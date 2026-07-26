@@ -1,41 +1,33 @@
 /**
- * Trusted by — a continuously moving logo wall. Marks are grey on the black
- * surface and return to full colour on hover (which also pauses the track).
- * The SVGs in public/logos are cropped and clipped to their badge, so they
- * scale cleanly at any size.
+ * Trusted by — a continuously moving logo wall.
+ *
+ * Monochrome wordmarks from each brand's own kit (grey #9b9b9c, so they sit on
+ * the black surface as-is). Each one brightens on hover, which also pauses the
+ * track. Heights are set per mark so they carry the same optical weight rather
+ * than the same pixel height.
  */
 
-const brands = [
-  { name: "ExpressVPN", file: "Express-d.svg", dark: true },
-  { name: "Private Internet Access", file: "pia-brand.svg" },
-  { name: "CyberGhost", file: "cg-brand.svg" },
-  { name: "Intego", file: "intego-brand.svg" },
+type Brand = { name: string; file: string; h: number };
+
+const brands: Brand[] = [
+  { name: "ExpressVPN", file: "Express-mono.svg", h: 24 },
+  { name: "CyberGhost", file: "cyber-gohst.svg", h: 26 },
+  { name: "Private Internet Access", file: "PIA-grey.png", h: 26 },
+  { name: "Intego", file: "intego.svg", h: 26 },
+  { name: "Webselense", file: "webselence-1.svg", h: 23 },
+  { name: "Holiday.com", file: "holidaycom-mono-2.png", h: 24 },
 ];
 
-function Item({
-  name,
-  file,
-  dark,
-}: {
-  name: string;
-  file: string;
-  dark?: boolean;
-}) {
+function Item({ name, file, h }: Brand) {
   return (
-    <span className="brand group flex shrink-0 items-center gap-4 px-6 sm:gap-5 sm:px-10">
-      <span className="brand-badge h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`/logos/${file}`}
-          alt={`${name} logo`}
-          width={72}
-          height={72}
-          className={`brand-img h-full w-full ${dark ? "brand-img-dark" : ""}`}
-        />
-      </span>
-      <span className="text-[13px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[14px]">
-        {name}
-      </span>
+    <span className="brand flex shrink-0 items-center px-7 sm:px-10">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`/logos/${file}`}
+        alt={`${name} logo`}
+        className="brand-img w-auto"
+        style={{ height: `${h}px` }}
+      />
     </span>
   );
 }
@@ -47,27 +39,21 @@ export function TrustedBy() {
   return (
     <div className="border-t border-line">
       <div className="py-12 md:py-16">
-        <p className="mx-auto w-full max-w-[1120px] px-6 font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim md:px-8">
-          Trusted by consumer-security brands
+        <p className="mx-auto w-full max-w-[1120px] px-6 text-center font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim md:px-8">
+          Trusted by consumer brands with millions of subscribers
         </p>
 
-        <div className="marquee mt-8">
-          <div className="marquee-track" aria-hidden>
+        <div className="marquee mt-9">
+          <div className="marquee-track items-center" aria-hidden>
             {track.map((brand, i) => (
               <Item key={`${brand.name}-${i}`} {...brand} />
             ))}
           </div>
         </div>
 
-        {/* the same names, once, for assistive tech and no-motion contexts */}
-        <p className="sr-only">
-          {brands.map((brand) => brand.name).join(", ")}
-        </p>
+        {/* the same names, once, for assistive tech */}
+        <p className="sr-only">{brands.map((b) => b.name).join(", ")}</p>
 
-        <p className="mx-auto mt-8 w-full max-w-[1120px] px-6 text-[12.5px] leading-relaxed text-fg-dim md:px-8">
-          Built and hardened on live consumer-support traffic — millions of
-          subscribers, every channel, in dozens of languages.
-        </p>
       </div>
     </div>
   );

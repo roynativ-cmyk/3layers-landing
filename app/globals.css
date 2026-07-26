@@ -33,7 +33,7 @@
   --cream-line: rgba(12, 12, 13, 0.12);
 
   /* one shared beat for every animation on the page */
-  --cycle: 12s;
+  --cycle: 24s; /* two hero scenes share it: chat, then behind the scenes */
 }
 
 @theme inline {
@@ -148,46 +148,58 @@ body {
   transform: none;
 }
 
-/* --- logo mark ------------------------------------------------------------ */
-/* Three plates. A pulse runs top → bottom (answer → verify → learn):
-   the product in one glyph. */
+/* --- hero: two scenes on one 24s beat -------------------------------------
+   Scene A (0 – 46%)  the conversation, with each layer reporting in.
+   Scene B (50 – 96%) the same turn from behind: what was retrieved, what was
+                      checked, what was replayed, what it queued to learn.
 
-.mark-plate {
-  fill: rgba(255, 255, 255, 0);
-  animation: markPulse 3.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes markPulse {
-  0% {
-    fill: rgba(255, 255, 255, 0);
-  }
-  7% {
-    fill: rgba(255, 255, 255, 0.92);
-  }
-  26% {
-    fill: rgba(255, 255, 255, 0);
-  }
-  100% {
-    fill: rgba(255, 255, 255, 0);
-  }
-}
-
-.mark-link:hover .mark-plate {
-  animation-duration: 1.5s;
-}
-
-/* --- hero: one chat, with the three layers popping in beside it -----------
-   A single 12s cycle. The conversation plays out, then each layer announces
-   itself as a small note under it:
-
-     customer   3 – 8%      typing  12 – 20%     agent  22 – 30%
-     note 01    35%         note 02  47%         note 03  58%
-     clear      84 – 88%
-
-   Every element keys off those absolute percentages, so the whole panel stays
-   in step without a line of JavaScript.
+   Every element keys off absolute percentages of the shared cycle, so the two
+   scenes hand over cleanly without a line of JavaScript.
 ------------------------------------------------------------------------- */
 
+.scene {
+  grid-area: 1 / 1;
+}
+
+.scene-a {
+  animation: sceneA var(--cycle) linear infinite;
+}
+
+.scene-b {
+  opacity: 0;
+  animation: sceneB var(--cycle) linear infinite;
+}
+
+@keyframes sceneA {
+  0%,
+  44% {
+    opacity: 1;
+  }
+  48%,
+  96% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes sceneB {
+  0%,
+  47% {
+    opacity: 0;
+  }
+  50%,
+  94% {
+    opacity: 1;
+  }
+  97%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* the live dot ticks along on its own short beat */
 .cw-dot {
   width: 6px;
   height: 6px;
@@ -205,6 +217,8 @@ body {
     box-shadow: 0 0 0 6px color-mix(in srgb, var(--c-pass) 0%, transparent);
   }
 }
+
+/* --- scene A: the conversation -------------------------------------------- */
 
 .cw-msg,
 .cw-note {
@@ -224,16 +238,16 @@ body {
 
 @keyframes cwMsg1 {
   0%,
-  3% {
+  2% {
     opacity: 0;
     transform: translateY(8px);
   }
-  8%,
-  84% {
+  5%,
+  42% {
     opacity: 1;
     transform: none;
   }
-  88%,
+  45%,
   100% {
     opacity: 0;
     transform: translateY(-6px);
@@ -242,16 +256,16 @@ body {
 
 @keyframes cwMsg2 {
   0%,
-  22% {
+  11% {
     opacity: 0;
     transform: translateY(8px);
   }
-  27%,
-  84% {
+  14%,
+  42% {
     opacity: 1;
     transform: none;
   }
-  88%,
+  45%,
   100% {
     opacity: 0;
     transform: translateY(-6px);
@@ -265,14 +279,14 @@ body {
 
 @keyframes cwTyping {
   0%,
-  11% {
+  5.5% {
     opacity: 0;
   }
-  13%,
-  20% {
+  7%,
+  10% {
     opacity: 1;
   }
-  22%,
+  11.5%,
   100% {
     opacity: 0;
   }
@@ -299,7 +313,6 @@ body {
   }
 }
 
-/* the three notes: each pops in, holds, and clears with the conversation */
 .cw-note {
   transform: translateY(6px);
 }
@@ -316,16 +329,16 @@ body {
 
 @keyframes cwNote1 {
   0%,
-  33% {
+  17% {
     opacity: 0;
     transform: translateY(6px);
   }
-  38%,
-  84% {
+  20%,
+  42% {
     opacity: 1;
     transform: none;
   }
-  88%,
+  45%,
   100% {
     opacity: 0;
     transform: translateY(-4px);
@@ -334,16 +347,16 @@ body {
 
 @keyframes cwNote2 {
   0%,
-  45% {
+  23% {
     opacity: 0;
     transform: translateY(6px);
   }
-  50%,
-  84% {
+  26%,
+  42% {
     opacity: 1;
     transform: none;
   }
-  88%,
+  45%,
   100% {
     opacity: 0;
     transform: translateY(-4px);
@@ -352,51 +365,281 @@ body {
 
 @keyframes cwNote3 {
   0%,
-  56% {
+  29% {
     opacity: 0;
     transform: translateY(6px);
   }
-  61%,
-  84% {
+  32%,
+  42% {
     opacity: 1;
     transform: none;
   }
-  88%,
+  45%,
   100% {
     opacity: 0;
     transform: translateY(-4px);
   }
 }
 
-/* --- trusted-by marks ----------------------------------------------------- */
-/* Marks are cropped to their badge in the SVG itself, so sizing is plain CSS.
-   Grey by default, full brand colour on hover. */
+/* --- scene B: the same turn, from behind ---------------------------------- */
 
-.brand-badge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.tr-row {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.tr-row[data-i="1"] {
+  animation: trRow1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.tr-row[data-i="2"] {
+  animation: trRow2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.tr-row[data-i="3"] {
+  animation: trRow3 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+.tr-row[data-i="4"] {
+  animation: trRow4 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes trRow1 {
+  0%,
+  51% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  54%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes trRow2 {
+  0%,
+  57% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  60%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes trRow3 {
+  0%,
+  63% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  66%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes trRow4 {
+  0%,
+  69% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  72%,
+  92% {
+    opacity: 1;
+    transform: none;
+  }
+  95%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* the meter that fills as each stage runs */
+.tr-bar {
+  position: relative;
+  height: 3px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.05);
-  transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
 }
 
-.brand:hover .brand-badge {
-  background: rgba(255, 255, 255, 0.09);
+.tr-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-origin: left;
+  transform: scaleX(0);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 30%, transparent),
+    var(--accent)
+  );
 }
+
+.tr-row[data-i="1"] .tr-bar::after {
+  animation: trFill1 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
+}
+.tr-row[data-i="2"] .tr-bar::after {
+  animation: trFill2 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
+}
+.tr-row[data-i="3"] .tr-bar::after {
+  animation: trFill3 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
+}
+.tr-row[data-i="4"] .tr-bar::after {
+  animation: trFill4 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
+}
+
+@keyframes trFill1 {
+  0%,
+  53% {
+    transform: scaleX(0);
+  }
+  58%,
+  92% {
+    transform: scaleX(1);
+  }
+  95%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes trFill2 {
+  0%,
+  59% {
+    transform: scaleX(0);
+  }
+  64%,
+  92% {
+    transform: scaleX(1);
+  }
+  95%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes trFill3 {
+  0%,
+  65% {
+    transform: scaleX(0);
+  }
+  70%,
+  92% {
+    transform: scaleX(1);
+  }
+  95%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@keyframes trFill4 {
+  0%,
+  71% {
+    transform: scaleX(0);
+  }
+  76%,
+  92% {
+    transform: scaleX(1);
+  }
+  95%,
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+/* the replayed cases: one of them fails, in colour */
+.tr-cell {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  animation: trCell var(--cycle) linear infinite;
+}
+
+@keyframes trCell {
+  0%,
+  66% {
+    background: rgba(255, 255, 255, 0.1);
+  }
+  70%,
+  92% {
+    background: var(--cell, var(--c-pass));
+  }
+  95%,
+  100% {
+    background: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* --- the app frame on small screens --------------------------------------
+   The console screenshot keeps its real three-pane layout at every width and
+   is scaled down instead of being re-stacked, so a phone shows the same screen
+   a laptop does (and can pan the rest). `zoom` reflows, unlike a transform, so
+   the frame keeps its own height.
+------------------------------------------------------------------------- */
+
+.app-scale {
+  /* the console keeps its design width at every breakpoint and is scaled to
+     fit, so nothing is ever squeezed — only smaller. */
+  width: 1040px;
+}
+
+@media (max-width: 767.98px) {
+  .app-scale {
+    zoom: 0.5;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .app-scale {
+    zoom: 0.66;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .app-scale {
+    zoom: 0.86;
+  }
+}
+
+@media (min-width: 1280px) {
+  .app-scale {
+    zoom: 0.95;
+  }
+}
+
+/* --- trusted-by marks ----------------------------------------------------- */
+/* The brand kits ship these as mid-grey monochrome wordmarks, so they need no
+   filtering to sit on black — only a lift on hover. */
 
 .brand-img {
-  filter: grayscale(1) brightness(1.4) opacity(0.5);
-  transition: filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* a very dark mark reads as smaller on black — lift it further */
-.brand-img-dark {
-  filter: grayscale(1) brightness(2.9) opacity(0.6);
+  opacity: 0.5;
+  transition:
+    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .brand:hover .brand-img {
-  filter: none;
+  opacity: 1;
+  filter: brightness(1.7);
 }
 
 /* the logo wall moves: one continuous track, three copies, paused on hover */
@@ -422,10 +665,6 @@ body {
   display: flex;
   width: max-content;
   animation: marqueeX 34s linear infinite;
-}
-
-.marquee:hover .marquee-track {
-  animation-play-state: paused;
 }
 
 @keyframes marqueeX {
@@ -619,27 +858,42 @@ body {
     transition: none;
   }
 
-  .mark-plate,
+  .scene-a,
+  .scene-b,
   .cw-dot,
   .cw-msg,
   .cw-typing,
   .cw-typing i,
   .cw-note,
+  .tr-row,
+  .tr-bar::after,
+  .tr-cell,
   .marquee-track {
     animation: none !important;
   }
 
   /* a static, fully readable end state */
-  .mark-plate[data-top="true"] {
-    fill: rgba(255, 255, 255, 0.9);
+  /* no crossfade without motion: show the conversation, drop the second scene */
+  .scene-a {
+    opacity: 1;
+  }
+  .scene-b {
+    display: none;
   }
   .cw-msg,
-  .cw-note {
+  .cw-note,
+  .tr-row {
     opacity: 1;
     transform: none;
   }
   .cw-typing {
     display: none;
+  }
+  .tr-bar::after {
+    transform: scaleX(1);
+  }
+  .tr-cell {
+    background: var(--cell, var(--c-pass));
   }
   .marquee {
     overflow-x: auto;

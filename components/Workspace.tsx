@@ -64,7 +64,7 @@ function Frame({
           </span>
         ) : null}
         {meta ? (
-          <span className="flex flex-wrap items-center gap-2 sm:ml-auto">
+          <span className="ml-auto flex flex-wrap items-center gap-2">
             {meta}
           </span>
         ) : null}
@@ -173,7 +173,7 @@ function StateChip({ state }: { state: Row["state"] }) {
 function Rail() {
   return (
     <div
-      className="hidden flex-col justify-between border-r px-3 py-3.5 md:flex"
+      className="flex flex-col justify-between border-r px-3 py-3.5"
       style={{
         background: "var(--xv-rail)",
         borderColor: "var(--xv-rail-border)",
@@ -182,7 +182,7 @@ function Rail() {
     >
       <div>
         <span className="flex items-center gap-2 px-1.5 pb-3.5">
-          <Mark className="h-[15px] w-[15px]" animated={false} />
+          <Mark className="h-[15px] w-[15px]" />
           <span
             className="text-[12px] font-semibold tracking-[-0.01em]"
             style={{ color: "var(--xv-rail-text-strong)" }}
@@ -254,7 +254,7 @@ function ReviewFrame() {
         </>
       }
     >
-      <div className="grid md:grid-cols-[172px_282px_minmax(0,1fr)]">
+      <div className="grid grid-cols-[186px_300px_minmax(0,1fr)]">
         <Rail />
 
         {/* the queue — a ~300px pane in the console, same here */}
@@ -331,7 +331,7 @@ function ReviewFrame() {
 
         {/* the conversation pane — the wide one, as in the console */}
         <div
-          className="flex min-w-0 flex-col border-t md:border-t-0"
+          className="flex min-w-0 flex-col"
           style={{
             borderColor: "var(--xv-border)",
             background: "var(--xv-surface)",
@@ -348,7 +348,7 @@ function ReviewFrame() {
             <span className="text-[11px]" style={{ color: "var(--xv-muted)" }}>
               iOS · 4 turns · 09:36
             </span>
-            <span className="flex items-center gap-2 sm:ml-auto">
+            <span className="ml-auto flex items-center gap-2">
               <span className="xv-chip xv-chip-handoff">escalated</span>
               <span className="xv-chip">unreviewed</span>
             </span>
@@ -473,7 +473,7 @@ function ReviewFrame() {
               KB gap
             </span>
             <span
-              className="ml-auto hidden min-w-[180px] flex-1 rounded-full border px-3 py-1.5 text-[11.5px] lg:block"
+              className="ml-auto min-w-[180px] flex-1 rounded-full border px-3 py-1.5 text-[11.5px]"
               style={{
                 borderColor: "var(--xv-border)",
                 color: "var(--xv-faint)",
@@ -693,7 +693,11 @@ export function Workspace() {
             Every answer verified, every turn reviewable — a human only where one
             is needed.
           </FrameCaption>
-          <ReviewFrame />
+          <div className="-mx-1 overflow-x-auto px-1 pb-1">
+            <div className="app-scale">
+              <ReviewFrame />
+            </div>
+          </div>
 
           <div className="mt-8 grid items-stretch gap-8 md:mt-10 md:grid-cols-2 md:gap-6">
             <div className="flex flex-col">
