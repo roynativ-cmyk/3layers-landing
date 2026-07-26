@@ -356,7 +356,7 @@ function ReviewFrame() {
 
           <div className="flex-1 space-y-2.5 px-4 py-3.5">
             <p
-              className="max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
+              className="w-fit max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
               style={{
                 background: "var(--xv-cust-bg)",
                 color: "var(--xv-cust-fg)",
@@ -365,7 +365,7 @@ function ReviewFrame() {
               I want to cancel and get my money back.
             </p>
             <p
-              className="ml-auto max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
+              className="ml-auto w-fit max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
               style={{
                 background: "var(--xv-ai-bg)",
                 color: "var(--xv-ai-fg)",
@@ -377,7 +377,7 @@ function ReviewFrame() {
               your refund window stays open either way.
             </p>
             <p
-              className="max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
+              className="w-fit max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
               style={{
                 background: "var(--xv-cust-bg)",
                 color: "var(--xv-cust-fg)",
@@ -386,7 +386,7 @@ function ReviewFrame() {
               It keeps dropping on my router.
             </p>
             <p
-              className="ml-auto max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
+              className="ml-auto w-fit max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
               style={{
                 background: "var(--xv-ai-bg)",
                 color: "var(--xv-ai-fg)",

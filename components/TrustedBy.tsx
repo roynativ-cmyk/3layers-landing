@@ -23,7 +23,7 @@ function Item({ name, file }: { name: string; file: string }) {
         height={72}
         className="brand-img h-14 w-14 shrink-0 sm:h-[72px] sm:w-[72px]"
       />
-      <span className="text-[16px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[19px]">
+      <span className="text-[13px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[14px]">
         {name}
       </span>
     </span>
