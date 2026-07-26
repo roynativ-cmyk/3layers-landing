@@ -1,5 +1,6 @@
 import { Section, SectionHead, Bullets } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
+import { ControlFrames } from "@/components/Workspace";
 
 const options = [
   {
@@ -56,6 +57,16 @@ export function Deploy() {
           </Reveal>
         ))}
       </div>
+
+      <Reveal delay={120} className="mt-14 md:mt-16">
+        <p className="mb-6 max-w-[64ch] text-[14px] leading-relaxed text-fg-muted">
+          Two of those controls have their own screens: the release gate that
+          replays your labelled conversations before any change goes live, and
+          the fixes the system writes for its own gaps — each waiting for a
+          human yes.
+        </p>
+        <ControlFrames />
+      </Reveal>
     </Section>
   );
 }

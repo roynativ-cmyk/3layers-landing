@@ -59,7 +59,7 @@ export function Footer() {
           <span>Smarter support · lower costs · human when it matters</span>
           <a
             href="mailto:hello@3layers.ai"
-            className="ml-auto transition-colors hover:text-fg"
+            className="w-full transition-colors hover:text-fg sm:ml-auto sm:w-auto"
           >
             hello@3layers.ai
           </a>

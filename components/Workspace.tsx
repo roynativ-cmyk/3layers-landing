@@ -1058,6 +1058,45 @@ function HumanFrame() {
   );
 }
 
+/**
+ * The two control screens. They belong with quality and control, not with the
+ * three layers — they are what keeps all three honest.
+ */
+export function ControlFrames() {
+  return (
+    <div className="grid items-stretch gap-8 md:grid-cols-2 md:gap-6">
+      <div className="flex flex-col">
+        <p className="mb-3 flex items-baseline gap-3">
+          <span
+            className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
+            style={{ color: "var(--c-pass)" }}
+          >
+            Before release
+          </span>
+          <span className="text-[13px] font-medium tracking-[-0.01em] text-fg">
+            Nothing ships until your own history passes.
+          </span>
+        </p>
+        <RegressionFrame />
+      </div>
+      <div className="flex flex-col">
+        <p className="mb-3 flex items-baseline gap-3">
+          <span
+            className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
+            style={{ color: "var(--c-learn)" }}
+          >
+            After review
+          </span>
+          <span className="text-[13px] font-medium tracking-[-0.01em] text-fg">
+            The system proposes the fix; a person approves it.
+          </span>
+        </p>
+        <ProposalFrame />
+      </div>
+    </div>
+  );
+}
+
 export function Workspace() {
   return (
     <section id="workspace" className="light">
@@ -1109,20 +1148,6 @@ export function Workspace() {
             <HumanFrame />
           </div>
 
-          <div className="mt-10 grid items-stretch gap-8 md:mt-12 md:grid-cols-2 md:gap-6">
-            <div className="flex flex-col">
-              <FrameCaption layer="Control" accent="#14724c">
-                Nothing ships until your own history passes.
-              </FrameCaption>
-              <RegressionFrame />
-            </div>
-            <div className="flex flex-col">
-              <FrameCaption layer="Control" accent="#4a2f9c">
-                The system proposes the fix; a person approves it.
-              </FrameCaption>
-              <ProposalFrame />
-            </div>
-          </div>
         </Reveal>
 
         <p className="mt-6 text-[11.5px] text-cream-muted">
