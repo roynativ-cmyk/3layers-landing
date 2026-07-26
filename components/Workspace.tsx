@@ -268,9 +268,11 @@ function Rail({ collapsed = false }: { collapsed?: boolean }) {
 function QueuePane({
   rows = QUEUE,
   className = "",
+  compact = false,
 }: {
   rows?: Row[];
   className?: string;
+  compact?: boolean;
 }) {
   return (
         <div
@@ -296,10 +298,10 @@ function QueuePane({
               </span>
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-1">
-              <span className="xv-chip">All</span>
+              {compact ? null : <span className="xv-chip">All</span>}
               <span className="xv-chip xv-chip-info">Unreviewed · 12</span>
               <span className="xv-chip">Escalated</span>
-              <span className="xv-chip">Source</span>
+              {compact ? null : <span className="xv-chip">Source</span>}
             </div>
           </div>
 
@@ -347,7 +349,7 @@ function QueuePane({
   );
 }
 
-function ConversationPane() {
+function ConversationPane({ compact = false }: { compact?: boolean }) {
   return (
         <div
           className="flex min-w-0 flex-col"
@@ -364,12 +366,17 @@ function ConversationPane() {
               <PlatformIcon platform="ios" size={12} title="iOS" />
               #48212
             </span>
-            <span className="text-[11px]" style={{ color: "var(--xv-muted)" }}>
-              iOS · 4 turns · 09:36
-            </span>
+            {compact ? null : (
+              <span
+                className="text-[11px]"
+                style={{ color: "var(--xv-muted)" }}
+              >
+                iOS · 4 turns · 09:36
+              </span>
+            )}
             <span className="ml-auto flex items-center gap-2">
               <span className="xv-chip xv-chip-handoff">escalated</span>
-              <span className="xv-chip">unreviewed</span>
+              {compact ? null : <span className="xv-chip">unreviewed</span>}
             </span>
           </div>
 
@@ -395,28 +402,39 @@ function ConversationPane() {
               it&apos;s a connection problem there is usually a quick fix, and
               your refund window stays open either way.
             </p>
-            <p
-              className="w-fit max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
-              style={{
-                background: "var(--xv-cust-bg)",
-                color: "var(--xv-cust-fg)",
-              }}
-            >
-              It keeps dropping on my router.
-            </p>
-            <p
-              className="ml-auto w-fit max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
-              style={{
-                background: "var(--xv-ai-bg)",
-                color: "var(--xv-ai-fg)",
-                borderColor: "var(--xv-ai-border)",
-              }}
-            >
-              That is usually the firmware update: the app has to be re-paired
-              from Settings → Devices → Re-pair. If it drops again after that,
-              I&apos;ll bring in a specialist who can take the refund from here —
-              your window stays open until then.
-            </p>
+            {compact ? (
+              <p
+                className="flex items-center gap-2 pt-1 font-mono text-[10.5px] uppercase tracking-[0.12em]"
+                style={{ color: "var(--xv-faint)" }}
+              >
+                <span aria-hidden>⌄</span> 2 more turns
+              </p>
+            ) : (
+              <>
+                <p
+                  className="w-fit max-w-[78%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
+                  style={{
+                    background: "var(--xv-cust-bg)",
+                    color: "var(--xv-cust-fg)",
+                  }}
+                >
+                  It keeps dropping on my router.
+                </p>
+                <p
+                  className="ml-auto w-fit max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
+                  style={{
+                    background: "var(--xv-ai-bg)",
+                    color: "var(--xv-ai-fg)",
+                    borderColor: "var(--xv-ai-border)",
+                  }}
+                >
+                  That is usually the firmware update: the app has to be
+                  re-paired from Settings → Devices → Re-pair. If it drops again
+                  after that, I&apos;ll bring in a specialist who can take the
+                  refund from here — your window stays open until then.
+                </p>
+              </>
+            )}
 
             <div
               className="mt-3.5 grid gap-4 rounded-xl border p-3 sm:grid-cols-2"
@@ -454,14 +472,23 @@ function ConversationPane() {
                 >
                   retrieved
                 </p>
-                <ul
-                  className="mt-2 space-y-1.5 text-[11px]"
-                  style={{ color: "var(--xv-text-2)" }}
-                >
-                  <li>Refund policy · 30-day money-back</li>
-                  <li>Router setup · connection drops</li>
-                  <li>Cancelling a subscription</li>
-                </ul>
+                {compact ? (
+                  <p
+                    className="mt-2 flex items-center gap-2 text-[11px]"
+                    style={{ color: "var(--xv-text-2)" }}
+                  >
+                    <span aria-hidden>⌄</span> 3 sources cited
+                  </p>
+                ) : (
+                  <ul
+                    className="mt-2 space-y-1.5 text-[11px]"
+                    style={{ color: "var(--xv-text-2)" }}
+                  >
+                    <li>Refund policy · 30-day money-back</li>
+                    <li>Router setup · connection drops</li>
+                    <li>Cancelling a subscription</li>
+                  </ul>
+                )}
               </div>
             </div>
           </div>
@@ -491,15 +518,17 @@ function ConversationPane() {
             >
               KB gap
             </span>
-            <span
-              className="ml-auto min-w-[180px] flex-1 rounded-full border px-3 py-1.5 text-[11.5px]"
-              style={{
-                borderColor: "var(--xv-border)",
-                color: "var(--xv-faint)",
-              }}
-            >
-              Add a note for the next reviewer…
-            </span>
+            {compact ? null : (
+              <span
+                className="ml-auto min-w-[180px] flex-1 rounded-full border px-3 py-1.5 text-[11.5px]"
+                style={{
+                  borderColor: "var(--xv-border)",
+                  color: "var(--xv-faint)",
+                }}
+              >
+                Add a note for the next reviewer…
+              </span>
+            )}
           </div>
         </div>
   );
@@ -535,17 +564,12 @@ function ReviewFrameMobile() {
     <Frame
       app="3layers.ai"
       title="Live review"
-      meta={
-        <>
-          <span className="xv-chip">Today · 1,284</span>
-          <span className="xv-chip xv-chip-handoff">12 need a human</span>
-        </>
-      }
+      meta={<span className="xv-chip xv-chip-handoff">12 need a human</span>}
     >
-      <div className="grid grid-cols-[56px_252px_minmax(0,1fr)]">
+      <div className="grid grid-cols-[56px_236px_minmax(0,1fr)]">
         <Rail collapsed />
-        <QueuePane className="border-r" rows={QUEUE.slice(0, 6)} />
-        <ConversationPane />
+        <QueuePane className="border-r" rows={QUEUE.slice(0, 4)} compact />
+        <ConversationPane compact />
       </div>
     </Frame>
   );

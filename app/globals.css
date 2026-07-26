@@ -604,36 +604,36 @@ body {
 
 /* the phone frame: 760px of design, stepped to fit without a sideways swipe */
 .app-scale-sm {
-  width: 760px;
+  width: 660px;
 }
 
 @media (max-width: 400px) {
   .app-scale-sm {
-    zoom: 0.32;
+    zoom: 0.38;
   }
 }
 
 @media (min-width: 401px) and (max-width: 480px) {
   .app-scale-sm {
-    zoom: 0.42;
+    zoom: 0.48;
   }
 }
 
 @media (min-width: 481px) and (max-width: 560px) {
   .app-scale-sm {
-    zoom: 0.52;
+    zoom: 0.60;
   }
 }
 
 @media (min-width: 561px) and (max-width: 640px) {
   .app-scale-sm {
-    zoom: 0.62;
+    zoom: 0.84;
   }
 }
 
 @media (min-width: 641px) and (max-width: 767.98px) {
   .app-scale-sm {
-    zoom: 0.72;
+    zoom: 0.84;
   }
 }
 
