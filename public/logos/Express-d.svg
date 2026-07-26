@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="7.0 8.0 242 242">
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="7.0 8.0 242 242"><defs><clipPath id="Expressdbadgeclip"><circle cx="128.0" cy="129.0" r="116.0"/></clipPath></defs><g clip-path="url(#Expressdbadgeclip)" data-badge-clip="1">
   <g id="Express-d" transform="translate(-735 -4094.152)">
     <g id="Group_50355" data-name="Group 50355" transform="translate(15249 23171.838)">
       <ellipse id="Ellipse_1899" data-name="Ellipse 1899" cx="127.763" cy="129.699" rx="127.763" ry="129.699" transform="translate(-14514 -19076.836)" fill="#ed1f38" opacity="0.1"/>
@@ -7,4 +7,4 @@
     </g>
     <path id="Path_125928" data-name="Path 125928" d="M-15503-18744.457s-122.846-8.508-112.332,37.068,74.951-30.729,0-48.936-89.2,65.84-89.2,65.84" transform="translate(16676.004 22853.908)" fill="none" stroke="#050505" stroke-width="1.5"/>
   </g>
-</svg>
+</g></svg>
