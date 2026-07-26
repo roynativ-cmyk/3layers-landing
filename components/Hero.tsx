@@ -24,21 +24,26 @@ export function Hero() {
         <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:gap-16">
           <div>
             <Reveal>
-              <p className="inline-flex items-center gap-2.5 rounded-full border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-fg-muted">
-                Smarter support · lower costs · human when it matters
+              <p className="font-mono text-[11px] tracking-[0.04em] text-fg-muted sm:inline-flex sm:items-center sm:rounded-full sm:border sm:border-line sm:px-3 sm:py-1.5 sm:text-[10px] sm:uppercase sm:tracking-[0.2em]">
+                Smarter support. Lower costs. Human when it matters.
               </p>
             </Reveal>
 
             <Reveal delay={60}>
-              <h1 className="mt-7 max-w-[20ch] text-[clamp(2.4rem,4.8vw,3.6rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-balance">
-                Cut support costs. Keep the service.
+              <h1 className="mt-7 max-w-[24ch] text-[clamp(1.95rem,4.2vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.035em] text-balance">
+                Reduce support costs without reducing service quality
               </h1>
             </Reveal>
 
             <Reveal delay={120}>
-              <p className="mt-7 max-w-[52ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
-                An AI bot, AI-assisted agents and human specialists — three
-                layers in one support operation, monitored in one console.
+              <p className="mt-7 max-w-[58ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
+                3Layers.ai gives your business a complete customer-support
+                operation powered by three intelligent layers: AI automation,
+                AI-assisted agents, and experienced human support.
+              </p>
+              <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-fg-muted">
+                Handle more conversations, respond faster, and keep your
+                customers satisfied without building a large support department.
               </p>
             </Reveal>
 
