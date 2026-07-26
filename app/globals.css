@@ -596,54 +596,20 @@ body {
    the frame keeps its own height.
 ------------------------------------------------------------------------- */
 
-.app-scale {
-  /* the console keeps its design width at every breakpoint and is scaled to
-     fit, so nothing is ever squeezed — only smaller. */
-  width: 1040px;
-}
-
-/* the phone frame: 760px of design, stepped to fit without a sideways swipe */
+.app-scale,
 .app-scale-sm {
-  width: 660px;
+  /* With `zoom`, percentages resolve in the zoomed coordinate space, so
+     width:100% renders exactly the container width and the frame lines up with
+     everything else on the page. The factor then only picks how much design
+     width the console gets (container / zoom) — never how wide it draws. */
+  width: 100%;
 }
 
-@media (max-width: 400px) {
-  .app-scale-sm {
-    zoom: 0.38;
-  }
+.app-scale {
+  zoom: 0.7;
 }
 
-@media (min-width: 401px) and (max-width: 480px) {
-  .app-scale-sm {
-    zoom: 0.48;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 560px) {
-  .app-scale-sm {
-    zoom: 0.60;
-  }
-}
-
-@media (min-width: 561px) and (max-width: 640px) {
-  .app-scale-sm {
-    zoom: 0.84;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 767.98px) {
-  .app-scale-sm {
-    zoom: 0.84;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1023.98px) {
-  .app-scale {
-    zoom: 0.66;
-  }
-}
-
-@media (min-width: 1024px) and (max-width: 1279.98px) {
+@media (min-width: 1024px) {
   .app-scale {
     zoom: 0.86;
   }
@@ -652,6 +618,24 @@ body {
 @media (min-width: 1280px) {
   .app-scale {
     zoom: 0.95;
+  }
+}
+
+/* the phone frame: the queue is collapsed away, so a smaller factor is enough
+   and the type stays as large as it can be */
+.app-scale-sm {
+  zoom: 0.68;
+}
+
+@media (min-width: 480px) {
+  .app-scale-sm {
+    zoom: 0.8;
+  }
+}
+
+@media (min-width: 640px) {
+  .app-scale-sm {
+    zoom: 0.9;
   }
 }
 

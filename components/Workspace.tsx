@@ -349,6 +349,66 @@ function QueuePane({
   );
 }
 
+/** A source pill, as the console renders them: read-in-full or hit-only. */
+function SourcePill({
+  title,
+  cited,
+  read = true,
+}: {
+  title: string;
+  cited?: number;
+  read?: boolean;
+}) {
+  return (
+    <span
+      className={`flex min-w-0 items-center gap-1.5 rounded-lg px-2 py-1 text-[11px] ${
+        read ? "" : "opacity-55"
+      }`}
+      style={{
+        background: "var(--xv-surface)",
+        border: "1px solid var(--xv-border)",
+      }}
+    >
+      {read ? (
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M4 5.5A1.5 1.5 0 0 1 5.5 4H10a2 2 0 0 1 2 2v13a1.6 1.6 0 0 0-1.6-1.5H5.5A1.5 1.5 0 0 1 4 16zM20 5.5A1.5 1.5 0 0 0 18.5 4H14a2 2 0 0 0-2 2v13a1.6 1.6 0 0 1 1.6-1.5h4.9A1.5 1.5 0 0 0 20 16z"
+            stroke="var(--xv-muted)"
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+        </svg>
+      ) : (
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"
+            stroke="var(--xv-faint)"
+            strokeWidth="1.6"
+          />
+          <circle cx="12" cy="12" r="2.6" stroke="var(--xv-faint)" strokeWidth="1.6" />
+        </svg>
+      )}
+      <span
+        className="truncate font-medium"
+        style={{ color: "var(--xv-text)" }}
+      >
+        {title}
+      </span>
+      {cited ? (
+        <span
+          className="shrink-0 rounded-full px-1.5 py-0.5 text-[9.5px] font-medium tabular-nums"
+          style={{
+            background: "var(--xv-card-good)",
+            color: "var(--xv-good)",
+          }}
+        >
+          {cited} cited
+        </span>
+      ) : null}
+    </span>
+  );
+}
+
 function ConversationPane({ compact = false }: { compact?: boolean }) {
   return (
         <div
@@ -358,6 +418,24 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
             background: "var(--xv-surface)",
           }}
         >
+          {compact ? (
+            <div
+              className="flex items-center gap-2 border-b px-4 py-2"
+              style={{
+                borderColor: "var(--xv-border)",
+                background: "var(--xv-surface-2)",
+              }}
+            >
+              <span
+                className="text-[11.5px] font-medium"
+                style={{ color: "var(--xv-text-2)" }}
+              >
+                ‹ Live queue
+              </span>
+              <span className="xv-chip xv-chip-info ml-auto">12 unreviewed</span>
+            </div>
+          ) : null}
+
           <div
             className="flex flex-wrap items-center gap-2 border-b px-4 py-2.5"
             style={{ borderColor: "var(--xv-border)" }}
@@ -437,58 +515,62 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
             )}
 
             <div
-              className="mt-3.5 grid gap-4 rounded-xl border p-3 sm:grid-cols-2"
+              className="mt-3.5 overflow-hidden rounded-xl border"
               style={{
                 borderColor: "var(--xv-border)",
                 background: "var(--xv-surface-2)",
               }}
             >
-              <div>
+              <div className="px-3 py-2.5">
                 <p
                   className="font-mono text-[10px] uppercase tracking-[0.14em]"
                   style={{ color: "var(--xv-muted)" }}
                 >
                   verification
                 </p>
-                <ul className="mt-2 space-y-1.5 text-[11px]">
-                  <li className="flex items-center gap-2">
-                    <span className="xv-chip xv-chip-good">grounded</span>
-                    every claim traced to a source
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="xv-chip xv-chip-good">on-policy</span>
-                    reason asked before refund
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="xv-chip xv-chip-handoff">handoff</span>
-                    account action needs a person
-                  </li>
-                </ul>
+                <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                  <span className="xv-chip xv-chip-good">✓ grounded</span>
+                  <span className="xv-chip xv-chip-good">✓ on-policy</span>
+                  <span className="xv-chip xv-chip-handoff">⚑ handoff</span>
+                </div>
+                <p className="mt-2 text-[11px]" style={{ color: "var(--xv-muted)" }}>
+                  every claim traced to a source · reason asked before refund ·
+                  account action needs a person
+                </p>
               </div>
-              <div>
+
+              <div
+                className="border-t px-3 py-2.5"
+                style={{ borderColor: "var(--xv-border)" }}
+              >
                 <p
-                  className="font-mono text-[10px] uppercase tracking-[0.14em]"
+                  className="flex items-center gap-1.5 text-[10px] font-medium"
                   style={{ color: "var(--xv-muted)" }}
                 >
-                  retrieved
+                  <span aria-hidden style={{ color: "var(--xv-good)" }}>
+                    ●
+                  </span>
+                  3 sources · 2 read in full
                 </p>
-                {compact ? (
-                  <p
-                    className="mt-2 flex items-center gap-2 text-[11px]"
-                    style={{ color: "var(--xv-text-2)" }}
-                  >
-                    <span aria-hidden>⌄</span> 3 sources cited
-                  </p>
-                ) : (
-                  <ul
-                    className="mt-2 space-y-1.5 text-[11px]"
-                    style={{ color: "var(--xv-text-2)" }}
-                  >
-                    <li>Refund policy · 30-day money-back</li>
-                    <li>Router setup · connection drops</li>
-                    <li>Cancelling a subscription</li>
-                  </ul>
-                )}
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  <SourcePill title="Refund policy · 30-day" cited={2} />
+                  <SourcePill title="Router setup · drops" cited={1} />
+                  <SourcePill title="Cancelling a subscription" read={false} />
+                </div>
+              </div>
+
+              <div
+                className="flex flex-wrap items-center gap-x-3 gap-y-1 border-t px-3 py-2 font-mono text-[10px]"
+                style={{
+                  borderColor: "var(--xv-border)",
+                  color: "var(--xv-faint)",
+                }}
+              >
+                <span>claude-sonnet-5</span>
+                <span>bedrock · eu-central-1</span>
+                <span>2.4s</span>
+                <span>$0.004</span>
+                <span>step by step ›</span>
               </div>
             </div>
           </div>
@@ -566,9 +648,8 @@ function ReviewFrameMobile() {
       title="Live review"
       meta={<span className="xv-chip xv-chip-handoff">12 need a human</span>}
     >
-      <div className="grid grid-cols-[56px_236px_minmax(0,1fr)]">
+      <div className="grid grid-cols-[56px_minmax(0,1fr)]">
         <Rail collapsed />
-        <QueuePane className="border-r" rows={QUEUE.slice(0, 4)} compact />
         <ConversationPane compact />
       </div>
     </Frame>

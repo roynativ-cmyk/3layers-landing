@@ -21,7 +21,7 @@ const channels: { label: string; platform: Platform }[] = [
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
-    <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim">
+    <p className="text-center font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim md:text-left">
       {children}
     </p>
   );
@@ -32,10 +32,10 @@ const hover = "transition-colors duration-200 hover:text-white";
 export function Logos() {
   return (
     <div className="border-t border-line">
-      <div className="mx-auto grid w-full max-w-[1120px] items-start gap-8 px-6 py-10 md:grid-cols-2 md:gap-0 md:px-8 md:py-12">
+      <div className="mx-auto grid w-full max-w-[1120px] items-start gap-10 px-6 py-10 md:grid-cols-2 md:gap-0 md:px-8 md:py-12">
         <div className="md:pr-12">
           <Label>Runs on your models</Label>
-          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4 text-white/55 sm:mt-6 sm:gap-x-9 sm:gap-y-5">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-5 text-white/55 sm:mt-6 sm:gap-x-9 md:justify-start">
             <AWSLogo className={`h-[17px] w-auto sm:h-[22px] ${hover}`} />
             <AnthropicLogo className={`h-[10px] w-auto sm:h-[12px] ${hover}`} />
             <OpenAILogo className={`h-[14px] w-auto sm:h-[18px] ${hover}`} />
@@ -49,7 +49,7 @@ export function Logos() {
 
         <div className="md:border-l md:border-line md:pl-12">
           <Label>Plugs into your desk</Label>
-          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-4 text-white/55 sm:mt-6 sm:gap-x-8 sm:gap-y-5">
+          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-7 gap-y-5 text-white/55 sm:mt-6 sm:gap-x-8 md:justify-start">
             <ZendeskLogo className={`h-[15px] w-auto sm:h-[19px] ${hover}`} />
             {channels.map((channel) => (
               <span
