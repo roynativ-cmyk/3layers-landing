@@ -498,6 +498,44 @@ body {
   filter: none;
 }
 
+/* the logo wall moves: one continuous track, three copies, paused on hover */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeX 34s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeX {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.3333%);
+  }
+}
+
 /* --- the light surface ---------------------------------------------------- */
 /* One inverted section in the middle of the page: the product itself, shown
    on a warm paper surface so it reads as software rather than marketing. */
@@ -729,5 +767,11 @@ body {
   }
   .loop-return {
     border-color: rgba(255, 255, 255, 0.3);
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .marquee {
+    overflow-x: auto;
   }
 }

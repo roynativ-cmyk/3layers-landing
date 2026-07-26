@@ -436,12 +436,12 @@ function ReviewFrame() {
                   retrieved
                 </p>
                 <ul
-                  className="mt-2 space-y-1.5 font-mono text-[10.5px]"
+                  className="mt-2 space-y-1.5 text-[11px]"
                   style={{ color: "var(--xv-text-2)" }}
                 >
-                  <li>refund-policy.md · §30-day</li>
-                  <li>troubleshooting/router.md</li>
-                  <li>billing/cancellation.md</li>
+                  <li>Refund policy · 30-day money-back</li>
+                  <li>Router setup · connection drops</li>
+                  <li>Cancelling a subscription</li>
                 </ul>
               </div>
             </div>
@@ -590,42 +590,55 @@ function ProposalFrame() {
       meta={<span className="xv-chip xv-chip-info">written by the system</span>}
     >
       <div className="flex flex-1 flex-col px-4 py-3.5">
-        <p className="text-[12px] leading-relaxed">
-          18 conversations in 7 days ended with a human because no article
-          covers re-pairing after a firmware update.
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="xv-chip">18 conversations</span>
+          <span className="xv-chip">last 7 days</span>
+          <span className="xv-chip xv-chip-handoff">all handed to a person</span>
+        </div>
+        <p className="mt-3 text-[12.5px] leading-relaxed">
+          Customers keep asking how to reconnect after a firmware update, and
+          nothing in the knowledge base answers it.
         </p>
 
         <div
-          className="mt-3 overflow-hidden rounded-xl border font-mono text-[10.5px]"
+          className="mt-3.5 rounded-xl border p-3"
           style={{ borderColor: "var(--xv-border)" }}
         >
-          <div
-            className="border-b px-3 py-1.5"
-            style={{
-              borderColor: "var(--xv-border)",
-              background: "var(--xv-surface-2)",
-              color: "var(--xv-muted)",
-            }}
-          >
-            knowledge-base/router-setup.md
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-[12px] font-semibold tracking-tight">
+              Router setup
+            </span>
+            <span
+              className="text-[11px]"
+              style={{ color: "var(--xv-muted)" }}
+            >
+              knowledge base
+            </span>
+            <span className="xv-chip xv-chip-good ml-auto">
+              suggested addition
+            </span>
           </div>
-          <div className="space-y-1 px-3 py-2.5">
+
+          <ul className="mt-3 space-y-2.5">
             {[
-              "+ After a firmware update, re-pair the app: Settings → Devices → Re-pair.",
-              "+ If pairing fails twice, hand over to a human — never suggest a factory reset.",
+              "After a firmware update, ask the customer to re-pair the app: Settings → Devices → Re-pair.",
+              "If pairing fails twice, hand the conversation to a person — never suggest a factory reset.",
             ].map((line) => (
-              <div
-                key={line}
-                className="rounded px-1.5 py-1 leading-relaxed"
-                style={{
-                  background: "var(--xv-card-good)",
-                  color: "var(--xv-good)",
-                }}
-              >
+              <li key={line} className="flex gap-2.5 text-[11.5px] leading-relaxed">
+                <span
+                  aria-hidden
+                  className="mt-[2px] inline-flex h-[15px] w-[15px] shrink-0 items-center justify-center rounded-full text-[11px] font-semibold"
+                  style={{
+                    background: "var(--xv-card-good)",
+                    color: "var(--xv-good)",
+                  }}
+                >
+                  +
+                </span>
                 {line}
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div className="mt-auto flex flex-wrap items-center gap-2 pt-4">

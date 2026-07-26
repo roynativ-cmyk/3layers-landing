@@ -3,20 +3,16 @@ import { Reveal } from "@/components/Reveal";
 
 const steps = [
   {
-    k: "Customer asks",
-    v: "A message arrives from the web widget, your mobile app or WhatsApp. Same agent, same knowledge, same rules on every channel.",
+    k: "Answered, then verified",
+    v: "A message arrives from the web, your app or WhatsApp. The agent retrieves from your knowledge base and drafts a reply in the customer's language — then a second model checks it against those sources and your rules before it is sent, or hands it to a person with the full context.",
   },
   {
-    k: "Grounded answer",
-    v: "The agent retrieves from your knowledge base, drafts an answer in the customer's language, and records exactly which passages it used.",
+    k: "Proven before release",
+    v: "Every verified turn, escalation and review verdict becomes a test case. Each candidate prompt, model or knowledge change replays the whole set, case by case, and a failed run blocks the deploy.",
   },
   {
-    k: "Verified, then sent",
-    v: "A second model checks the draft against the retrieved sources and your rule set. It is repaired, sent — or handed to a human agent with full context when it can't be made safe.",
-  },
-  {
-    k: "Regression + learning",
-    v: "Verified turns, escalations and review verdicts feed the suite. Candidate builds replay every labelled case, and proposed fixes ship only once it passes.",
+    k: "Improved, then re-proven",
+    v: "Failures that survive review turn into concrete fixes — a knowledge-base edit, a retrieval change, a rule. Each one has to pass the suite and a human before it reaches production.",
   },
 ];
 
@@ -26,10 +22,10 @@ export function Flow() {
       <SectionHead
         eyebrow="How it works"
         title="How a single answer earns its place."
-        lead="One conversation, four movements. The last two are the ones most support AI skips."
+        lead="Three movements per conversation. The last two are the ones most support AI skips."
       />
 
-      <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-4">
+      <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
         {steps.map((step, i) => (
           <Reveal
             key={step.k}

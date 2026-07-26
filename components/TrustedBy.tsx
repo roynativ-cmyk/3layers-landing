@@ -1,47 +1,60 @@
 /**
- * Trusted by. Brand marks sit grey on the black surface and return to full
- * colour on hover — the same "prove it, then show it" idea as the product.
- * The SVGs in public/logos are cropped to their badge (see the viewBox in each
- * file), so they scale cleanly at any tile size without clipping tricks.
+ * Trusted by — a continuously moving logo wall. Marks are grey on the black
+ * surface and return to full colour on hover (which also pauses the track).
+ * The SVGs in public/logos are cropped and clipped to their badge, so they
+ * scale cleanly at any size.
  */
 
 const brands = [
   { name: "ExpressVPN", file: "Express-d.svg" },
-  { name: "Private Internet Access", short: "PIA", file: "pia-brand.svg" },
+  { name: "Private Internet Access", file: "pia-brand.svg" },
   { name: "CyberGhost", file: "cg-brand.svg" },
   { name: "Intego", file: "intego-brand.svg" },
 ];
 
+function Item({ name, file }: { name: string; file: string }) {
+  return (
+    <span className="brand group flex shrink-0 items-center gap-4 px-6 sm:px-9">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={`/logos/${file}`}
+        alt={`${name} logo`}
+        width={56}
+        height={56}
+        className="brand-img h-12 w-12 shrink-0 sm:h-14 sm:w-14"
+      />
+      <span className="text-[15px] font-medium whitespace-nowrap tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[17px]">
+        {name}
+      </span>
+    </span>
+  );
+}
+
 export function TrustedBy() {
+  // three copies so translateX(-33.33%) loops seamlessly
+  const track = [...brands, ...brands, ...brands];
+
   return (
     <div className="border-t border-line">
-      <div className="mx-auto w-full max-w-[1120px] px-6 py-12 md:px-8 md:py-16">
-        <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim">
+      <div className="py-12 md:py-16">
+        <p className="mx-auto w-full max-w-[1120px] px-6 font-mono text-[10px] uppercase tracking-[0.22em] text-fg-dim md:px-8">
           Trusted by consumer-security brands
         </p>
 
-        <ul className="mt-7 grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">
-          {brands.map((brand) => (
-            <li key={brand.name}>
-              <span className="brand group flex h-full min-h-[76px] items-center gap-3 rounded-xl border border-line px-4 py-4 transition-colors duration-300 hover:border-line-strong hover:bg-white/[0.03] sm:gap-4 sm:px-5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={`/logos/${brand.file}`}
-                  alt={`${brand.name} logo`}
-                  width={40}
-                  height={40}
-                  className="brand-img h-9 w-9 shrink-0 sm:h-11 sm:w-11"
-                />
-                <span className="min-w-0 text-[13px] font-medium leading-tight tracking-[-0.01em] text-fg-muted transition-colors duration-300 group-hover:text-fg sm:text-[14px]">
-                  <span className="sm:hidden">{brand.short ?? brand.name}</span>
-                  <span className="hidden sm:inline">{brand.name}</span>
-                </span>
-              </span>
-            </li>
-          ))}
-        </ul>
+        <div className="marquee mt-8">
+          <div className="marquee-track" aria-hidden>
+            {track.map((brand, i) => (
+              <Item key={`${brand.name}-${i}`} {...brand} />
+            ))}
+          </div>
+        </div>
 
-        <p className="mt-7 max-w-[62ch] text-[12.5px] leading-relaxed text-fg-dim">
+        {/* the same names, once, for assistive tech and no-motion contexts */}
+        <p className="sr-only">
+          {brands.map((brand) => brand.name).join(", ")}
+        </p>
+
+        <p className="mx-auto mt-8 w-full max-w-[1120px] px-6 text-[12.5px] leading-relaxed text-fg-dim md:px-8">
           Built and hardened on live consumer-support traffic — millions of
           subscribers, every channel, in dozens of languages.
         </p>
