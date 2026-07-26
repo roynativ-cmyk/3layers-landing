@@ -5,41 +5,40 @@ const layers = [
   {
     n: "01",
     accent: "var(--c-machine)",
-    name: "Verification on every answer",
-    claim:
-      "Each answer is checked against your sources and your rules before the customer reads it.",
-    body: "A second model reviews every draft turn: is each claim traceable to a retrieved passage, and does the wording follow the rules your business defined — required disclosures, refund and billing policy, what must never be promised, what must never be said, which topics are off limits? Answers that fail are repaired or stopped. When the turn can't be made safe — thin sources, a sensitive account action, a policy edge, or a customer who asks for a person — it goes to a human agent with the full context attached. That is the only time a human is pulled in, and it is why the ones that arrive are worth their time.",
+    name: "AI Bot: instant answers at the lowest cost",
+    claim: "Resolve high-volume, low-complexity requests without using agent time.",
+    body: "The AI Bot handles repetitive and common customer requests instantly, 24 hours a day. It learns from your website, help center, product information, internal procedures and approved support content — and it answers only from what you approved.",
     bullets: [
-      "Groundedness check: every claim tied to a retrieved source",
-      "Your rule set: disclosures, policy wording, hard prohibitions",
-      "Failing answers repaired — or stopped before they are sent",
-      "Escalation to a human only when the turn genuinely needs one",
+      "Answers frequent questions and guides common processes",
+      "Handles basic troubleshooting and service information",
+      "Collects the details an agent would have to ask for",
+      "Answers outside business hours, consistently every time",
     ],
   },
   {
     n: "02",
     accent: "var(--c-pass)",
-    name: "AI-to-AI regression testing",
-    claim: "Every change is proven against your real history before release.",
-    body: "Before a prompt, model or knowledge change goes live, a fleet of simulated customers replays scenarios drawn from your actual transcripts against the candidate build. An LLM judge scores each conversation against the verdicts your team recorded on real cases, and the run reports per-case pass, fail and diff — not one aggregate number you have to trust. Adversarial cases ride along in the same sweep: hostile tone, mixed languages, deliberate ambiguity, mid-conversation topic switches.",
+    name: "AI Agent Assist: make every agent faster",
+    claim: "Your agents stop searching, typing and repeating the same work.",
+    body: "When a human agent is needed, the AI copilot works alongside your team. It understands the conversation, searches your approved knowledge sources and recommends an accurate response in real time — with the summary and the next best action already prepared.",
     bullets: [
-      "Simulated customers replay your own conversation history",
-      "Judge calibrated on your team's labels, not a generic rubric",
-      "Per-case diffs: exactly which behaviours moved, in both directions",
-      "Runs as a release gate — a red suite blocks the deploy",
+      "Suggests complete responses and summarises long threads",
+      "Finds the relevant procedure or product detail instantly",
+      "Recommends the next action and flags missing information",
+      "New agents perform like experienced ones, sooner",
     ],
   },
   {
     n: "03",
-    accent: "var(--c-learn)",
-    name: "ML that learns automatically",
-    claim: "Verified failures turn themselves into the next improvement.",
-    body: "The third layer reads every conversation a human had to take over and compares what your agent answered with what the AI had available. That gap is the lesson: a missing knowledge-base article, a source the agent was never given access to, a retrieval blind spot, a rule it keeps tripping over. It writes the concrete fix. Each proposal goes straight back through the regression layer and waits for a human approval. Your people approve improvements instead of hand-authoring them, and the same failure stops coming back.",
+    accent: "var(--c-human)",
+    name: "Human Experts: expertise when it matters",
+    claim: "Customers still get real human care whenever it is genuinely needed.",
+    body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. Human specialists step in when a case is too complex, sensitive or valuable for automation alone — and they arrive with the full history, not a cold ticket.",
     bullets: [
-      "Mines escalated chats: what the human answered, what the AI lacked",
-      "Proposes the data, the extra source or the rule that closes the gap",
-      "Every proposal regression-gated and human-approved",
-      "A quality curve that moves weekly instead of per quarter",
+      "Complaints, escalations and retention conversations",
+      "Billing and account disputes, sensitive situations",
+      "Deeper technical troubleshooting",
+      "Anything that needs a judgment call or an approval",
     ],
   },
 ];
@@ -48,9 +47,9 @@ export function Layers() {
   return (
     <Section id="layers">
       <SectionHead
-        eyebrow="The system"
-        title="Three layers, one loop."
-        lead="Each layer catches what the layer above it cannot. Together they turn support automation from a bet you place into an engineering process you can run."
+        eyebrow="The right support at the right layer"
+        title="Three layers, one operation."
+        lead="Every customer request does not need the same level of attention. Each conversation is routed to the most efficient layer — and every layer is monitored in the same console, so you can see what it cost and whether it was right."
       />
 
       <div className="mt-14 space-y-4">
@@ -81,7 +80,7 @@ export function Layers() {
               </div>
 
               <div>
-                <h3 className="text-[clamp(1.4rem,2.6vw,1.9rem)] font-semibold leading-tight tracking-[-0.025em]">
+                <h3 className="text-[clamp(1.3rem,2.4vw,1.8rem)] font-semibold leading-tight tracking-[-0.025em]">
                   {layer.name}
                 </h3>
                 <p className="mt-3 max-w-[52ch] text-[15px] leading-relaxed text-fg">
@@ -100,6 +99,15 @@ export function Layers() {
           </Reveal>
         ))}
       </div>
+
+      <Reveal delay={120}>
+        <p className="mt-10 max-w-[70ch] text-[14px] leading-relaxed text-fg-muted">
+          A simple question is resolved instantly by the bot. A question that
+          needs account context is prepared by AI and completed by an agent. A
+          complex or sensitive issue is handled by an experienced specialist. You
+          pay human-level cost only where human expertise is actually required.
+        </p>
+      </Reveal>
     </Section>
   );
 }

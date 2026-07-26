@@ -13,24 +13,30 @@ const NOTES = [
   {
     n: "01",
     accent: "var(--c-machine)",
-    label: "verified",
-    text: "grounded in your KB · reason asked before any refund",
+    label: "AI Bot",
+    text: "answered from your approved content · in 4 seconds",
   },
   {
     n: "02",
     accent: "var(--c-pass)",
-    label: "proven",
-    text: "214 replayed cases cover this behaviour · 1 caught",
+    label: "Agent Assist",
+    text: "draft, summary and next action ready for your agent",
   },
   {
     n: "03",
-    accent: "var(--c-learn)",
-    label: "learned",
-    text: "from 18 handoffs your agents answered last week",
+    accent: "var(--c-human)",
+    label: "Human Expert",
+    text: "steps in for judgment — with the full history attached",
   },
 ];
 
 const STAGES = [
+  {
+    k: "understand",
+    accent: "var(--c-machine)",
+    value: "intent · billing",
+    detail: "confidence 0.91 · language matched",
+  },
   {
     k: "retrieve",
     accent: "var(--c-machine)",
@@ -38,22 +44,16 @@ const STAGES = [
     detail: "Refund policy · Router setup · Cancelling",
   },
   {
-    k: "check",
-    accent: "var(--c-machine)",
-    value: "14 of 14 rules pass",
-    detail: "reason asked · no date promised · PII masked",
-  },
-  {
-    k: "replay",
+    k: "route",
     accent: "var(--c-pass)",
-    value: "214 cases · 1 caught",
+    value: "layer 1 · resolved",
     detail: null,
   },
   {
-    k: "learn",
+    k: "measure",
     accent: "var(--c-learn)",
-    value: "1 proposal queued",
-    detail: "waiting for a human yes",
+    value: "$0.04 · 11 min saved",
+    detail: "logged to your cost report",
   },
 ];
 
@@ -173,7 +173,7 @@ function TraceScene() {
 
             <div className="tr-bar mt-2" aria-hidden />
 
-            {stage.k === "replay" ? (
+            {stage.k === "route" ? (
               <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
                 {Array.from({ length: 14 }).map((_, c) => (
                   <span
@@ -181,14 +181,14 @@ function TraceScene() {
                     className="tr-cell"
                     style={{
                       ["--cell" as string]:
-                        c === 9 ? "var(--c-fail)" : "var(--c-pass)",
+                        c === 9 ? "var(--c-human)" : "var(--c-pass)",
                       animationDelay: `${c * 0.05}s`,
                     }}
                     aria-hidden
                   />
                 ))}
                 <span className="ml-1 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-dim">
-                  release blocked
+                  14 rules checked
                 </span>
               </div>
             ) : stage.detail ? (

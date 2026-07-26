@@ -836,30 +836,252 @@ function ProposalFrame() {
   );
 }
 
+/* --- Layer 02: what the copilot handed the agent --------------------------- */
+
+function AssistFrame() {
+  const stats = [
+    { k: "suggestions used", v: "78%" },
+    { k: "avg edit", v: "12%" },
+    { k: "handle time", v: "−41%" },
+  ];
+
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Agent assist"
+      meta={<span className="xv-chip xv-chip-info">live · 6 agents</span>}
+    >
+      <div className="px-4 py-3.5">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="xv-chip">#48219 · Web</span>
+          <span className="xv-chip xv-chip-info">needs account context</span>
+          <span
+            className="ml-auto font-mono text-[10.5px]"
+            style={{ color: "var(--xv-faint)" }}
+          >
+            waiting 00:14
+          </span>
+        </div>
+
+        <p
+          className="mt-3 w-fit max-w-[86%] rounded-xl rounded-bl-sm px-3 py-2 text-[12px] leading-relaxed"
+          style={{
+            background: "var(--xv-cust-bg)",
+            color: "var(--xv-cust-fg)",
+          }}
+        >
+          I was charged twice this month — can you sort it out?
+        </p>
+
+        <div
+          className="mt-3.5 rounded-xl border"
+          style={{ borderColor: "var(--xv-border)" }}
+        >
+          <div
+            className="flex flex-wrap items-center gap-2 border-b px-3 py-2"
+            style={{
+              borderColor: "var(--xv-border)",
+              background: "var(--xv-surface-2)",
+            }}
+          >
+            <span
+              className="font-mono text-[10px] uppercase tracking-[0.14em]"
+              style={{ color: "var(--xv-muted)" }}
+            >
+              suggested reply
+            </span>
+            <span className="xv-chip xv-chip-good">grounded · 2 sources</span>
+            <span className="xv-chip">confidence 0.88</span>
+          </div>
+
+          <p className="px-3 py-2.5 text-[12px] leading-relaxed">
+            I can see two charges on 3 July — one is the monthly renewal and one
+            is a duplicate from a retried payment. I&apos;ve refunded the
+            duplicate; it lands back on your card within 5 working days.
+          </p>
+
+          <div
+            className="flex flex-wrap items-center gap-2 border-t px-3 py-2.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <span
+              className="rounded-full px-3 py-1.5 text-[11.5px] font-medium"
+              style={{
+                background: "var(--xv-mint)",
+                color: "var(--xv-on-mint)",
+              }}
+            >
+              Insert
+            </span>
+            <span
+              className="rounded-full border px-3 py-1.5 text-[11.5px] font-medium"
+              style={{ borderColor: "var(--xv-border-strong)" }}
+            >
+              Edit
+            </span>
+            <span
+              className="rounded-full border px-3 py-1.5 text-[11.5px] font-medium"
+              style={{ borderColor: "var(--xv-border-strong)" }}
+            >
+              Skip
+            </span>
+            <span
+              className="ml-auto font-mono text-[10.5px]"
+              style={{ color: "var(--xv-faint)" }}
+            >
+              next action · refund duplicate charge
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-3.5 grid gap-2 sm:grid-cols-3">
+          {stats.map((stat) => (
+            <div
+              key={stat.k}
+              className="rounded-xl border px-3 py-2.5"
+              style={{
+                borderColor: "var(--xv-border)",
+                background: "var(--xv-surface-2)",
+              }}
+            >
+              <p className="text-[17px] font-semibold tracking-[-0.02em]">
+                {stat.v}
+              </p>
+              <p
+                className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.12em]"
+                style={{ color: "var(--xv-muted)" }}
+              >
+                {stat.k}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Frame>
+  );
+}
+
+/* --- Layer 03: the human queue and how it is performing -------------------- */
+
+function HumanFrame() {
+  const cases = [
+    {
+      id: "48212",
+      reason: "refund · account action",
+      wait: "01:12",
+      who: "Specialist · EU",
+      qa: "4.8",
+    },
+    {
+      id: "48204",
+      reason: "billing dispute",
+      wait: "02:40",
+      who: "Specialist · EU",
+      qa: "4.6",
+    },
+    {
+      id: "48198",
+      reason: "retention · cancelling",
+      wait: "00:38",
+      who: "Specialist · US",
+      qa: "5.0",
+    },
+    {
+      id: "48191",
+      reason: "complaint · escalated",
+      wait: "04:05",
+      who: "Team lead",
+      qa: "4.4",
+    },
+  ];
+
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Human experts"
+      meta={<span className="xv-chip xv-chip-handoff">4 in progress</span>}
+    >
+      <div
+        className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-b px-4 py-3 text-[11.5px]"
+        style={{ borderColor: "var(--xv-border)" }}
+      >
+        <span>
+          <strong className="text-[15px] font-semibold">1m 12s</strong>{" "}
+          <span style={{ color: "var(--xv-muted)" }}>first response</span>
+        </span>
+        <span>
+          <strong className="text-[15px] font-semibold">98%</strong>{" "}
+          <span style={{ color: "var(--xv-muted)" }}>within SLA</span>
+        </span>
+        <span>
+          <strong className="text-[15px] font-semibold">4.7</strong>{" "}
+          <span style={{ color: "var(--xv-muted)" }}>quality review</span>
+        </span>
+        <span
+          className="ml-auto font-mono text-[10.5px]"
+          style={{ color: "var(--xv-faint)" }}
+        >
+          9% of all conversations
+        </span>
+      </div>
+
+      <ul className="flex-1">
+        {cases.map((c) => (
+          <li
+            key={c.id}
+            className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b px-4 py-2.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <span className="font-mono text-[11px]">#{c.id}</span>
+            <span className="text-[12px] font-medium">{c.reason}</span>
+            <span className="xv-chip">{c.who}</span>
+            <span
+              className="ml-auto font-mono text-[10.5px] tabular-nums"
+              style={{ color: "var(--xv-faint)" }}
+            >
+              waiting {c.wait}
+            </span>
+            <span className="xv-chip xv-chip-good">QA {c.qa}</span>
+          </li>
+        ))}
+      </ul>
+
+      <div
+        className="border-t px-4 py-2.5 text-[11px]"
+        style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
+      >
+        Every human case arrives with the AI&apos;s summary, the sources it used
+        and the reason it stopped — so the specialist starts mid-case, not from
+        scratch.
+      </div>
+    </Frame>
+  );
+}
+
 export function Workspace() {
   return (
     <section id="workspace" className="light">
       <div className="mx-auto w-full max-w-[1120px] px-6 py-20 md:px-8 md:py-28">
         <div className="max-w-[54rem]">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-cream-muted">
-            The workspace
+            AI support with human oversight
           </p>
           <h2 className="mt-5 text-[clamp(1.9rem,4vw,3rem)] font-semibold leading-[1.03] tracking-[-0.03em]">
-            This is what your team works in.
+            One console. All three layers.
           </h2>
           <p className="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-cream-muted">
-            Not a chat log and a resolution percentage. A queue where every
-            conversation arrives with its verification result and the sources it
-            used, a release gate that replays your whole history before anything
-            ships, and fixes the system writes for its own failures — waiting for
-            a yes.
+            Automation should reduce work, not create new risks. Every
+            conversation — answered by the bot, completed by an assisted agent or
+            handled by a specialist — lands in the same console with its sources,
+            its cost and its quality review. You see what customers ask, where
+            your costs go, and what the AI is allowed to say.
           </p>
         </div>
 
         <Reveal className="light-dots mt-12 rounded-2xl p-4 md:mt-14 md:p-8">
           <FrameCaption layer="Layer 01" accent="#0d4f78">
-            Every answer verified, every turn reviewable — a human only where one
-            is needed.
+            AI Bot — every automated answer with the sources behind it, ready to
+            review.
           </FrameCaption>
           <div className="hidden md:block">
             <div className="app-scale">
@@ -872,15 +1094,30 @@ export function Workspace() {
             </div>
           </div>
 
-          <div className="mt-8 grid items-stretch gap-8 md:mt-10 md:grid-cols-2 md:gap-6">
+          <div className="mt-8 md:mt-10">
+            <FrameCaption layer="Layer 02" accent="#14724c">
+              Agent Assist — the draft, the context and the next action your
+              agent accepted or edited.
+            </FrameCaption>
+            <AssistFrame />
+          </div>
+
+          <div className="mt-8 md:mt-10">
+            <FrameCaption layer="Layer 03" accent="#7a4405">
+              Human Experts — who is handling what, how fast, and how it scored.
+            </FrameCaption>
+            <HumanFrame />
+          </div>
+
+          <div className="mt-10 grid items-stretch gap-8 md:mt-12 md:grid-cols-2 md:gap-6">
             <div className="flex flex-col">
-              <FrameCaption layer="Layer 02" accent="#14724c">
+              <FrameCaption layer="Control" accent="#14724c">
                 Nothing ships until your own history passes.
               </FrameCaption>
               <RegressionFrame />
             </div>
             <div className="flex flex-col">
-              <FrameCaption layer="Layer 03" accent="#4a2f9c">
+              <FrameCaption layer="Control" accent="#4a2f9c">
                 The system proposes the fix; a person approves it.
               </FrameCaption>
               <ProposalFrame />

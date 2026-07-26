@@ -1,10 +1,10 @@
 import { Logo } from "@/components/Logo";
 
 const links = [
-  { href: "#layers", label: "The layers" },
+  { href: "#layers", label: "The three layers" },
   { href: "#how", label: "How it works" },
-  { href: "#deploy", label: "Deployment" },
-  { href: "#compare", label: "Compare" },
+  { href: "#deploy", label: "Oversight" },
+  { href: "#compare", label: "Cost" },
   { href: "#faq", label: "FAQ" },
 ];
 
@@ -28,7 +28,7 @@ export function Nav() {
           href="#demo"
           className="ml-auto inline-flex h-9 items-center rounded-full bg-white px-4 text-[13px] font-medium text-black transition-colors hover:bg-white/88 lg:ml-0"
         >
-          Book a demo
+          Book a consultation
         </a>
       </nav>
     </header>

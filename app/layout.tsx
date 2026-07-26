@@ -12,9 +12,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "3layers.ai — support AI that proves it works";
+const title = "3Layers.ai | AI and Human Customer Support";
 const description =
-  "A support agent wrapped in three layers of proof: human review of every conversation, AI-to-AI regression testing before every release, and machine learning that turns verified failures into fixes. Deployable inside your own AWS account.";
+  "Reduce customer-support costs with an AI Bot, AI-assisted agents and experienced human support — monitored in one console. Built for small and medium businesses.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://3layers.ai"),
@@ -22,13 +22,12 @@ export const metadata: Metadata = {
   description,
   applicationName: "3layers.ai",
   keywords: [
-    "support AI",
-    "customer support automation",
+    "customer support AI",
+    "AI agent assist",
+    "outsourced customer support",
+    "support cost reduction",
+    "AI bot for support",
     "human in the loop",
-    "regression testing for LLMs",
-    "AI evaluation",
-    "on-premise AI",
-    "AWS Bedrock",
   ],
   openGraph: {
     title,

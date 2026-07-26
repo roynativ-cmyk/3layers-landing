@@ -6,15 +6,15 @@ const columns = [
     links: [
       { href: "#layers", label: "The three layers" },
       { href: "#how", label: "How it works" },
-      { href: "#deploy", label: "Deployment" },
+      { href: "#deploy", label: "Quality & control" },
     ],
   },
   {
     title: "Evaluate",
     links: [
-      { href: "#compare", label: "Comparison" },
+      { href: "#compare", label: "Cost savings" },
       { href: "#faq", label: "FAQ" },
-      { href: "#demo", label: "Book a demo" },
+      { href: "#demo", label: "Book a consultation" },
     ],
   },
 ];
@@ -27,8 +27,8 @@ export function Footer() {
           <div>
             <Logo />
             <p className="mt-5 max-w-[34ch] text-[13px] leading-relaxed text-fg-dim">
-              Support AI with receipts: human review, AI-to-AI regression
-              testing, and learning that has to pass a test before it ships.
+              Smarter support, lower costs, human when it matters: an AI Bot,
+              AI-assisted agents and human specialists in one operation.
             </p>
           </div>
 
@@ -56,7 +56,7 @@ export function Footer() {
         <div className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-dim">
           <span>© {new Date().getFullYear()} 3layers.ai</span>
           <span className="hidden sm:inline">·</span>
-          <span>Deployable in your own AWS account</span>
+          <span>Smarter support · lower costs · human when it matters</span>
           <a
             href="mailto:hello@3layers.ai"
             className="ml-auto transition-colors hover:text-fg"

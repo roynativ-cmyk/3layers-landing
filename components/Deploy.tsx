@@ -3,36 +3,37 @@ import { Reveal } from "@/components/Reveal";
 
 const options = [
   {
-    tag: "Recommended",
-    title: "In your own AWS account",
-    body: "The whole stack deploys into your account as infrastructure-as-code you can read line by line: models on Amazon Bedrock in your region, conversations in your DynamoDB, transcripts in your S3, traffic inside your VPC. Nothing crosses your perimeter — not the transcripts, not the prompts.",
+    tag: "Quality & control",
+    title: "Your business defines the rules",
+    body: "Automation should reduce work, not create new risks. You control which sources the AI may use, when it escalates, which topics it must never touch, and what happens when confidence drops. The platform follows those rules and records every decision.",
     bullets: [
-      "Terraform you own and review",
-      "Your KMS keys, your retention policy",
-      "Your Bedrock region, quotas and model approvals",
-      "SSO for reviewers, audit trail for every verdict",
+      "Approved knowledge sources only",
+      "Custom escalation rules and restricted topics",
+      "Confidence-based handoff to a human",
+      "Conversation monitoring, quality reviews and response fixes",
     ],
   },
   {
-    tag: "Managed",
-    title: "Hosted by us",
-    body: "The same stack in our account when you want to move first and decide later. Bring your own model keys, export everything on demand, and migrate into your own account when procurement is ready — same code, no re-platforming.",
+    tag: "Reporting",
+    title: "See what customers ask and where costs go",
+    body: "One report across all three layers: how much the bot resolved, how much your agents were helped, how much needed a specialist — and what each of those actually cost you. Knowledge gaps come with the conversations that exposed them.",
     bullets: [
-      "Live in days, not a quarter",
-      "Priced per resolved ticket — you pay for outcomes",
-      "Full data export whenever you ask",
-      "Identical review and regression tooling",
+      "AI resolution rate, escalation rate, human-handled cases",
+      "First response, average resolution, agent productivity",
+      "Frequent questions and the knowledge gaps behind them",
+      "Estimated cost savings and satisfaction trends",
     ],
   },
 ];
+
 
 export function Deploy() {
   return (
     <Section id="deploy">
       <SectionHead
-        eyebrow="Deployment"
-        title="Runs where your data already lives."
-        lead="On-premise in the cloud sense of the word: your AWS account, your network boundary, your compliance story. The alternative is available, not assumed."
+        eyebrow="Oversight"
+        title="AI support with human oversight."
+        lead="Deployed in our managed environment or inside your own cloud account — either way the controls, the audit trail and the reporting are yours."
       />
 
       <div className="mt-14 grid gap-4 md:grid-cols-2">

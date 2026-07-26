@@ -3,29 +3,42 @@ import { Reveal } from "@/components/Reveal";
 
 const steps = [
   {
-    k: "Answered, then verified",
-    v: "A message arrives from the web, your app or WhatsApp. The agent retrieves from your knowledge base and drafts a reply in the customer's language — then a second model checks it against those sources and your rules before it is sent, or hands it to a person with the full context.",
+    k: "We learn your business",
+    v: "We review your products, services, support channels, customer questions, policies and the support content you already have.",
   },
   {
-    k: "Proven before release",
-    v: "Every verified turn, escalation and review verdict becomes a test case. Each candidate prompt, model or knowledge change replays the whole set, case by case, and a failed run blocks the deploy.",
+    k: "We build your support knowledge",
+    v: "Your approved documentation, help center, workflows and escalation rules are connected to the platform — nothing else is used.",
   },
   {
-    k: "Improved, then re-proven",
-    v: "Failures that survive review turn into concrete fixes — a knowledge-base edit, a retrieval change, a rule. Each one has to pass the suite and a human before it reaches production.",
+    k: "We launch the AI Bot",
+    v: "Layer 1 starts answering common questions and collecting the details an agent would otherwise have to ask for.",
+  },
+  {
+    k: "We assist your agents",
+    v: "Layer 2 gives your existing team summaries, recommended responses and the next best action, in real time.",
+  },
+  {
+    k: "We provide human coverage",
+    v: "Layer 3 handles conversations that need extra expertise or capacity — including outside your business hours.",
+  },
+  {
+    k: "We continuously improve",
+    v: "We review conversations, identify gaps, improve answers and expand automation as the results come in.",
   },
 ];
+
 
 export function Flow() {
   return (
     <Section id="how">
       <SectionHead
-        eyebrow="How it works"
-        title="How a single answer earns its place."
-        lead="Three movements per conversation. The last two are the ones most support AI skips."
+        eyebrow="How 3Layers.ai works"
+        title="From setup to launch."
+        lead="You do not need to automate your entire support operation on day one. We start with the repetitive conversations that cost the most."
       />
 
-      <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
+      <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
         {steps.map((step, i) => (
           <Reveal
             key={step.k}
@@ -50,9 +63,10 @@ export function Flow() {
       </ol>
 
       <Reveal delay={120}>
-        <p className="mt-8 max-w-[60ch] text-[14px] leading-relaxed text-fg-dim">
-          Then it starts again — against a knowledge base that knows one more
-          thing, and a suite that now contains the case you just fixed.
+        <p className="mt-8 max-w-[64ch] text-[14px] leading-relaxed text-fg-dim">
+          A limited pilot normally launches before a full deployment — one
+          channel, or one high-volume use case, with the savings measured from
+          day one.
         </p>
       </Reveal>
     </Section>

@@ -3,54 +3,45 @@ import { Reveal } from "@/components/Reveal";
 
 const rows = [
   {
-    q: "Can you see why an answer was given?",
-    ours: "Full trace per turn: retrieved sources, tool calls, decision",
-    theirs: "The chat log",
+    q: "A simple, frequent question",
+    ours: "Resolved instantly by the AI Bot, from your approved content",
+    theirs: "An agent types the same answer again",
   },
   {
-    q: "Is an answer checked before it is sent?",
-    ours: "Groundedness and policy check on every turn, by a second model",
-    theirs: "The model's own confidence, after the fact",
+    q: "A question that needs account context",
+    ours: "Prepared by AI — summary, draft, next action — completed by an agent",
+    theirs: "An agent searches, reads, and writes from scratch",
   },
   {
-    q: "When does a human get involved?",
-    ours: "Only when a turn can't be verified — with full context attached",
-    theirs: "On a keyword, a sentiment flag, or a dead end",
+    q: "A complex or sensitive issue",
+    ours: "Handled by an experienced specialist with the full history",
+    theirs: "Escalated cold, and the customer repeats themselves",
   },
   {
-    q: "What happens before a change ships?",
-    ours: "AI-to-AI regression over your real history, per-case diffs, CI gate",
-    theirs: "Ship it and watch the dashboard",
+    q: "Outside business hours",
+    ours: "Layers 1 and 3 keep answering",
+    theirs: "A queue that waits for the morning",
   },
   {
-    q: "What happens to the chats a human had to take over?",
-    ours: "We read what your agent answered, find what the AI was missing, and propose the data or source that closes it",
-    theirs: "They leave the funnel — the AI never learns from them",
+    q: "A busy period or a launch",
+    ours: "Capacity flexes — no new hire per spike",
+    theirs: "Overtime, temps, or slower replies",
   },
   {
-    q: "How does it get better?",
-    ours: "Your verified failures become proposed fixes, gated and approved",
-    theirs: "The vendor's roadmap",
-  },
-  {
-    q: "Where does your data live?",
-    ours: "Your AWS account, your VPC, your retention rules",
-    theirs: "The vendor's cloud",
-  },
-  {
-    q: "How are you charged?",
-    ours: "Per resolved ticket — and every resolution is auditable",
-    theirs: "Per resolution, on the vendor's own definition of resolved",
+    q: "What you can prove afterwards",
+    ours: "Every answer with its sources, cost and quality review",
+    theirs: "A chat log and a monthly gut feeling",
   },
 ];
+
 
 export function Compare() {
   return (
     <Section id="compare">
       <SectionHead
-        eyebrow="Comparison"
-        title="The questions to ask any support AI."
-        lead="If you are evaluating Fin, Zendesk AI or any hosted assistant, these are the answers that decide whether you can defend it in production. Ours are in the middle column."
+        eyebrow="Cost"
+        title="Stop paying human-level costs for bot-level questions."
+        lead="Many teams use expensive human capacity to answer the same basic questions over and over. Each request moves to the most cost-efficient layer that can actually resolve it."
       />
 
       <Reveal delay={80} className="mt-12 overflow-x-auto">
@@ -58,13 +49,13 @@ export function Compare() {
           <thead>
             <tr className="border-b border-line-strong">
               <th className="py-4 pr-6 font-mono text-[10px] font-normal uppercase tracking-[0.2em] text-fg-dim">
-                The question
+                The conversation
               </th>
               <th className="py-4 pr-6 text-[13px] font-medium tracking-[-0.01em]">
                 3layers.ai
               </th>
               <th className="py-4 font-mono text-[10px] font-normal uppercase tracking-[0.2em] text-fg-dim">
-                Typical hosted assistant
+                A human-only support team
               </th>
             </tr>
           </thead>
@@ -88,10 +79,10 @@ export function Compare() {
 
       <Reveal delay={140}>
         <p className="mt-6 max-w-[70ch] text-[12.5px] leading-relaxed text-fg-dim">
-          Hosted assistants are good at deflection and fast to switch on. The
-          right-hand column describes how they are typically packaged, not a
-          claim about any single product — check it yourself against whichever
-          vendor you are comparing.
+          You reduce cost by using human expertise only where human expertise is
+          actually required — not by removing it. Share your volume, staffing
+          cost and operating hours and we will prepare a practical savings
+          estimate.
         </p>
       </Reveal>
     </Section>

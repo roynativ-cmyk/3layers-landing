@@ -12,16 +12,15 @@ export function Cta() {
         <Reveal>
           <Mark className="mx-auto h-8 w-8 text-fg" />
           <h2 className="mx-auto mt-9 max-w-[24ch] text-[clamp(2rem,4.6vw,3.25rem)] font-semibold leading-[1.02] tracking-[-0.035em]">
-            See it answer your own transcripts.
+            Build a smarter support operation.
           </h2>
           <p className="mx-auto mt-6 max-w-[58ch] text-[15px] leading-relaxed text-fg-muted">
-            Send a redacted export of yesterday's conversations. We run them
-            through a demo deployment and walk you through it case by case: what
-            it got right, what it handed to a human, and what it would have
-            learned by tomorrow.
+            Tell us how your support operation works today — volume, channels,
+            team size, hours — and we will show you where automation creates
+            immediate savings, and what the three layers would cost you.
           </p>
           <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-            <ButtonLink href={`mailto:${CONTACT}`}>Book a demo</ButtonLink>
+            <ButtonLink href={`mailto:${CONTACT}`}>Book a free consultation</ButtonLink>
             <ButtonLink href={`mailto:${CONTACT}`} variant="ghost">
               {CONTACT}
             </ButtonLink>

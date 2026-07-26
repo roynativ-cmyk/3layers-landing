@@ -2,11 +2,13 @@ import { ButtonLink } from "@/components/ui";
 import { LoopVisual } from "@/components/LoopVisual";
 import { Reveal } from "@/components/Reveal";
 
-const stats = [
-  { value: "3", label: "layers between the model and your customer" },
-  { value: "0", label: "releases that ship without a regression run" },
-  { value: "100%", label: "of answers verified before they are sent" },
-  { value: "1", label: "AWS account involved — yours" },
+const trust = [
+  "Faster first-response times",
+  "Lower cost per conversation",
+  "24/7 support coverage",
+  "Consistent and accurate answers",
+  "Smooth escalation to human agents",
+  "No large internal support team",
 ];
 
 export function Hero() {
@@ -23,37 +25,38 @@ export function Hero() {
           <div>
             <Reveal>
               <p className="inline-flex items-center gap-2.5 rounded-full border border-line px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-fg-muted">
-                Support AI · three layers of proof
+                Smarter support · lower costs · human when it matters
               </p>
             </Reveal>
 
             <Reveal delay={60}>
-              <h1 className="mt-7 max-w-[17ch] text-[clamp(2.25rem,4.6vw,3.6rem)] font-semibold leading-[1] tracking-[-0.04em] text-balance">
-                Support AI that proves it works.
+              <h1 className="mt-7 max-w-[24ch] text-[clamp(2.25rem,4.4vw,3.4rem)] font-semibold leading-[1.02] tracking-[-0.035em] text-balance">
+                Reduce support costs without reducing service quality
               </h1>
             </Reveal>
 
             <Reveal delay={120}>
-              <p className="mt-7 max-w-[56ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
-                It answers from your own knowledge base, verifies every answer
-                against your sources and your rules, and regression-tests every
-                change before it ships. A human agent is pulled in only when a
-                conversation genuinely needs one.
+              <p className="mt-7 max-w-[58ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
+                3Layers.ai gives your business a complete customer-support
+                operation powered by three intelligent layers: AI automation,
+                AI-assisted agents, and experienced human support — with one
+                console monitoring all three.
               </p>
             </Reveal>
 
             <Reveal delay={180}>
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <ButtonLink href="#demo">Book a demo</ButtonLink>
-                <ButtonLink href="#layers" variant="ghost">
-                  See the three layers
+                <ButtonLink href="#demo">Book a free consultation</ButtonLink>
+                <ButtonLink href="#how" variant="ghost">
+                  See how it works
                 </ButtonLink>
               </div>
             </Reveal>
 
             <Reveal delay={240}>
-              <p className="mt-8 font-mono text-[10.5px] uppercase leading-relaxed tracking-[0.14em] text-fg-dim">
-                Your AWS account · Your VPC · Any Bedrock or Anthropic model
+              <p className="mt-8 max-w-[52ch] text-[12.5px] leading-relaxed text-fg-dim">
+                Built for small and medium businesses that need reliable support
+                without enterprise-level overhead.
               </p>
             </Reveal>
           </div>
@@ -64,18 +67,26 @@ export function Hero() {
         </div>
 
         <Reveal delay={80}>
-          <dl className="mt-20 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-line pt-10 md:mt-24 md:grid-cols-4">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="text-[clamp(2rem,3.4vw,2.75rem)] font-semibold leading-none tracking-[-0.04em]">
-                  {stat.value}
-                </dt>
-                <dd className="mt-3 max-w-[24ch] text-[12.5px] leading-relaxed text-fg-dim">
-                  {stat.label}
-                </dd>
-              </div>
-            ))}
-          </dl>
+          <div className="mt-20 border-t border-line pt-10 md:mt-24">
+            <h2 className="text-[clamp(1.35rem,2.4vw,1.75rem)] font-semibold tracking-[-0.025em]">
+              One support platform. Three powerful layers.
+            </h2>
+            <ul className="mt-7 grid gap-x-10 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-3">
+              {trust.map((point) => (
+                <li
+                  key={point}
+                  className="flex items-start gap-3 text-[13.5px] leading-relaxed text-fg-muted"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[7px] h-[5px] w-[5px] shrink-0 rounded-full"
+                    style={{ background: "var(--c-pass)" }}
+                  />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
         </Reveal>
       </div>
     </section>

@@ -3,26 +3,27 @@ import { Reveal } from "@/components/Reveal";
 
 const gaps = [
   {
-    title: "Silent wrong answers",
-    body: "A confident, fluent, wrong reply looks exactly like a good one in a deflection dashboard. The customer finds out first.",
+    title: "Repetitive questions eat the team",
+    body: "The same handful of questions arrives every day, and experienced agents spend their time on requests that never needed a person.",
   },
   {
-    title: "Blind changes",
-    body: "Prompt, model and knowledge edits ship on hope. Nothing tells you which behaviours you just broke on the way to fixing one.",
+    title: "Every peak costs a hire",
+    body: "Recruitment, training and extra shifts arrive with every busy period — and response times still slip when volume spikes.",
   },
   {
-    title: "Borrowed intelligence",
-    body: "Your conversations improve someone else's product. The judgment your support team builds stays locked in a vendor's console.",
+    title: "Quality drifts as you grow",
+    body: "Answers differ between agents, coverage stops outside business hours, and nobody can say which conversations are handled well.",
   },
 ];
+
 
 export function Problem() {
   return (
     <Section>
       <SectionHead
-        eyebrow="The gap"
-        title="Deflection rates are easy to claim. Correctness is hard to prove."
-        lead="Most support AI is a hosted black box. You get a resolution percentage and a chat log — not the reason an answer was given, not a way to test a change before customers meet it, and not the data to fix what went wrong."
+        eyebrow="The problem"
+        title="Customer support becomes expensive before you notice it."
+        lead="As your business grows, customer questions grow with it. You hire more agents, train more people, add more shifts and spend more time managing repetitive requests — while customers expect immediate, accurate and personal answers. Traditional support forces a choice between high costs and poor service."
       />
 
       <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
