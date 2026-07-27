@@ -621,6 +621,34 @@ body {
   }
 }
 
+/* Layers 02 and 03 are single-pane screens, so they keep the same markup at
+   every width — but at phone width their rows have to wrap. Below md they get
+   the same treatment as the other frames: zoomed out to buy design width, so a
+   case row stays one line. From md up the zoom is off and they draw at 1:1. */
+.app-zoom-sm {
+  width: 100%;
+}
+
+/* ~525px of design width is what a case row needs to stay on one line, so each
+   step picks the factor that buys it back from the width actually available. */
+@media (max-width: 389px) {
+  .app-zoom-sm {
+    zoom: 0.62;
+  }
+}
+
+@media (min-width: 390px) and (max-width: 479px) {
+  .app-zoom-sm {
+    zoom: 0.68;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+  .app-zoom-sm {
+    zoom: 0.78;
+  }
+}
+
 /* the phone frame: the queue is collapsed away, so a smaller factor is enough
    and the type stays as large as it can be */
 .app-scale-sm {

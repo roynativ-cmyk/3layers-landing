@@ -934,7 +934,7 @@ function AssistFrame() {
           </div>
         </div>
 
-        <div className="mt-3.5 grid gap-2 sm:grid-cols-3">
+        <div className="mt-3.5 grid grid-cols-3 gap-2">
           {stats.map((stat) => (
             <div
               key={stat.k}
@@ -1117,7 +1117,9 @@ export function Workspace() {
           </p>
         </div>
 
-        <Reveal className="light-dots mt-12 rounded-2xl p-4 md:mt-14 md:p-8">
+        {/* On a phone the frames need every pixel, so the dotted panel bleeds
+            past the section padding and keeps only a hairline of its own. */}
+        <Reveal className="light-dots -mx-4 mt-12 rounded-2xl p-2 sm:mx-0 sm:p-4 md:mt-14 md:p-8">
           <FrameCaption layer="Layer 01" accent="#0d4f78">
             AI Bot — every automated answer with the sources behind it, ready to
             review.
@@ -1138,7 +1140,9 @@ export function Workspace() {
               Agent Assist — the draft, the context and the next action your
               agent accepted or edited.
             </FrameCaption>
-            <AssistFrame />
+            <div className="app-zoom-sm">
+              <AssistFrame />
+            </div>
           </div>
 
           <div className="mt-8 md:mt-10">
@@ -1146,7 +1150,9 @@ export function Workspace() {
               Your Human Experts — who on your team is handling what, how fast,
               and how it scored.
             </FrameCaption>
-            <HumanFrame />
+            <div className="app-zoom-sm">
+              <HumanFrame />
+            </div>
           </div>
 
         </Reveal>
