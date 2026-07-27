@@ -17,7 +17,7 @@ const options = [
   {
     tag: "Reporting",
     title: "See what customers ask and where costs go",
-    body: "One report across all three layers: how much the bot resolved, how much your agents were helped, how much needed a specialist — and what each of those actually cost you. Knowledge gaps come with the conversations that exposed them.",
+    body: "One report across all three layers: how much the bot resolved, how much your agents were helped, how much had to reach your specialists — and what each of those actually cost you. Knowledge gaps come with the conversations that exposed them.",
     bullets: [
       "AI resolution rate, escalation rate, human-handled cases",
       "First response, average resolution, agent productivity",

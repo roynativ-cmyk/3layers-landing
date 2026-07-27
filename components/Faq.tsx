@@ -4,15 +4,15 @@ import { Reveal } from "@/components/Reveal";
 const faqs = [
   {
     q: "What is 3Layers.ai?",
-    a: "A customer-support platform that combines an AI Bot for repetitive questions, AI assistance for your support agents, and human support specialists for the conversations that need judgment — all monitored in one console.",
+    a: "A customer-support platform that combines an AI Bot for repetitive questions, AI assistance for your support agents, and intelligent escalation to your own specialists for the conversations that need judgment — all monitored in one console.",
   },
   {
-    q: "Do I need an existing support team?",
-    a: "No. We work with businesses that already have a support team, and we also provide the human layer ourselves as a managed service. You can start with one layer and add the others later.",
+    q: "Who are the human experts in layer 3 — yours or mine?",
+    a: "Yours. We do not supply support staff. Layer 3 is your existing team, and what we provide is the intelligence around it: the AI recognises when a conversation genuinely needs a person, escalates it under your rules, and hands your agent the full history, the customer context and a recommended response. Layer 2 then makes those same agents faster. You can start with layer 1 alone and switch on the others as your operation grows.",
   },
   {
     q: "Will the AI replace my support team?",
-    a: "No. The platform removes repetitive work and increases your team's capacity. Complex, sensitive and high-value conversations stay with people — that is the third layer, not an afterthought.",
+    a: "No. The platform removes repetitive work and increases your team's capacity. Complex, sensitive and high-value conversations stay with your people — that is the third layer, not an afterthought.",
   },
   {
     q: "How does the AI learn about my business?",
@@ -20,7 +20,7 @@ const faqs = [
   },
   {
     q: "What happens when the AI does not know the answer?",
-    a: "It escalates — based on confidence, topic, urgency and your own business rules — and the agent receives a summary, the customer context, the relevant policy and a recommended response. Customers can also ask for a human at any point.",
+    a: "It escalates to your team — based on confidence, topic, urgency and your own business rules — and your agent receives a summary, the customer context, the relevant policy and a recommended response. Customers can also ask for a human at any point.",
   },
   {
     q: "Can the AI access private customer information?",

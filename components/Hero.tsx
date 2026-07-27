@@ -7,7 +7,7 @@ const trust = [
   "Lower cost per conversation",
   "24/7 support coverage",
   "Consistent and accurate answers",
-  "Smooth escalation to human agents",
+  "Smooth escalation to your own agents",
   "No large internal support team",
 ];
 
@@ -39,7 +39,8 @@ export function Hero() {
               <p className="mt-7 max-w-[58ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
                 3Layers.ai gives your business a complete customer-support
                 operation powered by three intelligent layers: AI automation,
-                AI-assisted agents, and experienced human support.
+                AI-assisted agents, and clean escalation to your own experts
+                whenever a conversation truly needs a person.
               </p>
               <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-fg-muted">
                 Handle more conversations, respond faster, and keep your

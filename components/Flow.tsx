@@ -19,8 +19,8 @@ const steps = [
     v: "Layer 2 gives your existing team summaries, recommended responses and the next best action, in real time.",
   },
   {
-    k: "We provide human coverage",
-    v: "Layer 3 handles conversations that need extra expertise or capacity — including outside your business hours.",
+    k: "We tune the handoff to your team",
+    v: "Layer 3 is your own agents. Together we define when a conversation must reach them — and they receive it with the full history and a prepared summary.",
   },
   {
     k: "We continuously improve",

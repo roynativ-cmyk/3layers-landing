@@ -14,17 +14,17 @@ const rows = [
   },
   {
     q: "A complex or sensitive issue",
-    ours: "Handled by an experienced specialist with the full history",
+    ours: "Escalated to your specialist with the full history and the reason it stopped",
     theirs: "Escalated cold, and the customer repeats themselves",
   },
   {
     q: "Outside business hours",
-    ours: "Layers 1 and 3 keep answering",
+    ours: "Layer 1 keeps answering, and anything that needs a person is ready for your team",
     theirs: "A queue that waits for the morning",
   },
   {
     q: "A busy period or a launch",
-    ours: "Capacity flexes — no new hire per spike",
+    ours: "Automation absorbs the spike — your team keeps only what needs them",
     theirs: "Overtime, temps, or slower replies",
   },
   {

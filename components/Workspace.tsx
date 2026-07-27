@@ -969,28 +969,28 @@ function HumanFrame() {
       id: "48212",
       reason: "refund · account action",
       wait: "01:12",
-      who: "Specialist · EU",
+      who: "Your team · Billing",
       qa: "4.8",
     },
     {
       id: "48204",
       reason: "billing dispute",
       wait: "02:40",
-      who: "Specialist · EU",
+      who: "Your team · Billing",
       qa: "4.6",
     },
     {
       id: "48198",
       reason: "retention · cancelling",
       wait: "00:38",
-      who: "Specialist · US",
+      who: "Your team · Retention",
       qa: "5.0",
     },
     {
       id: "48191",
       reason: "complaint · escalated",
       wait: "04:05",
-      who: "Team lead",
+      who: "Your team lead",
       qa: "4.4",
     },
   ];
@@ -998,7 +998,7 @@ function HumanFrame() {
   return (
     <Frame
       app="3layers.ai"
-      title="Human experts"
+      title="Your human experts"
       meta={<span className="xv-chip xv-chip-handoff">4 in progress</span>}
     >
       <div
@@ -1050,9 +1050,9 @@ function HumanFrame() {
         className="border-t px-4 py-2.5 text-[11px]"
         style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
       >
-        Every human case arrives with the AI&apos;s summary, the sources it used
-        and the reason it stopped — so the specialist starts mid-case, not from
-        scratch.
+        Every escalated case arrives with the AI&apos;s summary, the sources it
+        used and the reason it stopped — so your specialist starts mid-case, not
+        from scratch.
       </div>
     </Frame>
   );
@@ -1111,7 +1111,7 @@ export function Workspace() {
           <p className="mt-5 max-w-[62ch] text-[15px] leading-relaxed text-cream-muted">
             Automation should reduce work, not create new risks. Every
             conversation — answered by the bot, completed by an assisted agent or
-            handled by a specialist — lands in the same console with its sources,
+            escalated to your specialists — lands in the same console with its sources,
             its cost and its quality review. You see what customers ask, where
             your costs go, and what the AI is allowed to say.
           </p>
@@ -1143,7 +1143,8 @@ export function Workspace() {
 
           <div className="mt-8 md:mt-10">
             <FrameCaption layer="Layer 03" accent="#7a4405">
-              Human Experts — who is handling what, how fast, and how it scored.
+              Your Human Experts — who on your team is handling what, how fast,
+              and how it scored.
             </FrameCaption>
             <HumanFrame />
           </div>

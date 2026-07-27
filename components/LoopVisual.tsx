@@ -25,8 +25,8 @@ const NOTES = [
   {
     n: "03",
     accent: "var(--c-human)",
-    label: "Human Expert",
-    text: "steps in for judgment — with the full history attached",
+    label: "Your Expert",
+    text: "escalated to your agent for judgment — full history attached",
   },
 ];
 

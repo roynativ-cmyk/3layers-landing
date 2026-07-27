@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 const title = "3Layers.ai | AI and Human Customer Support";
 const description =
-  "Reduce customer-support costs with an AI Bot, AI-assisted agents and experienced human support — monitored in one console. Built for small and medium businesses.";
+  "Reduce customer-support costs with an AI Bot, AI-assisted agents and intelligent escalation to your own human experts — monitored in one console. Built for small and medium businesses.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://3layers.ai"),
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   keywords: [
     "customer support AI",
     "AI agent assist",
-    "outsourced customer support",
+    "AI escalation to human agents",
     "support cost reduction",
     "AI bot for support",
     "human in the loop",

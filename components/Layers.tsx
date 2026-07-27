@@ -31,9 +31,9 @@ const layers = [
   {
     n: "03",
     accent: "var(--c-human)",
-    name: "Human Experts: expertise when it matters",
-    claim: "Customers still get real human care whenever it is genuinely needed.",
-    body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. Human specialists step in when a case is too complex, sensitive or valuable for automation alone — and they arrive with the full history, not a cold ticket.",
+    name: "Your Human Experts: escalation only when it is real",
+    claim: "The AI knows when to stop — and hands the conversation to your own team.",
+    body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. The platform recognises those cases — by confidence, topic, sentiment and your own rules — and escalates them to your support team, who arrive with the full history and a prepared summary instead of a cold ticket. The people in this layer are yours; what we provide is the intelligence that decides when they are genuinely needed.",
     bullets: [
       "Complaints, escalations and retention conversations",
       "Billing and account disputes, sensitive situations",
@@ -103,9 +103,10 @@ export function Layers() {
       <Reveal delay={120}>
         <p className="mt-10 max-w-[70ch] text-[14px] leading-relaxed text-fg-muted">
           A simple question is resolved instantly by the bot. A question that
-          needs account context is prepared by AI and completed by an agent. A
-          complex or sensitive issue is handled by an experienced specialist. You
-          pay human-level cost only where human expertise is actually required.
+          needs account context is prepared by AI and completed by one of your
+          agents. A complex or sensitive issue is escalated to your specialists,
+          in context. You pay human-level cost only where your human expertise is
+          actually required.
         </p>
       </Reveal>
     </Section>
