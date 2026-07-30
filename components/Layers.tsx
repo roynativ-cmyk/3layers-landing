@@ -249,6 +249,28 @@ export function Layers() {
                   <Bullets items={layer.bullets.slice(0, 2)} dot={layer.accent} />
                   <Bullets items={layer.bullets.slice(2)} dot={layer.accent} />
                 </div>
+
+                {/* below lg the visual joins the flow after the text — the
+                    photo tucked into the card's bottom-right corner, the
+                    illustrations as a small block */}
+                {layer.visual === "photo" ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={`${BASE}/photos/specialist.jpg`}
+                    alt="A 3Layers support specialist"
+                    className="pointer-events-none -mb-7 -mr-7 ml-auto block h-[220px] w-[200px] object-cover object-top md:-mb-10 md:-mr-10 lg:hidden"
+                    style={{
+                      WebkitMaskImage:
+                        "radial-gradient(130% 120% at 92% 74%, black 40%, transparent 70%)",
+                      maskImage:
+                        "radial-gradient(130% 120% at 92% 74%, black 40%, transparent 70%)",
+                    }}
+                  />
+                ) : (
+                  <div aria-hidden className="mt-7 max-w-[300px] lg:hidden">
+                    {layer.visual === "bot" ? <BotIllustration /> : <JointIllustration />}
+                  </div>
+                )}
               </div>
             </div>
           </Reveal>
