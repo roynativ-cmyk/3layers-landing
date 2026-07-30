@@ -62,7 +62,10 @@ export function Compare() {
           </thead>
           <tbody>
             {rows.map((row, i) => (
-              <tr key={row.q} className="border-b border-line align-top">
+              <tr
+                key={row.q}
+                className="border-b border-line align-top transition-colors duration-200 hover:bg-fg/[0.03]"
+              >
                 <td className="py-5 pr-6 text-[13.5px] font-medium leading-relaxed text-fg">
                   {row.q}
                 </td>

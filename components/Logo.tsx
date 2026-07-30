@@ -50,12 +50,17 @@ export function Logo({ className = "" }: { className?: string }) {
   return (
     <a
       href="#top"
-      className={`inline-flex items-center gap-2.5 ${className}`}
+      className={`group inline-flex items-center gap-2.5 ${className}`}
       aria-label="3layers.ai — home"
     >
-      <Mark className="h-[24px] w-[24px] text-fg" />
+      <span className="inline-flex transition-transform duration-300 ease-out group-hover:-rotate-6 group-hover:scale-110">
+        <Mark className="h-[24px] w-[24px] text-fg" />
+      </span>
       <span className="text-[17px] font-semibold tracking-[-0.02em] leading-none">
-        3layers<span className="text-fg-dim">.ai</span>
+        3layers
+        <span className="text-fg-dim transition-colors duration-300 group-hover:text-fg-muted">
+          .ai
+        </span>
       </span>
     </a>
   );

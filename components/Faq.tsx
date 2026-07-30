@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Section, SectionHead } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 
@@ -41,6 +44,38 @@ const faqs = [
 ];
 
 
+function FaqItem({ q, a }: { q: string; a: string }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="border-b border-line">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="group flex w-full items-start gap-6 py-6 text-left text-[15px] font-medium tracking-[-0.01em] transition-colors hover:text-fg-muted"
+      >
+        <span className="flex-1">{q}</span>
+        <span
+          aria-hidden
+          className="mt-1 shrink-0 text-fg-dim transition-transform duration-300 group-aria-expanded:rotate-45"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1.2" />
+          </svg>
+        </span>
+      </button>
+      <div className="faq-body" data-state={open ? "open" : "closed"}>
+        <div className="overflow-hidden">
+          <p className="max-w-[74ch] pb-7 pr-10 text-[13.5px] leading-relaxed text-fg-muted">
+            {a}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Faq() {
   return (
     <Section id="faq">
@@ -49,26 +84,7 @@ export function Faq() {
       <div className="mt-12 border-t border-line">
         {faqs.map((faq, i) => (
           <Reveal key={faq.q} delay={i * 50}>
-            <details className="group border-b border-line">
-              <summary className="flex cursor-pointer list-none items-start gap-6 py-6 text-[15px] font-medium tracking-[-0.01em] transition-colors hover:text-fg-muted">
-                <span className="flex-1">{faq.q}</span>
-                <span
-                  aria-hidden
-                  className="mt-1 shrink-0 text-fg-dim transition-transform duration-300 group-open:rotate-45"
-                >
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <path
-                      d="M7 1v12M1 7h12"
-                      stroke="currentColor"
-                      strokeWidth="1.2"
-                    />
-                  </svg>
-                </span>
-              </summary>
-              <p className="max-w-[74ch] pb-7 pr-10 text-[13.5px] leading-relaxed text-fg-muted">
-                {faq.a}
-              </p>
-            </details>
+            <FaqItem q={faq.q} a={faq.a} />
           </Reveal>
         ))}
       </div>

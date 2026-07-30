@@ -8,7 +8,7 @@ const layers = [
     soft: "var(--c-machine-soft)",
     label: "AI Bot",
     name: "Instant answers at the lowest cost",
-    claim: "Resolve high-volume, low-complexity requests without using agent time.",
+    claim: "100% AI, start to finish — resolved without an agent ever touching it.",
     body: "The AI Bot handles repetitive and common customer requests instantly, 24 hours a day. It learns from your website, help center, product information, internal procedures and approved support content — and it answers only from what you approved.",
     bullets: [
       "Answers frequent questions and guides common processes",
@@ -23,7 +23,7 @@ const layers = [
     soft: "var(--c-pass-soft)",
     label: "AI Agent Assist",
     name: "Make every agent faster",
-    claim: "Your agents stop searching, typing and repeating the same work.",
+    claim: "AI drafts the answer in real time; your agent reviews, edits and sends it.",
     body: "When a human agent is needed, the AI copilot works alongside your team. It understands the conversation, searches your approved knowledge sources and recommends an accurate response in real time — with the summary and the next best action already prepared.",
     bullets: [
       "Suggests complete responses and summarises long threads",
@@ -38,7 +38,7 @@ const layers = [
     soft: "var(--c-human-soft)",
     label: "Your Human Experts",
     name: "Escalation only when it is real",
-    claim: "The AI knows when to stop — and hands the conversation to your own team.",
+    claim: "A person from your team — brought in only when the case genuinely needs one.",
     body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. The platform recognises those cases — by confidence, topic, sentiment and your own rules — and escalates them to your support team, who arrive with the full history and a prepared summary instead of a cold ticket. The people in this layer are yours; what we provide is the intelligence that decides when they are genuinely needed.",
     bullets: [
       "Plan changes, upgrades and renewals",
@@ -55,7 +55,7 @@ export function Layers() {
       <SectionHead
         eyebrow="The right support at the right layer"
         title="Three layers, one operation."
-        lead="Every customer request does not need the same level of attention. Each conversation is routed to the most efficient layer — and every layer is monitored in the same console, so you can see what it cost and whether it was right."
+        lead="A hybrid model, not a single bot: layer one resolves the request entirely on its own, layer two pairs AI with your agent, and layer three brings in a person only when the case genuinely needs one. Every conversation goes to the layer that fits it — monitored in the same console, so you can see what it cost and whether it was right."
       />
 
       <div className="mt-14 space-y-4">

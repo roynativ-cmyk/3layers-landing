@@ -942,7 +942,7 @@ export function DashboardFrame() {
           >
             <div className="min-w-0">
               <p className="text-[15px] font-semibold tracking-[-0.015em]">
-                Good morning, Dana
+                Good morning, Mike
               </p>
               <p
                 className="mt-0.5 text-[11.5px]"

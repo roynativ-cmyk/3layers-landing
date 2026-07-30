@@ -54,6 +54,11 @@
 
   /* one shared beat for every animation on the page */
   --cycle: 24s; /* two hero scenes share it: chat, then behind the scenes */
+
+  /* the site's two hand gestures: a plain decelerate for anything that fades
+     or grows, a restrained overshoot for anything a person just touched */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
@@ -124,7 +129,9 @@ body {
 }
 
 /* Two soft washes from the top — the layer hues, at the edge of visible. This
-   is where most of the page's warmth comes from, so it is tinted, not neutral. */
+   is where most of the page's warmth comes from, so it is tinted, not neutral.
+   A very slow drift keeps the hero from sitting dead still; the parent section
+   is overflow-hidden, so the small excursion never shows a hard edge. */
 .glow {
   background:
     radial-gradient(
@@ -137,6 +144,16 @@ body {
       color-mix(in srgb, var(--c-pass) 11%, transparent) 0%,
       transparent 64%
     );
+  animation: glowDrift 26s var(--ease-out) infinite alternate;
+}
+
+@keyframes glowDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-1.4%, 1%, 0) scale(1.02);
+  }
 }
 
 /* accent wash for a card, driven by its own --accent */
@@ -153,12 +170,73 @@ body {
   );
 }
 
+/* Cards lift toward the pointer rather than just sitting there. The higher-
+   specificity pair guards against Reveal's own `transform: none` on `.is-in`
+   (equal specificity would otherwise leave the winner to source order). */
 .panel {
   background: linear-gradient(180deg, #ffffff, var(--panel-2));
   border: 1px solid var(--line);
   box-shadow:
     0 1px 2px rgba(13, 42, 60, 0.04),
     0 10px 30px -18px rgba(13, 42, 60, 0.18);
+  transition:
+    transform 0.4s var(--ease-spring),
+    border-color 0.35s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+
+.panel:hover,
+.reveal.is-in.panel:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent, var(--fg)) 24%, var(--line));
+  box-shadow:
+    0 1px 2px rgba(13, 42, 60, 0.05),
+    0 28px 52px -26px color-mix(in srgb, var(--accent, var(--fg)) 32%, transparent);
+}
+
+/* --- interactive primitives ------------------------------------------------ */
+
+/* button feedback: a small lift on hover, a settle on press */
+.btn-motion {
+  transition:
+    transform 0.2s var(--ease-spring),
+    background-color 0.2s var(--ease-out),
+    border-color 0.2s var(--ease-out),
+    box-shadow 0.3s var(--ease-out);
+}
+
+.btn-motion:hover {
+  transform: translateY(-2px);
+}
+
+.btn-motion:active {
+  transform: translateY(0) scale(0.97);
+}
+
+/* nav/footer links: an underline that grows in from the left on hover */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transition: right 0.3s var(--ease-out);
+}
+
+.nav-link:hover::after {
+  right: 0;
+}
+
+/* anchored sections clear the sticky nav with a little air to spare */
+section[id] {
+  scroll-margin-top: 5rem;
 }
 
 /* --- scroll reveal -------------------------------------------------------- */
@@ -698,22 +776,21 @@ body {
 }
 
 /* --- trusted-by marks ----------------------------------------------------- */
-/* The brand kits ship these as mid-grey monochrome wordmarks, so they need no
-   filtering to sit on black — only a lift on hover. */
-
 /* The kits ship these as mid-grey (#9b9b9c) wordmarks, so on paper they need
    darkening rather than brightening to carry weight. */
 .brand-img {
   opacity: 0.72;
   filter: brightness(0.72);
   transition:
-    opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.35s var(--ease-out),
+    filter 0.35s var(--ease-out),
+    transform 0.35s var(--ease-spring);
 }
 
 .brand:hover .brand-img {
   opacity: 1;
   filter: brightness(0.42);
+  transform: scale(1.05);
 }
 
 /* the logo wall moves: one continuous track, three copies, paused on hover */
@@ -942,6 +1019,20 @@ body {
   background-repeat: repeat-x;
 }
 
+/* --- FAQ accordion ---------------------------------------------------------
+   Grid-rows trick: the row track animates 0fr → 1fr, and the child's own
+   overflow:hidden clips it mid-transition. No JS height measurement needed. */
+
+.faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.4s var(--ease-out);
+}
+
+.faq-body[data-state="open"] {
+  grid-template-rows: 1fr;
+}
+
 /* --- accessibility -------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -953,6 +1044,13 @@ body {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  /* the one continuous, automatic motion on the page — everything else here
+     is a direct response to a click or a hover, which reduced-motion users
+     still expect to see */
+  .glow {
+    animation: none;
   }
 
   .scene-a,

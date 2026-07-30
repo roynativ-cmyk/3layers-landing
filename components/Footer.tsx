@@ -43,7 +43,7 @@ export function Footer() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="text-[13px] text-fg-muted transition-colors hover:text-fg"
+                      className="nav-link text-[13px] text-fg-muted transition-colors hover:text-fg"
                     >
                       {link.label}
                     </a>
@@ -60,7 +60,7 @@ export function Footer() {
           <span>Smarter support · lower costs · human when it matters</span>
           <a
             href="mailto:hello@3layers.ai"
-            className="w-full transition-colors hover:text-fg sm:ml-auto sm:w-auto"
+            className="nav-link w-full transition-colors hover:text-fg sm:ml-auto sm:w-auto"
           >
             hello@3layers.ai
           </a>

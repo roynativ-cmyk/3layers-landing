@@ -90,10 +90,10 @@ export function ButtonLink({
   variant?: "primary" | "ghost";
 }) {
   const base =
-    "inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium transition-colors duration-200";
+    "btn-motion inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium";
   const styles =
     variant === "primary"
-      ? "bg-fg text-ink hover:bg-fg/85"
+      ? "bg-fg text-ink hover:bg-fg/85 hover:shadow-[0_14px_32px_-14px_rgba(15,26,34,0.5)]"
       : "border border-line bg-panel text-fg hover:border-line-strong hover:bg-fg/[0.04]";
 
   return (
