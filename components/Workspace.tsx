@@ -121,14 +121,14 @@ const QUEUE: Row[] = [
     t: "09:39",
     ch: "Web",
     platform: "web",
-    snippet: "Charged twice this month",
+    snippet: "Can I add my partner to my plan?",
     state: "verified",
   },
   {
     t: "09:36",
     ch: "iOS",
     platform: "ios",
-    snippet: "I want to cancel and get a refund",
+    snippet: "Can we move to the family plan?",
     state: "human",
     active: true,
   },
@@ -143,7 +143,7 @@ const QUEUE: Row[] = [
     t: "09:28",
     ch: "Web",
     platform: "web",
-    snippet: "App won't connect on 5 GHz",
+    snippet: "Setting it up on a new laptop",
     state: "verified",
   },
   {
@@ -466,7 +466,7 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
                 color: "var(--xv-cust-fg)",
               }}
             >
-              I want to cancel and get my money back.
+              We&apos;re five people now — can we move to the family plan?
             </p>
             <p
               className="ml-auto w-fit max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
@@ -476,9 +476,8 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
                 borderColor: "var(--xv-ai-border)",
               }}
             >
-              Of course — may I ask what&apos;s prompting the cancellation? If
-              it&apos;s a connection problem there is usually a quick fix, and
-              your refund window stays open either way.
+              Yes — the family plan covers six people, each with their own login,
+              and everything you have set up stays exactly as it is.
             </p>
             {compact ? (
               <p
@@ -496,7 +495,7 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
                     color: "var(--xv-cust-fg)",
                   }}
                 >
-                  It keeps dropping on my router.
+                  Do we lose what we have already paid for?
                 </p>
                 <p
                   className="ml-auto w-fit max-w-[82%] rounded-xl rounded-br-sm border px-3 py-2 text-[12px] leading-relaxed"
@@ -506,10 +505,10 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
                     borderColor: "var(--xv-ai-border)",
                   }}
                 >
-                  That is usually the firmware update: the app has to be
-                  re-paired from Settings → Devices → Re-pair. If it drops again
-                  after that, I&apos;ll bring in a specialist who can take the
-                  refund from here — your window stays open until then.
+                  No — your current plan runs to 12 August and the unused part is
+                  credited against the family plan, so you only pay the
+                  difference. Changing a plan is an account action, so I&apos;ll
+                  bring in a specialist to make the switch with you.
                 </p>
               </>
             )}
@@ -534,8 +533,8 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
                   <span className="xv-chip xv-chip-handoff">⚑ handoff</span>
                 </div>
                 <p className="mt-2 text-[11px]" style={{ color: "var(--xv-muted)" }}>
-                  every claim traced to a source · reason asked before refund ·
-                  account action needs a person
+                  every claim traced to a source · credit confirmed before the
+                  quote · account change needs a person
                 </p>
               </div>
 
@@ -553,9 +552,9 @@ function ConversationPane({ compact = false }: { compact?: boolean }) {
                   3 sources · 2 read in full
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
-                  <SourcePill title="Refund policy · 30-day" cited={2} />
-                  <SourcePill title="Router setup · drops" cited={1} />
-                  <SourcePill title="Cancelling a subscription" read={false} />
+                  <SourcePill title="Family plan · six seats" cited={2} />
+                  <SourcePill title="Plan changes · proration" cited={1} />
+                  <SourcePill title="Device limits" read={false} />
                 </div>
               </div>
 
@@ -661,13 +660,13 @@ function ReviewFrameMobile() {
 function RegressionFrame() {
   const cases = [
     {
-      name: "cancellation · reason not asked",
+      name: "plan change · credit not explained",
       state: "fail",
-      note: "candidate jumps straight to the refund flow",
+      note: "candidate quotes the full price and skips the proration",
     },
-    { name: "refund outside the 30-day window", state: "pass", note: "" },
+    { name: "more seats than the plan allows", state: "pass", note: "" },
     { name: "streaming location not supported", state: "pass", note: "" },
-    { name: "hostile tone · asks for a human", state: "pass", note: "" },
+    { name: "customer asks for a person by name", state: "pass", note: "" },
   ];
 
   return (
@@ -1061,8 +1060,8 @@ export function RulesFrame() {
       tone: "handoff",
     },
     {
-      when: "topic · cancellation",
-      then: "ask the reason first, then your team",
+      when: "topic · plan change",
+      then: "confirm the credit, then your team",
       chip: "handoff",
       tone: "handoff",
     },
@@ -1079,13 +1078,13 @@ export function RulesFrame() {
       tone: "handoff",
     },
     {
-      when: "sentiment · hostile",
+      when: "sentiment · frustrated",
       then: "route to your team lead",
       chip: "priority",
       tone: "warn",
     },
     {
-      when: "account action · refund",
+      when: "account action · plan change",
       then: "needs a human approval",
       chip: "approval",
       tone: "info",
@@ -1181,7 +1180,7 @@ function AssistFrame() {
             color: "var(--xv-cust-fg)",
           }}
         >
-          I was charged twice this month — can you sort it out?
+          Can I add my partner to my plan?
         </p>
 
         <div
@@ -1206,9 +1205,9 @@ function AssistFrame() {
           </div>
 
           <p className="px-3 py-2.5 text-[12px] leading-relaxed">
-            I can see two charges on 3 July — one is the monthly renewal and one
-            is a duplicate from a retried payment. I&apos;ve refunded the
-            duplicate; it lands back on your card within 5 working days.
+            Yes — your plan has eight device slots and three are in use. I have
+            sent her an invite to set up her own login; her devices are covered
+            by your subscription, and nothing changes on your bill until renewal.
           </p>
 
           <div
@@ -1240,7 +1239,7 @@ function AssistFrame() {
               className="ml-auto font-mono text-[10.5px]"
               style={{ color: "var(--xv-faint)" }}
             >
-              next action · refund duplicate charge
+              next action · send the plan invite
             </span>
           </div>
         </div>
@@ -1278,28 +1277,28 @@ function HumanFrame() {
   const cases = [
     {
       id: "48212",
-      reason: "refund · account action",
+      reason: "plan change · account action",
       wait: "01:12",
       who: "Your team · Billing",
       qa: "4.8",
     },
     {
       id: "48204",
-      reason: "billing dispute",
+      reason: "billing question",
       wait: "02:40",
       who: "Your team · Billing",
       qa: "4.6",
     },
     {
       id: "48198",
-      reason: "retention · cancelling",
+      reason: "renewal · upgrade",
       wait: "00:38",
-      who: "Your team · Retention",
+      who: "Your team · Renewals",
       qa: "5.0",
     },
     {
       id: "48191",
-      reason: "complaint · escalated",
+      reason: "annual invoice · finance",
       wait: "04:05",
       who: "Your team lead",
       qa: "4.4",

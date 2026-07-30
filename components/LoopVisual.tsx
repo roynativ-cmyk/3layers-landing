@@ -39,14 +39,14 @@ const STAGES = [
   {
     k: "understand",
     accent: "var(--c-machine)",
-    value: "intent · billing",
+    value: "intent · plan change",
     detail: "confidence 0.91 · language matched",
   },
   {
     k: "retrieve",
     accent: "var(--c-machine)",
     value: "3 of 412 passages",
-    detail: "Refund policy · Router setup · Cancelling",
+    detail: "Family plan · Plan changes · Device limits",
   },
   {
     k: "route",
@@ -109,7 +109,7 @@ function ChatScene() {
           }}
           data-i="1"
         >
-          I want to cancel and get my money back.
+          We&apos;re five people now — can we move to the family plan?
         </p>
 
         <span
@@ -134,9 +134,8 @@ function ChatScene() {
           }}
           data-i="2"
         >
-          Of course — may I ask what&apos;s prompting it? If it&apos;s a
-          connection issue there is usually a quick fix, and your refund window
-          stays open either way.
+          Yes — the family plan covers six people with their own logins, and what
+          you have already paid is credited, so you only pay the difference.
         </p>
       </div>
 

@@ -41,8 +41,8 @@ const layers = [
     claim: "The AI knows when to stop — and hands the conversation to your own team.",
     body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. The platform recognises those cases — by confidence, topic, sentiment and your own rules — and escalates them to your support team, who arrive with the full history and a prepared summary instead of a cold ticket. The people in this layer are yours; what we provide is the intelligence that decides when they are genuinely needed.",
     bullets: [
-      "Complaints, escalations and retention conversations",
-      "Billing and account disputes, sensitive situations",
+      "Plan changes, upgrades and renewals",
+      "Billing and account questions, sensitive situations",
       "Deeper technical troubleshooting",
       "Anything that needs a judgment call or an approval",
     ],
