@@ -19,9 +19,9 @@ export default function Home() {
       <Nav />
       <main className="flex-1">
         <Hero />
-        <Layers />
         <TrustedBy />
         <Logos />
+        <Layers />
         <Showcase />
         <Problem />
         <Workspace />

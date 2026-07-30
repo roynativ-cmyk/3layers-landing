@@ -1,6 +1,5 @@
 import { Section, SectionHead } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
-import { SourcesFrame } from "@/components/Workspace";
 
 /* the palette walks down the six steps, so no two neighbours read the same */
 const HUES = [
@@ -26,12 +25,12 @@ const steps = [
     v: "Layer 1 starts answering common questions and collecting the details an agent would otherwise have to ask for.",
   },
   {
-    k: "We assist your agents",
-    v: "Layer 2 gives your existing team summaries, recommended responses and the next best action, in real time.",
+    k: "We staff layer 2 with our team",
+    v: "Our own human specialists close out what the bot can't — summaries, drafts and the next best action, resolved end to end.",
   },
   {
-    k: "We tune the handoff to your team",
-    v: "Layer 3 is your own agents. Together we define when a conversation must reach them — and they receive it with the full history and a prepared summary.",
+    k: "We define the rare exception",
+    v: "Layer 3 is rare, by design. Together we define what genuinely needs your systems or your call, and how that live session runs — Zoom, Meet or a screen-share.",
   },
   {
     k: "We continuously improve",
@@ -78,23 +77,6 @@ export function Flow() {
           channel, or one high-volume use case, with the savings measured from
           day one.
         </p>
-      </Reveal>
-
-      <Reveal delay={140} className="mt-14 md:mt-16">
-        <p className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span
-            className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
-            style={{ color: "var(--c-pass)" }}
-          >
-            Step 2, on screen
-          </span>
-          <span className="text-[13px] font-medium tracking-[-0.01em]">
-            Everything the AI is allowed to know, and nothing else.
-          </span>
-        </p>
-        <div className="app-zoom-sm">
-          <SourcesFrame />
-        </div>
       </Reveal>
     </Section>
   );

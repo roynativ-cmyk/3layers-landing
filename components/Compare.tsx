@@ -9,22 +9,22 @@ const rows = [
   },
   {
     q: "A question that needs account context",
-    ours: "Prepared by AI — summary, draft, next action — completed by an agent",
+    ours: "Prepared by AI — summary, draft, next action — completed by our specialist",
     theirs: "An agent searches, reads, and writes from scratch",
   },
   {
     q: "A complex or sensitive issue",
-    ours: "Escalated to your specialist with the full history and the reason it stopped",
+    ours: "Closed out by our specialist with the full history — never routed to your desk",
     theirs: "Escalated cold, and the customer repeats themselves",
   },
   {
     q: "Outside business hours",
-    ours: "Layer 1 keeps answering, and anything that needs a person is ready for your team",
+    ours: "Layer 1 keeps answering, and our specialists pick up the rest",
     theirs: "A queue that waits for the morning",
   },
   {
     q: "A busy period or a launch",
-    ours: "Automation absorbs the spike — your team keeps only what needs them",
+    ours: "Automation and our specialists absorb the spike — you never hire",
     theirs: "Overtime, temps, or slower replies",
   },
   {

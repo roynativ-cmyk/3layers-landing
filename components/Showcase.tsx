@@ -27,8 +27,8 @@ export function Showcase() {
           <Bullets
             items={[
               "How much the bot resolved, without agent time",
-              "What reached your team, and why it had to",
-              "Cost per conversation, and where it is going",
+              "How much our specialists closed out, and why",
+              "The rare case that needed your own team, live",
             ]}
             dot="var(--c-learn)"
           />

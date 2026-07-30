@@ -7,15 +7,15 @@ import { Reveal } from "@/components/Reveal";
 const faqs = [
   {
     q: "What is 3Layers.ai?",
-    a: "A customer-support platform that combines an AI Bot for repetitive questions, AI assistance for your support agents, and intelligent escalation to your own specialists for the conversations that need judgment — all monitored in one console.",
+    a: "A fully managed customer-support operation: an AI Bot for repetitive questions, our own human specialists who resolve what the bot can't, and — for the rare case that needs your systems or a decision only you can make — live coordination with your own team. All monitored in one console.",
   },
   {
-    q: "Who are the human experts in layer 3 — yours or mine?",
-    a: "Yours. We do not supply support staff. Layer 3 is your existing team, and what we provide is the intelligence around it: the AI recognises when a conversation genuinely needs a person, escalates it under your rules, and hands your agent the full history, the customer context and a recommended response. Layer 2 then makes those same agents faster. You can start with layer 1 alone and switch on the others as your operation grows.",
+    q: "Do I need my own support team?",
+    a: "No. Layers one and two are a complete package we run for you: the AI Bot and our own human specialists handle the large majority of conversations end to end — nothing lands on your desk. Layer three is the exception, for the small number of cases that need your systems, your account access or a call only you can make: our team gets on a live session with yours — Zoom, Meet or a screen-share — and we close it together. That is typically under 5% of conversations.",
   },
   {
-    q: "Will the AI replace my support team?",
-    a: "No. The platform removes repetitive work and increases your team's capacity. Complex, sensitive and high-value conversations stay with your people — that is the third layer, not an afterthought.",
+    q: "What happens to my existing support team?",
+    a: "That's up to you. Most businesses run 3Layers as their entire support operation — the bot plus our specialists handle it end to end. If you already have a team, they are only pulled in for the rare case that needs your systems or a decision only you can make.",
   },
   {
     q: "How does the AI learn about my business?",
@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "What happens when the AI does not know the answer?",
-    a: "It escalates to your team — based on confidence, topic, urgency and your own business rules — and your agent receives a summary, the customer context, the relevant policy and a recommended response. Customers can also ask for a human at any point.",
+    a: "It goes to one of our own human specialists — based on confidence, topic, urgency and your business rules — with a summary, the customer context, the relevant policy and a recommended response already prepared. Only the rare case that needs your systems or a decision only you can make is escalated further, live, to your own team.",
   },
   {
     q: "Can the AI access private customer information?",

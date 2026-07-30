@@ -1,15 +1,6 @@
 import { ButtonLink } from "@/components/ui";
-import { LoopVisual } from "@/components/LoopVisual";
+import { HeroStatus } from "@/components/HeroStatus";
 import { Reveal } from "@/components/Reveal";
-
-const trust = [
-  "Faster first-response times",
-  "Lower cost per conversation",
-  "24/7 support coverage",
-  "Consistent and accurate answers",
-  "Smooth escalation to your own agents",
-  "No large internal support team",
-];
 
 export function Hero() {
   return (
@@ -37,10 +28,10 @@ export function Hero() {
 
             <Reveal delay={120}>
               <p className="mt-7 max-w-[58ch] text-[16px] leading-relaxed text-fg-muted md:text-[17px]">
-                3Layers.ai gives your business a complete customer-support
-                operation powered by three intelligent layers: AI automation,
-                AI-assisted agents, and clean escalation to your own experts
-                whenever a conversation truly needs a person.
+                3Layers.ai gives your business a complete, fully managed
+                customer-support operation: an AI Bot, real human specialists
+                on our team, and — for the rare case that truly needs it —
+                live coordination with your own team.
               </p>
               <p className="mt-4 max-w-[58ch] text-[15px] leading-relaxed text-fg-muted">
                 Handle more conversations, respond faster, and keep your
@@ -66,32 +57,9 @@ export function Hero() {
           </div>
 
           <Reveal delay={120} className="lg:pl-4">
-            <LoopVisual />
+            <HeroStatus />
           </Reveal>
         </div>
-
-        <Reveal delay={80}>
-          <div className="mt-20 border-t border-line pt-10 md:mt-24">
-            <h2 className="text-[clamp(1.35rem,2.4vw,1.75rem)] font-semibold tracking-[-0.025em]">
-              One support platform. Three powerful layers.
-            </h2>
-            <ul className="mt-7 grid gap-x-10 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-3">
-              {trust.map((point) => (
-                <li
-                  key={point}
-                  className="flex items-start gap-3 text-[13.5px] leading-relaxed text-fg-muted"
-                >
-                  <span
-                    aria-hidden
-                    className="mt-[7px] h-[5px] w-[5px] shrink-0 rounded-full"
-                    style={{ background: "var(--c-pass)" }}
-                  />
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

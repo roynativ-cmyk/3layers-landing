@@ -1,6 +1,5 @@
 import { Section, SectionHead } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
-import { CostFrame } from "@/components/Workspace";
 
 const gaps = [
   {
@@ -49,23 +48,6 @@ export function Problem() {
           </Reveal>
         ))}
       </div>
-
-      <Reveal delay={120} className="mt-14 md:mt-16">
-        <p className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <span
-            className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
-            style={{ color: "var(--c-fail)" }}
-          >
-            The same month, measured
-          </span>
-          <span className="text-[13px] font-medium tracking-[-0.01em]">
-            One report shows what each conversation actually cost you.
-          </span>
-        </p>
-        <div className="app-zoom-sm">
-          <CostFrame />
-        </div>
-      </Reveal>
     </Section>
   );
 }

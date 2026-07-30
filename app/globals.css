@@ -53,7 +53,12 @@
   --cream-line: rgba(12, 22, 30, 0.14);
 
   /* one shared beat for every animation on the page */
-  --cycle: 24s; /* two hero scenes share it: chat, then behind the scenes */
+  --cycle: 40s; /* one full pass through the hero's four scenes — long and
+    unequal on purpose: layer one holds about a third of the loop, layer
+    three far less, so the rhythm itself says "rare", not "every time".
+    Every beat inside the scenes is a percentage of this one number, so
+    slowing the page down is a one-line change. At 40s: layer one ~13s,
+    layer two ~8s, layer three ~6.5s, the recap ~7.5s. */
 
   /* the site's two hand gestures: a plain decelerate for anything that fades
      or grows, a restrained overshoot for anything a person just touched */
@@ -256,160 +261,133 @@ section[id] {
   transform: none;
 }
 
-/* --- hero: two scenes on one 24s beat -------------------------------------
-   Scene A (0 – 46%)  the conversation, with each layer reporting in.
-   Scene B (50 – 96%) the same turn from behind: what was retrieved, what was
-                      checked, what was replayed, what it queued to learn.
+/* --- hero: one status pill, updating ----------------------------------------
+   Everything that changes with the step — the pill and the scene — shares
+   .status-text, cross-fading on one long beat: layer one -> layer two ->
+   layer three -> the recap that adds them up to 100%. Each keyframe's own
+   0% matches its own 100% (the same trick used elsewhere in this file) so
+   the loop has no snap. Windows are unequal on purpose — layer one holds
+   the longest — and every scene finishes its beats early enough to rest,
+   readable, before the crossfade takes it away.
 
-   Every element keys off absolute percentages of the shared cycle, so the two
-   scenes hand over cleanly without a line of JavaScript.
-------------------------------------------------------------------------- */
+   The clock: L1 owns 0-32, L2 35-55, L3 58-74, recap 77-96 (of 40s). */
 
-.scene {
-  grid-area: 1 / 1;
-}
-
-.scene-a {
-  animation: sceneA var(--cycle) linear infinite;
-}
-
-.scene-b {
+.status-text {
   opacity: 0;
-  animation: sceneB var(--cycle) linear infinite;
 }
 
-@keyframes sceneA {
+.status-text[data-i="1"] {
+  animation: statusS1 var(--cycle) ease-in-out infinite;
+}
+.status-text[data-i="2"] {
+  animation: statusS2 var(--cycle) ease-in-out infinite;
+}
+.status-text[data-i="3"] {
+  animation: statusS3 var(--cycle) ease-in-out infinite;
+}
+.status-text[data-i="4"] {
+  animation: statusS4 var(--cycle) ease-in-out infinite;
+}
+
+@keyframes statusS1 {
   0%,
-  44% {
+  32% {
     opacity: 1;
   }
-  48%,
+  35%,
+  97% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes statusS2 {
+  0%,
+  32% {
+    opacity: 0;
+  }
+  35%,
+  55% {
+    opacity: 1;
+  }
+  58%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes statusS3 {
+  0%,
+  55% {
+    opacity: 0;
+  }
+  58%,
+  74% {
+    opacity: 1;
+  }
+  77%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes statusS4 {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  77%,
   96% {
-    opacity: 0;
-  }
-  100% {
     opacity: 1;
   }
-}
-
-@keyframes sceneB {
-  0%,
-  47% {
-    opacity: 0;
-  }
-  50%,
-  94% {
-    opacity: 1;
-  }
-  97%,
+  99%,
   100% {
     opacity: 0;
   }
 }
 
-/* the live dot ticks along on its own short beat */
-.cw-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 999px;
-  background: var(--c-pass);
-  animation: cwPulse 2.4s ease-in-out infinite;
-}
+/* --- the beats inside each layer's window ----------------------------------
+   Same clock (--cycle), finer subdivisions. Inner elements stay opaque past
+   their window's end — the scene's own crossfade is the only exit, so
+   nothing fades twice. Chips and tiles that stagger do it inline via
+   animation-delay: a constant phase shift, so the stagger holds every loop. */
 
-@keyframes cwPulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-pass) 34%, transparent);
-  }
-  60% {
-    box-shadow: 0 0 0 6px color-mix(in srgb, var(--c-pass) 0%, transparent);
-  }
-}
-
-/* --- scene A: the conversation -------------------------------------------- */
-
-.cw-msg,
-.cw-note {
+.hs-m,
+.hs-typing,
+.hs-cust2,
+.hs-draft,
+.hs-kb,
+.hs-badge,
+.hs-l3t,
+.hs-call,
+.hs-tile,
+.hs-live,
+.hs-chip,
+.hs-stat,
+.hs-sumh,
+.hs-sum,
+.hs-chk,
+.hs-total {
   opacity: 0;
 }
 
-.cw-msg {
-  transform: translateY(8px);
+.hs-fill,
+.hs-fillT {
+  transform: scaleX(0);
+  transform-origin: left;
 }
 
-.cw-msg[data-i="1"] {
-  animation: cwMsg1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-.cw-msg[data-i="2"] {
-  animation: cwMsg2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes cwMsg1 {
-  0%,
-  2% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  5%,
-  42% {
-    opacity: 1;
-    transform: none;
-  }
-  45%,
-  100% {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-
-@keyframes cwMsg2 {
-  0%,
-  11% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  14%,
-  42% {
-    opacity: 1;
-    transform: none;
-  }
-  45%,
-  100% {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-}
-
-.cw-typing {
-  opacity: 0;
-  animation: cwTyping var(--cycle) linear infinite;
-}
-
-@keyframes cwTyping {
-  0%,
-  5.5% {
-    opacity: 0;
-  }
-  7%,
-  10% {
-    opacity: 1;
-  }
-  11.5%,
-  100% {
-    opacity: 0;
-  }
-}
-
-.cw-typing i {
+.hs-typing i {
   display: block;
   width: 4px;
   height: 4px;
   border-radius: 999px;
   background: rgba(12, 22, 30, 0.42);
-  animation: cwDot 1.1s ease-in-out infinite;
+  animation: hsDot 1.1s ease-in-out infinite;
 }
-
-@keyframes cwDot {
+@keyframes hsDot {
   0%,
   100% {
     opacity: 0.3;
@@ -421,279 +399,648 @@ section[id] {
   }
 }
 
-.cw-note {
-  transform: translateY(6px);
+
+/* layer one: two questions, two answers behind typing dots, the 75% bar */
+
+
+.hs-m[data-i="1"] {
+  animation: hsM1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
 }
 
-.cw-note[data-i="1"] {
-  animation: cwNote1 var(--cycle) cubic-bezier(0.34, 1.4, 0.5, 1) infinite;
-}
-.cw-note[data-i="2"] {
-  animation: cwNote2 var(--cycle) cubic-bezier(0.34, 1.4, 0.5, 1) infinite;
-}
-.cw-note[data-i="3"] {
-  animation: cwNote3 var(--cycle) cubic-bezier(0.34, 1.4, 0.5, 1) infinite;
-}
-
-@keyframes cwNote1 {
+@keyframes hsM1 {
   0%,
-  15% {
+  1.5% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
-  17.5%,
-  42% {
+  3.5%,
+  34% {
     opacity: 1;
     transform: none;
   }
-  45%,
+  38%,
   100% {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(8px);
   }
 }
 
-@keyframes cwNote2 {
+.hs-typing[data-i="1"] {
+  animation: hsTyping1 var(--cycle) linear infinite;
+}
+
+@keyframes hsTyping1 {
+  0%,
+  4.5% {
+    opacity: 0;
+  }
+  5.5%,
+  7.5% {
+    opacity: 1;
+  }
+  9.5%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.hs-m[data-i="2"] {
+  animation: hsM2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsM2 {
+  0%,
+  7.5% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  9.5%,
+  34% {
+    opacity: 1;
+    transform: none;
+  }
+  38%,
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.hs-m[data-i="3"] {
+  animation: hsM3 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsM3 {
+  0%,
+  11.5% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  13.5%,
+  34% {
+    opacity: 1;
+    transform: none;
+  }
+  38%,
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.hs-typing[data-i="2"] {
+  animation: hsTyping2 var(--cycle) linear infinite;
+}
+
+@keyframes hsTyping2 {
+  0%,
+  14.5% {
+    opacity: 0;
+  }
+  16%,
+  19% {
+    opacity: 1;
+  }
+  21%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.hs-m[data-i="4"] {
+  animation: hsM4 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsM4 {
   0%,
   19% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
-  21.5%,
-  42% {
+  21%,
+  34% {
     opacity: 1;
     transform: none;
   }
-  45%,
+  38%,
   100% {
     opacity: 0;
-    transform: translateY(-4px);
+    transform: translateY(8px);
   }
 }
 
-@keyframes cwNote3 {
+.hs-stat[data-i="1"] {
+  animation: hsStat1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsStat1 {
   0%,
-  23% {
+  22.5% {
     opacity: 0;
     transform: translateY(6px);
   }
-  25.5%,
-  42% {
+  24.5%,
+  34% {
     opacity: 1;
     transform: none;
   }
-  45%,
+  38%,
   100% {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-}
-
-/* --- scene B: the same turn, from behind ---------------------------------- */
-
-.tr-row {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-.tr-row[data-i="1"] {
-  animation: trRow1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-.tr-row[data-i="2"] {
-  animation: trRow2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-.tr-row[data-i="3"] {
-  animation: trRow3 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-.tr-row[data-i="4"] {
-  animation: trRow4 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
-}
-
-@keyframes trRow1 {
-  0%,
-  51% {
     opacity: 0;
     transform: translateY(6px);
   }
-  54%,
-  92% {
-    opacity: 1;
-    transform: none;
+}
+
+.hs-fill[data-i="1"] {
+  animation: hsFill1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsFill1 {
+  0%,
+  24.5% {
+    transform: scaleX(0);
   }
-  95%,
+  29%,
   100% {
-    opacity: 0;
+    transform: scaleX(1);
   }
 }
 
-@keyframes trRow2 {
+
+/* layer two: the escalated question, the drafted reply, the source, the
+   send-stamp, the 20% bar */
+
+
+.hs-cust2 {
+  animation: hsCust2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsCust2 {
   0%,
+  35.5% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  37.5%,
   57% {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  60%,
-  92% {
     opacity: 1;
     transform: none;
   }
-  95%,
+  61%,
   100% {
     opacity: 0;
+    transform: translateY(8px);
   }
 }
 
-@keyframes trRow3 {
+.hs-draft {
+  animation: hsDraft var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsDraft {
   0%,
-  63% {
+  39% {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(8px);
   }
-  66%,
-  92% {
+  41%,
+  57% {
     opacity: 1;
     transform: none;
   }
-  95%,
+  61%,
   100% {
     opacity: 0;
+    transform: translateY(8px);
   }
 }
 
-@keyframes trRow4 {
+.hs-kb {
+  animation: hsKb var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsKb {
   0%,
-  69% {
+  43% {
     opacity: 0;
     transform: translateY(6px);
   }
-  72%,
-  92% {
+  45%,
+  57% {
     opacity: 1;
     transform: none;
   }
-  95%,
+  61%,
   100% {
     opacity: 0;
+    transform: translateY(6px);
   }
 }
 
-/* the meter that fills as each stage runs */
-.tr-bar {
-  position: relative;
-  height: 3px;
-  border-radius: 999px;
-  background: rgba(12, 22, 30, 0.08);
-  overflow: hidden;
+.hs-badge {
+  animation: hsBadge var(--cycle) var(--ease-spring) infinite;
 }
 
-.tr-bar::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  transform-origin: left;
-  transform: scaleX(0);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--accent) 30%, transparent),
-    var(--accent)
-  );
-}
-
-.tr-row[data-i="1"] .tr-bar::after {
-  animation: trFill1 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
-}
-.tr-row[data-i="2"] .tr-bar::after {
-  animation: trFill2 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
-}
-.tr-row[data-i="3"] .tr-bar::after {
-  animation: trFill3 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
-}
-.tr-row[data-i="4"] .tr-bar::after {
-  animation: trFill4 var(--cycle) cubic-bezier(0.3, 0.9, 0.3, 1) infinite;
-}
-
-@keyframes trFill1 {
+@keyframes hsBadge {
   0%,
-  53% {
+  46.5% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  48.5%,
+  57% {
+    opacity: 1;
+    transform: none;
+  }
+  61%,
+  100% {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+}
+
+.hs-stat[data-i="2"] {
+  animation: hsStat2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsStat2 {
+  0%,
+  50% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  52%,
+  57% {
+    opacity: 1;
+    transform: none;
+  }
+  61%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-fill[data-i="2"] {
+  animation: hsFill2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsFill2 {
+  0%,
+  52% {
     transform: scaleX(0);
   }
-  58%,
-  92% {
+  55%,
+  100% {
     transform: scaleX(1);
   }
-  95%,
+}
+
+
+/* layer three: the line, then the call assembles — window, our tile, your
+   tile joins, the LIVE row — then the tools and the 5% bar */
+
+
+.hs-l3t {
+  animation: hsL3T var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsL3T {
+  0%,
+  58.5% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  60.5%,
+  76% {
+    opacity: 1;
+    transform: none;
+  }
+  80%,
   100% {
-    transform: scaleX(0);
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
-@keyframes trFill2 {
+.hs-call {
+  animation: hsCall var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsCall {
   0%,
-  59% {
+  60.5% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  62.5%,
+  76% {
+    opacity: 1;
+    transform: none;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.hs-tile {
+  animation: hsTile var(--cycle) var(--ease-spring) infinite;
+}
+
+@keyframes hsTile {
+  0%,
+  62% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  63.5%,
+  76% {
+    opacity: 1;
+    transform: none;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+}
+
+.hs-live {
+  animation: hsLive var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsLive {
+  0%,
+  65.5% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  67%,
+  76% {
+    opacity: 1;
+    transform: none;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-chip {
+  animation: hsChip var(--cycle) var(--ease-spring) infinite;
+}
+
+@keyframes hsChip {
+  0%,
+  67% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  69%,
+  76% {
+    opacity: 1;
+    transform: none;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+}
+
+.hs-stat[data-i="3"] {
+  animation: hsStat3 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsStat3 {
+  0%,
+  69.5% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  71.5%,
+  76% {
+    opacity: 1;
+    transform: none;
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-fill[data-i="3"] {
+  animation: hsFill3 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsFill3 {
+  0%,
+  71.5% {
     transform: scaleX(0);
   }
-  64%,
-  92% {
+  74%,
+  100% {
     transform: scaleX(1);
   }
-  95%,
+}
+
+
+/* the recap: header, three rows checking off in order, then the stacked
+   bar adds them up to the one number that matters */
+
+
+.hs-sumh {
+  animation: hsSumH var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsSumH {
+  0%,
+  78% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  80%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
   100% {
-    transform: scaleX(0);
+    opacity: 0;
+    transform: translateY(6px);
   }
 }
 
-@keyframes trFill3 {
+.hs-sum[data-i="1"] {
+  animation: hsSum1 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsSum1 {
   0%,
-  65% {
+  80% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  82%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-chk[data-i="1"] {
+  animation: hsChk1 var(--cycle) var(--ease-spring) infinite;
+}
+
+@keyframes hsChk1 {
+  0%,
+  82% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  83.5%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.hs-sum[data-i="2"] {
+  animation: hsSum2 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsSum2 {
+  0%,
+  83% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  85%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-chk[data-i="2"] {
+  animation: hsChk2 var(--cycle) var(--ease-spring) infinite;
+}
+
+@keyframes hsChk2 {
+  0%,
+  85% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  86.5%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.hs-sum[data-i="3"] {
+  animation: hsSum3 var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsSum3 {
+  0%,
+  86% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  88%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-chk[data-i="3"] {
+  animation: hsChk3 var(--cycle) var(--ease-spring) infinite;
+}
+
+@keyframes hsChk3 {
+  0%,
+  88% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  89.5%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.hs-total {
+  animation: hsTotal var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsTotal {
+  0%,
+  90.5% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  92.5%,
+  97.5% {
+    opacity: 1;
+    transform: none;
+  }
+  99.5%,
+  100% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.hs-fillT {
+  animation: hsFillT var(--cycle) cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes hsFillT {
+  0%,
+  92.5% {
     transform: scaleX(0);
   }
-  70%,
-  92% {
+  95.5%,
+  100% {
     transform: scaleX(1);
-  }
-  95%,
-  100% {
-    transform: scaleX(0);
-  }
-}
-
-@keyframes trFill4 {
-  0%,
-  71% {
-    transform: scaleX(0);
-  }
-  76%,
-  92% {
-    transform: scaleX(1);
-  }
-  95%,
-  100% {
-    transform: scaleX(0);
-  }
-}
-
-/* the replayed cases: one of them fails, in colour */
-.tr-cell {
-  width: 7px;
-  height: 7px;
-  border-radius: 2px;
-  background: rgba(12, 22, 30, 0.12);
-  animation: trCell var(--cycle) linear infinite;
-}
-
-@keyframes trCell {
-  0%,
-  66% {
-    background: rgba(12, 22, 30, 0.12);
-  }
-  70%,
-  92% {
-    background: var(--cell, var(--c-pass));
-  }
-  95%,
-  100% {
-    background: rgba(12, 22, 30, 0.12);
   }
 }
 
@@ -1019,6 +1366,122 @@ section[id] {
   background-repeat: repeat-x;
 }
 
+/* --- hero: the layer-flow diagram -------------------------------------
+   One 8s loop, three phases. Each card holds its own accent border for its
+   third of the cycle; the dot only appears in the two gaps between phases,
+   so it reads as attention handing off to the next step rather than a ball
+   bouncing over solid cards. Card 1's keyframe repeats its active state at
+   0% and 100% (the sceneA/sceneB trick above) so the loop has no snap. */
+
+.stack-card {
+  border-color: var(--xv-border);
+  transform: scale(1);
+}
+
+.stack-dot {
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.stack-card[data-i="1"] {
+  animation: stackCard1 var(--stack-cycle) ease-in-out infinite;
+}
+.stack-card[data-i="2"] {
+  animation: stackCard2 var(--stack-cycle) ease-in-out infinite;
+}
+.stack-card[data-i="3"] {
+  animation: stackCard3 var(--stack-cycle) ease-in-out infinite;
+}
+.stack-dot {
+  animation: stackDot var(--stack-cycle) ease-in-out infinite;
+}
+
+@keyframes stackCard1 {
+  0%,
+  20% {
+    border-color: var(--c-machine);
+    transform: scale(1.035);
+  }
+  30%,
+  96% {
+    border-color: var(--xv-border);
+    transform: scale(1);
+  }
+  100% {
+    border-color: var(--c-machine);
+    transform: scale(1.035);
+  }
+}
+
+@keyframes stackCard2 {
+  0%,
+  28% {
+    border-color: var(--xv-border);
+    transform: scale(1);
+  }
+  38%,
+  58% {
+    border-color: var(--c-pass);
+    transform: scale(1.035);
+  }
+  68%,
+  100% {
+    border-color: var(--xv-border);
+    transform: scale(1);
+  }
+}
+
+@keyframes stackCard3 {
+  0%,
+  62% {
+    border-color: var(--xv-border);
+    transform: scale(1);
+  }
+  72%,
+  92% {
+    border-color: var(--c-human);
+    transform: scale(1.035);
+  }
+  100% {
+    border-color: var(--xv-border);
+    transform: scale(1);
+  }
+}
+
+@keyframes stackDot {
+  0%,
+  21% {
+    opacity: 0;
+    left: 17%;
+  }
+  25% {
+    opacity: 1;
+    left: 22%;
+  }
+  33% {
+    opacity: 1;
+    left: 46%;
+  }
+  37%,
+  59% {
+    opacity: 0;
+    left: 50%;
+  }
+  63% {
+    opacity: 1;
+    left: 54%;
+  }
+  71% {
+    opacity: 1;
+    left: 78%;
+  }
+  75%,
+  100% {
+    opacity: 0;
+    left: 83%;
+  }
+}
+
 /* --- FAQ accordion ---------------------------------------------------------
    Grid-rows trick: the row track animates 0fr → 1fr, and the child's own
    overflow:hidden clips it mid-transition. No JS height measurement needed. */
@@ -1046,50 +1509,50 @@ section[id] {
     transition: none;
   }
 
-  /* the one continuous, automatic motion on the page — everything else here
-     is a direct response to a click or a hover, which reduced-motion users
-     still expect to see */
-  .glow {
+  /* ambient/automatic motion off; each element's own base rule (outside the
+     keyframes) is already a clean settled state, so turning the animation off
+     is enough — no extra static-state overrides needed here */
+  .glow,
+  .marquee-track {
     animation: none;
   }
 
-  .scene-a,
-  .scene-b,
-  .cw-dot,
-  .cw-msg,
-  .cw-typing,
-  .cw-typing i,
-  .cw-note,
-  .tr-row,
-  .tr-bar::after,
-  .tr-cell,
-  .marquee-track {
+  /* the cross-fade is exactly the kind of continuous, automatic motion
+     reduced-motion is meant to suppress — freeze on the opening state:
+     layer one, conversation complete, typing dots gone, bar full. */
+  .status-text,
+  .hs-m,
+  .hs-typing,
+  .hs-cust2,
+  .hs-draft,
+  .hs-kb,
+  .hs-badge,
+  .hs-l3t,
+  .hs-call,
+  .hs-tile,
+  .hs-live,
+  .hs-chip,
+  .hs-stat,
+  .hs-fill,
+  .hs-sumh,
+  .hs-sum,
+  .hs-chk,
+  .hs-total,
+  .hs-fillT {
     animation: none !important;
+    opacity: 0;
   }
-
-  /* a static, fully readable end state */
-  /* no crossfade without motion: show the conversation, drop the second scene */
-  .scene-a {
-    opacity: 1;
-  }
-  .scene-b {
-    display: none;
-  }
-  .cw-msg,
-  .cw-note,
-  .tr-row {
+  .status-text[data-i="1"],
+  .hs-m,
+  .hs-stat[data-i="1"] {
     opacity: 1;
     transform: none;
   }
-  .cw-typing {
-    display: none;
+  .hs-fill[data-i="1"] {
+    opacity: 1;
+    transform: none;
   }
-  .tr-bar::after {
-    transform: scaleX(1);
-  }
-  .tr-cell {
-    background: var(--cell, var(--c-pass));
-  }
+
   .marquee {
     overflow-x: auto;
   }

@@ -12,9 +12,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "3Layers.ai | AI and Human Customer Support";
+const title = "3Layers.ai | Fully Managed AI and Human Customer Support";
 const description =
-  "Reduce customer-support costs with an AI Bot, AI-assisted agents and intelligent escalation to your own human experts — monitored in one console. Built for small and medium businesses.";
+  "A fully managed customer-support operation: an AI Bot, our own human specialists, and live coordination with your team for the rare case that needs it — monitored in one console. Built for small and medium businesses.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://3layers.ai"),
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   keywords: [
     "customer support AI",
     "AI agent assist",
-    "AI escalation to human agents",
+    "managed AI customer support",
     "support cost reduction",
     "AI bot for support",
     "human in the loop",

@@ -1,6 +1,6 @@
 import { Section, SectionHead, Bullets } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
-import { ControlFrames, RulesFrame } from "@/components/Workspace";
+import { RulesFrame } from "@/components/Workspace";
 
 const options = [
   {
@@ -17,7 +17,7 @@ const options = [
   {
     tag: "Reporting",
     title: "See what customers ask and where costs go",
-    body: "One report across all three layers: how much the bot resolved, how much your agents were helped, how much had to reach your specialists — and what each of those actually cost you. Knowledge gaps come with the conversations that exposed them.",
+    body: "One report across all three layers: how much the bot resolved, how much our specialists closed out, how much needed a live session with your team — and what each of those actually cost you. Knowledge gaps come with the conversations that exposed them.",
     bullets: [
       "AI resolution rate, escalation rate, human-handled cases",
       "First response, average resolution, agent productivity",
@@ -74,16 +74,6 @@ export function Deploy() {
         <div className="app-zoom-sm">
           <RulesFrame />
         </div>
-      </Reveal>
-
-      <Reveal delay={120} className="mt-14 md:mt-16">
-        <p className="mb-6 max-w-[64ch] text-[14px] leading-relaxed text-fg-muted">
-          Two more controls have their own screens: the release gate that
-          replays your labelled conversations before any change goes live, and
-          the fixes the system writes for its own gaps — each waiting for a
-          human yes.
-        </p>
-        <ControlFrames />
       </Reveal>
     </Section>
   );

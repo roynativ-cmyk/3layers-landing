@@ -1,11 +1,120 @@
 import { Section, SectionHead, Bullets } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
 
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/* --- the right-hand visual of each card ------------------------------------
+   Layer one and three get small in-house illustrations built from the same
+   parts as the hero (bubbles, chips, tool logos); layer two gets the real
+   photo — our specialist — bleeding off the card's right edge behind a
+   left-fading mask so it settles into the card instead of sitting on it. */
+
+function BotIllustration() {
+  return (
+    <div className="xv flex w-full flex-col gap-2.5">
+      <p
+        className="w-fit max-w-[92%] rounded-2xl rounded-bl-md px-3.5 py-2 text-[12px] leading-relaxed"
+        style={{ background: "var(--xv-cust-bg)", color: "var(--xv-cust-fg)" }}
+      >
+        Where is my order?
+      </p>
+      <p
+        className="ml-auto w-fit max-w-[92%] rounded-2xl rounded-br-md border px-3.5 py-2 text-[12px] leading-relaxed"
+        style={{
+          background: "var(--xv-ai-bg)",
+          color: "var(--xv-ai-fg)",
+          borderColor: "var(--xv-ai-border)",
+        }}
+      >
+        On its way — arriving tomorrow. Here&apos;s your tracking link.
+      </p>
+      <span
+        className="ml-auto inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-semibold"
+        style={{ background: "var(--c-machine-soft)", color: "var(--c-machine)" }}
+      >
+        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+          <path d="M13 2 3 14h7l-1 8 10-12h-7z" />
+        </svg>
+        Instant · 24/7
+      </span>
+    </div>
+  );
+}
+
+const JOINT_TOOLS = [
+  { file: "zoom.png", label: "Zoom", blend: false },
+  { file: "meet.jpg", label: "Meet", blend: true },
+  { file: "anydesk.png", label: "AnyDesk", blend: false },
+];
+
+function JointIllustration() {
+  return (
+    <div className="xv flex w-full flex-col gap-2.5">
+      <div className="light-frame rounded-xl p-2.5">
+        <div className="grid grid-cols-2 gap-1.5">
+          {[
+            { label: "3Layers", accent: "var(--c-pass)", soft: "var(--c-pass-soft)" },
+            { label: "Your team", accent: "var(--c-human)", soft: "var(--c-human-soft)" },
+          ].map((p) => (
+            <div
+              key={p.label}
+              className="flex flex-col items-center gap-1.5 rounded-lg py-3"
+              style={{ background: "var(--xv-surface-2)" }}
+            >
+              <span
+                className="flex h-8 w-8 items-center justify-center rounded-full"
+                style={{ background: p.soft }}
+              >
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={p.accent} strokeWidth="2" strokeLinecap="round">
+                  <circle cx="12" cy="8" r="3.6" />
+                  <path d="M4.5 20c0-4.7 3.4-8 7.5-8s7.5 3.3 7.5 8" />
+                </svg>
+              </span>
+              <span className="text-[10px] font-medium" style={{ color: "var(--xv-text-2)" }}>
+                {p.label}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 flex items-center gap-1.5 px-0.5">
+          <span
+            aria-hidden
+            className="h-[6px] w-[6px] rounded-full"
+            style={{ background: "var(--c-fail)" }}
+          />
+          <span className="font-mono text-[9.5px] uppercase tracking-[0.12em]" style={{ color: "var(--xv-muted)" }}>
+            Live · together in real time
+          </span>
+        </div>
+      </div>
+      <div className="flex items-center gap-1.5">
+        {JOINT_TOOLS.map((t) => (
+          <span
+            key={t.label}
+            className="inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] font-medium"
+            style={{ background: "var(--c-human-soft)", color: "var(--c-human)" }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={`${BASE}/logos/${t.file}`}
+              alt=""
+              className="h-[13px] w-[13px] rounded-[3px]"
+              style={t.blend ? { mixBlendMode: "multiply" } : undefined}
+            />
+            {t.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 const layers = [
   {
     n: "01",
     accent: "var(--c-machine)",
     soft: "var(--c-machine-soft)",
+    visual: "bot",
     label: "AI Bot",
     name: "Instant answers at the lowest cost",
     claim: "100% AI, start to finish — resolved without an agent ever touching it.",
@@ -21,30 +130,32 @@ const layers = [
     n: "02",
     accent: "var(--c-pass)",
     soft: "var(--c-pass-soft)",
-    label: "AI Agent Assist",
-    name: "Make every agent faster",
-    claim: "AI drafts the answer in real time; your agent reviews, edits and sends it.",
-    body: "When a human agent is needed, the AI copilot works alongside your team. It understands the conversation, searches your approved knowledge sources and recommends an accurate response in real time — with the summary and the next best action already prepared.",
+    visual: "photo",
+    label: "Our Support Team",
+    name: "Resolved by our specialists, not routed to yours",
+    claim: "AI drafts the answer; one of our specialists reviews, edits and sends it.",
+    body: "When the bot can't finish a request, it doesn't land on your desk — it goes to a trained 3Layers specialist. Our copilot understands the conversation, searches your approved knowledge sources and prepares an accurate response in real time; our specialist checks it, adjusts anything that needs a human touch, and sends it. The ticket is resolved, not just handed off.",
     bullets: [
-      "Suggests complete responses and summarises long threads",
-      "Finds the relevant procedure or product detail instantly",
-      "Recommends the next action and flags missing information",
-      "New agents perform like experienced ones, sooner",
+      "Every ticket the bot can't close is answered and resolved",
+      "AI-drafted, human-checked — accurate and fast",
+      "No queue lands on your own team",
+      "Consistent tone and policy on every reply",
     ],
   },
   {
     n: "03",
     accent: "var(--c-human)",
     soft: "var(--c-human-soft)",
-    label: "Your Human Experts",
-    name: "Escalation only when it is real",
-    claim: "A person from your team — brought in only when the case genuinely needs one.",
-    body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. The platform recognises those cases — by confidence, topic, sentiment and your own rules — and escalates them to your support team, who arrive with the full history and a prepared summary instead of a cold ticket. The people in this layer are yours; what we provide is the intelligence that decides when they are genuinely needed.",
+    visual: "joint",
+    label: "Joint Escalation",
+    name: "The rare case that needs you, too",
+    claim: "About 5% of cases need your systems or your call — we get on with your team to close it.",
+    body: "Occasionally a case needs something only your business has: access to an internal system, a policy call only you can make, account context we don't have. For that handful of cases, our team sets up a live session with yours — Zoom, Meet or a remote screen-share — and we close it together in real time, instead of lobbing a ticket over the wall.",
     bullets: [
-      "Plan changes, upgrades and renewals",
-      "Billing and account questions, sensitive situations",
-      "Deeper technical troubleshooting",
-      "Anything that needs a judgment call or an approval",
+      "Access to a system or account only you control",
+      "A judgment call or approval only your business can make",
+      "Live, not a ticket — Zoom, Meet or screen-share",
+      "The rare exception, not the default path",
     ],
   },
 ];
@@ -55,7 +166,7 @@ export function Layers() {
       <SectionHead
         eyebrow="The right support at the right layer"
         title="Three layers, one operation."
-        lead="A hybrid model, not a single bot: layer one resolves the request entirely on its own, layer two pairs AI with your agent, and layer three brings in a person only when the case genuinely needs one. Every conversation goes to the layer that fits it — monitored in the same console, so you can see what it cost and whether it was right."
+        lead="A fully managed operation, not a single bot: layer one resolves the request entirely on its own, layer two is closed out by our own human specialists, and layer three — rare, and only when your systems or your call are genuinely required — brings our team together with yours, live. Every conversation goes to the layer that fits it, monitored in the same console."
       />
 
       <div className="mt-14 space-y-4">
@@ -73,9 +184,33 @@ export function Layers() {
                 background: `linear-gradient(90deg, ${layer.accent}, color-mix(in srgb, ${layer.accent} 12%, transparent))`,
               }}
             />
+
+            {/* the right-hand visual — behind the (relative) text grid */}
+            {layer.visual === "photo" ? (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                src={`${BASE}/photos/specialist.jpg`}
+                alt="A 3Layers support specialist"
+                className="pointer-events-none absolute bottom-0 right-0 hidden h-[290px] w-[250px] object-cover object-top lg:block"
+                style={{
+                  WebkitMaskImage:
+                    "radial-gradient(130% 120% at 92% 74%, black 40%, transparent 70%)",
+                  maskImage:
+                    "radial-gradient(130% 120% at 92% 74%, black 40%, transparent 70%)",
+                }}
+              />
+            ) : (
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-y-0 right-10 hidden w-[250px] items-center lg:flex"
+              >
+                {layer.visual === "bot" ? <BotIllustration /> : <JointIllustration />}
+              </div>
+            )}
+
             <div
               style={{ ["--accent" as string]: layer.accent }}
-              className="relative grid gap-8 md:grid-cols-[7.5rem_minmax(0,1fr)] md:gap-12"
+              className="relative grid gap-8 md:grid-cols-[7.5rem_minmax(0,1fr)] md:gap-12 lg:pr-[300px]"
             >
               <div>
                 <div
@@ -123,10 +258,11 @@ export function Layers() {
       <Reveal delay={120}>
         <p className="mt-10 max-w-[70ch] text-[14px] leading-relaxed text-fg-muted">
           A simple question is resolved instantly by the bot. A question that
-          needs account context is prepared by AI and completed by one of your
-          agents. A complex or sensitive issue is escalated to your specialists,
-          in context. You pay human-level cost only where your human expertise is
-          actually required.
+          needs judgment is closed out by one of our own human
+          specialists — not routed to your desk. Only the rare case that
+          genuinely needs your systems or your people brings the two teams
+          together, live. You get a complete support operation without
+          building one.
         </p>
       </Reveal>
     </Section>

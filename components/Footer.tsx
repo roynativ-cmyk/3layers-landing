@@ -28,8 +28,8 @@ export function Footer() {
             <Logo />
             <p className="mt-5 max-w-[34ch] text-[13px] leading-relaxed text-fg-dim">
               Smarter support, lower costs, human when it matters: an AI Bot,
-              AI-assisted agents and clean escalation to your own experts — one
-              operation.
+              our own human specialists, and live coordination with your
+              team for the rare case that needs it — one complete operation.
             </p>
           </div>
 
