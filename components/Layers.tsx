@@ -258,7 +258,7 @@ export function Layers() {
                   <img
                     src={`${BASE}/photos/specialist.jpg`}
                     alt="A 3Layers support specialist"
-                    className="pointer-events-none -mb-7 -mr-7 ml-auto block h-[220px] w-[200px] object-cover object-top md:-mb-10 md:-mr-10 lg:hidden"
+                    className="pointer-events-none -mb-7 -mr-7 ml-auto mt-2 block h-[170px] w-[155px] object-cover object-top md:-mb-10 md:-mr-10 lg:hidden"
                     style={{
                       WebkitMaskImage:
                         "radial-gradient(130% 120% at 92% 74%, black 40%, transparent 70%)",
