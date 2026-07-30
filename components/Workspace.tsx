@@ -170,7 +170,13 @@ function StateChip({ state }: { state: Row["state"] }) {
   return <span className="xv-chip xv-chip-handoff">→ human agent</span>;
 }
 
-function Rail({ collapsed = false }: { collapsed?: boolean }) {
+function Rail({
+  collapsed = false,
+  current = "Live review",
+}: {
+  collapsed?: boolean;
+  current?: string;
+}) {
   return (
     <div
       className={`flex flex-col justify-between border-r py-3.5 ${
@@ -199,7 +205,7 @@ function Rail({ collapsed = false }: { collapsed?: boolean }) {
 
         <div className="flex flex-col gap-[3px]">
           {NAV.map((item) => {
-            const active = item.label === "Live review";
+            const active = item.label === current;
             return (
               <span
                 key={item.label}
@@ -223,7 +229,7 @@ function Rail({ collapsed = false }: { collapsed?: boolean }) {
                 {item.badge ? (
                   collapsed ? (
                     <span
-                      className="absolute -right-[1px] -top-[1px] h-[7px] w-[7px] rounded-full"
+                      className="absolute right-[7px] top-[6px] h-[5px] w-[5px] rounded-full"
                       style={{ background: "var(--xv-mint)" }}
                       aria-hidden
                     />
@@ -835,6 +841,266 @@ function ProposalFrame() {
   );
 }
 
+/* --- The overview the owner opens in the morning ---------------------------
+   The console's own dashboard, rebuilt here so the numbers stay in step with
+   every other screen on the page: 1,284 conversations, split 917 / 254 / 113
+   across the three layers, $1,055 of cost at $0.82 a conversation.
+
+   The sparklines are trend only — the value beside each one is the content, so
+   they carry no axis and no tooltip. Total gets a neutral stroke because it is
+   not one of the three layers; only the layers wear the categorical hues, and
+   each tile is titled, so identity never rests on colour.
+------------------------------------------------------------------------- */
+
+function Spark({ points, color }: { points: string; color: string }) {
+  return (
+    <svg
+      viewBox="0 0 100 30"
+      preserveAspectRatio="none"
+      className="h-7 w-[86px] shrink-0"
+      aria-hidden
+    >
+      <polyline
+        points={points}
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
+      />
+    </svg>
+  );
+}
+
+const HEADLINE = [
+  {
+    k: "total",
+    v: "1,284",
+    sub: "37 open · 6.2 msg/conv",
+    dot: "var(--xv-faint)",
+    spark: "0,24 10,20 20,22 30,16 40,18 50,11 60,14 70,8 80,12 90,6 100,9",
+  },
+  {
+    k: "bot handled",
+    v: "71.4%",
+    sub: "917 · no agent time",
+    dot: "var(--c-machine-mark)",
+    spark: "0,26 10,22 20,24 30,18 40,15 50,17 60,11 70,9 80,12 90,7 100,5",
+  },
+  {
+    k: "agent assisted",
+    v: "19.8%",
+    sub: "254 · 78% drafts kept",
+    dot: "var(--c-pass-mark)",
+    spark: "0,14 10,17 20,13 30,18 40,15 50,20 60,16 70,19 80,14 90,18 100,15",
+  },
+  {
+    k: "your experts",
+    v: "8.8%",
+    sub: "113 · 4 in progress",
+    dot: "var(--c-human-mark)",
+    spark: "0,17 10,15 20,19 30,16 40,20 50,18 60,22 70,19 80,23 90,21 100,25",
+  },
+];
+
+const STRIP = [
+  { k: "Avg first reply", v: "8.4s", sub: "p50 6.1s · p90 19.4s" },
+  { k: "Customer msgs", v: "4,062", sub: "3.2 / conv" },
+  { k: "AI msgs", v: "5,180", sub: "4.0 / conv" },
+  { k: "Awaiting review", v: "12", sub: "of 1,284" },
+  { k: "Knowledge gaps", v: "6%", sub: "12 questions" },
+  { k: "Delivery failures", v: "0", sub: "0.0% of convs", good: true },
+];
+
+const MONEY = [
+  { k: "Total cost", v: "$1,055", sub: "all three layers" },
+  { k: "Cost / conversation", v: "$0.82", sub: "over 1,284 conversations" },
+  { k: "Model spend", v: "$36", sub: "3% of total · 118.7M tokens" },
+  { k: "Saved this month", v: "$4,180", sub: "−38% vs June" },
+];
+
+export function DashboardFrame() {
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Dashboard"
+      meta={
+        <>
+          <span className="xv-chip">All channels</span>
+          <span className="xv-chip xv-chip-good">updated 09:41</span>
+        </>
+      }
+    >
+      <div className="grid grid-cols-[56px_minmax(0,1fr)]">
+        <Rail collapsed current="Dashboard" />
+
+        <div className="min-w-0">
+          <div
+            className="flex flex-wrap items-start gap-x-4 gap-y-2 border-b px-4 py-3.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <div className="min-w-0">
+              <p className="text-[15px] font-semibold tracking-[-0.015em]">
+                Good morning, Dana
+              </p>
+              <p
+                className="mt-0.5 text-[11.5px]"
+                style={{ color: "var(--xv-muted)" }}
+              >
+                Here is how your support performed in this window.
+              </p>
+            </div>
+            <div className="ml-auto flex flex-wrap items-center gap-2">
+              <span className="xv-chip">From 30 Jul 08:00</span>
+              <span
+                className="rounded-full px-3 py-1.5 text-[11px] font-medium"
+                style={{
+                  background: "var(--xv-mint)",
+                  color: "var(--xv-on-mint)",
+                }}
+              >
+                Refresh
+              </span>
+            </div>
+          </div>
+
+          <div
+            className="flex flex-wrap items-center gap-1.5 border-b px-4 py-2.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            {["Overview", "Analyze", "Regression"].map((tab) => (
+              <span
+                key={tab}
+                className="rounded-full px-3 py-1 text-[11.5px] font-medium"
+                style={
+                  tab === "Overview"
+                    ? {
+                        background: "var(--xv-surface-2)",
+                        border: "1px solid var(--xv-border-strong)",
+                      }
+                    : { color: "var(--xv-muted)" }
+                }
+              >
+                {tab}
+              </span>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 px-4 py-3.5 lg:grid-cols-4">
+            {HEADLINE.map((tile) => (
+              <div
+                key={tile.k}
+                className="rounded-xl border px-3 py-2.5"
+                style={{
+                  borderColor: "var(--xv-border)",
+                  background: "var(--xv-surface)",
+                }}
+              >
+                <p
+                  className="flex items-center gap-1.5 font-mono text-[9.5px] uppercase tracking-[0.14em]"
+                  style={{ color: "var(--xv-muted)" }}
+                >
+                  <span
+                    aria-hidden
+                    className="h-[6px] w-[6px] shrink-0 rounded-full"
+                    style={{ background: tile.dot }}
+                  />
+                  {tile.k}
+                </p>
+                <div className="mt-1.5 flex items-end justify-between gap-2">
+                  <span className="text-[22px] font-semibold leading-none tracking-[-0.03em] tabular-nums">
+                    {tile.v}
+                  </span>
+                  <Spark points={tile.spark} color={tile.dot} />
+                </div>
+                <p
+                  className="mt-1.5 text-[10.5px] tabular-nums"
+                  style={{ color: "var(--xv-faint)" }}
+                >
+                  {tile.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="grid grid-cols-2 gap-x-4 gap-y-3 border-t px-4 py-3 sm:grid-cols-3 lg:grid-cols-6"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            {STRIP.map((cell) => (
+              <div key={cell.k} className="min-w-0">
+                <p
+                  className="truncate text-[10.5px]"
+                  style={{ color: "var(--xv-muted)" }}
+                >
+                  {cell.k}
+                </p>
+                <p className="mt-0.5 flex items-center gap-1.5 text-[15px] font-semibold tracking-[-0.02em] tabular-nums">
+                  {cell.good ? (
+                    <span aria-hidden style={{ color: "var(--xv-good)" }}>
+                      ✓
+                    </span>
+                  ) : null}
+                  {cell.v}
+                </p>
+                <p
+                  className="mt-0.5 truncate text-[10px] tabular-nums"
+                  style={{ color: "var(--xv-faint)" }}
+                >
+                  {cell.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="grid grid-cols-2 gap-2 border-t px-4 py-3.5 lg:grid-cols-4"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            {MONEY.map((tile) => (
+              <div
+                key={tile.k}
+                className="rounded-xl px-3 py-2.5"
+                style={{ background: "var(--xv-surface-2)" }}
+              >
+                <p
+                  className="text-[10.5px]"
+                  style={{ color: "var(--xv-muted)" }}
+                >
+                  {tile.k}
+                </p>
+                <p
+                  className="mt-1 text-[20px] font-semibold leading-none tracking-[-0.03em] tabular-nums"
+                  style={{ color: "var(--c-machine)" }}
+                >
+                  {tile.v}
+                </p>
+                <p
+                  className="mt-1.5 text-[10px] tabular-nums"
+                  style={{ color: "var(--xv-faint)" }}
+                >
+                  {tile.sub}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div
+            className="border-t px-4 py-2.5 text-[11px]"
+            style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
+          >
+            Model spend is a list-price estimate and can run a little higher on
+            regional inference — reconcile against your cloud bill before you
+            report it. Everything else is measured, per layer, from your own
+            conversations.
+          </div>
+        </div>
+      </div>
+    </Frame>
+  );
+}
+
 /* --- Where the money goes --------------------------------------------------
    A composition question ("which layer resolved what, and at what cost"), so:
    one stacked bar for the split, plus a labelled row per layer carrying the
@@ -1434,6 +1700,14 @@ export function Workspace() {
         {/* On a phone the frames need every pixel, so the dotted panel bleeds
             past the section padding and keeps only a hairline of its own. */}
         <Reveal className="light-dots -mx-4 mt-12 rounded-2xl p-2 sm:mx-0 sm:p-4 md:mt-14 md:p-8">
+          <FrameCaption layer="Overview" accent="#4a2f9c">
+            The morning view — volume, where it was resolved, and what it cost,
+            all in one window.
+          </FrameCaption>
+          <div className="app-zoom-sm mb-8 md:mb-10">
+            <DashboardFrame />
+          </div>
+
           <FrameCaption layer="Layer 01" accent="#0d4f78">
             AI Bot — every automated answer with the sources behind it, ready to
             review.
