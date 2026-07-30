@@ -1143,24 +1143,25 @@ export function CostFrame() {
       meta={<span className="xv-chip xv-chip-good">−38% vs June</span>}
     >
       <div className="flex flex-1 flex-col px-4 py-3.5">
-        <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
-          {[
-            { v: "1,284", k: "conversations" },
-            { v: "$0.82", k: "avg per conversation" },
-            { v: "$4,180", k: "saved this month" },
-          ].map((stat) => (
-            <span key={stat.k}>
-              <span className="block text-[21px] font-semibold tracking-[-0.02em] tabular-nums">
-                {stat.v}
-              </span>
-              <span
-                className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.12em]"
-                style={{ color: "var(--xv-muted)" }}
-              >
-                {stat.k}
-              </span>
-            </span>
-          ))}
+        {/* The dashboard already carries the totals. What only this screen can
+            say is the spread: $4.60 against $0.04 for the same question. */}
+        <div className="flex flex-wrap items-end gap-x-6 gap-y-2">
+          <span className="text-[30px] font-semibold leading-none tracking-[-0.035em] tabular-nums">
+            115×
+          </span>
+          <span
+            className="max-w-[30ch] text-[11.5px] leading-snug"
+            style={{ color: "var(--xv-muted)" }}
+          >
+            between the cheapest layer that can resolve a request and the most
+            expensive one
+          </span>
+          <span
+            className="ml-auto font-mono text-[10.5px] tabular-nums"
+            style={{ color: "var(--xv-faint)" }}
+          >
+            July · 1,284 conversations
+          </span>
         </div>
 
         {/* the split: 2px surface gaps between segments, ends anchored */}

@@ -21,9 +21,9 @@ export default function Home() {
         <Hero />
         <TrustedBy />
         <Logos />
+        <Showcase />
         <Problem />
         <Layers />
-        <Showcase />
         <Workspace />
         <Flow />
         <Deploy />
