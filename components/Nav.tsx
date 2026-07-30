@@ -10,7 +10,7 @@ const links = [
 
 export function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-line bg-black/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 w-full max-w-[1120px] items-center gap-8 px-6 md:px-8">
         <Logo />
         <div className="ml-auto hidden items-center gap-7 lg:flex">
@@ -26,7 +26,7 @@ export function Nav() {
         </div>
         <a
           href="#demo"
-          className="ml-auto inline-flex h-9 items-center rounded-full bg-white px-4 text-[13px] font-medium text-black transition-colors hover:bg-white/88 lg:ml-0"
+          className="ml-auto inline-flex h-9 items-center rounded-full bg-fg px-4 text-[13px] font-medium text-ink transition-colors hover:bg-fg/85 lg:ml-0"
         >
           Book a consultation
         </a>

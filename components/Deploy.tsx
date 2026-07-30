@@ -1,6 +1,6 @@
 import { Section, SectionHead, Bullets } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
-import { ControlFrames } from "@/components/Workspace";
+import { ControlFrames, RulesFrame } from "@/components/Workspace";
 
 const options = [
   {
@@ -32,6 +32,7 @@ export function Deploy() {
   return (
     <Section id="deploy">
       <SectionHead
+        accent="var(--c-learn)"
         eyebrow="Oversight"
         title="AI support with human oversight."
         lead="Deployed in our managed environment or inside your own cloud account — either way the controls, the audit trail and the reporting are yours."
@@ -58,9 +59,26 @@ export function Deploy() {
         ))}
       </div>
 
+      <Reveal delay={110} className="mt-14 md:mt-16">
+        <p className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <span
+            className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
+            style={{ color: "var(--c-learn)" }}
+          >
+            Your rules
+          </span>
+          <span className="text-[13px] font-medium tracking-[-0.01em]">
+            When the AI must stop, and what it may never touch.
+          </span>
+        </p>
+        <div className="app-zoom-sm">
+          <RulesFrame />
+        </div>
+      </Reveal>
+
       <Reveal delay={120} className="mt-14 md:mt-16">
         <p className="mb-6 max-w-[64ch] text-[14px] leading-relaxed text-fg-muted">
-          Two of those controls have their own screens: the release gate that
+          Two more controls have their own screens: the release gate that
           replays your labelled conversations before any change goes live, and
           the fixes the system writes for its own gaps — each waiting for a
           human yes.

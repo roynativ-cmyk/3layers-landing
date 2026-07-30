@@ -2,35 +2,55 @@
 
 /* ---------------------------------------------------------------------------
    3layers.ai — foundations
-   Monochrome by design: true black surface, white type, hairline structure.
-   No accent hue — emphasis comes from contrast, spacing and motion.
+   Light by design: warm paper surface, white cards, ink type, hairline
+   structure. The signal palette carries the colour — three layers, three hues,
+   used on the cards, the numbers and the chips so the page reads as a product
+   rather than a brochure.
 --------------------------------------------------------------------------- */
 
 :root {
-  --ink: #000000;
-  --panel: #09090a;
-  --panel-2: #0e0e11;
-  --line: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.22);
-  --fg: #f6f6f7;
-  --fg-muted: #a2a2a8;
-  --fg-dim: #68686e;
+  --ink: #f7f6f2; /* the page: warm paper */
+  --panel: #ffffff; /* cards sit above it */
+  --panel-2: #fbfaf7;
+  --line: rgba(12, 22, 30, 0.1);
+  --line-strong: rgba(12, 22, 30, 0.22);
+  --fg: #0f1a22;
+  --fg-muted: #4a5b66; /* 6.3:1 on paper */
+  --fg-dim: #5d6d78; /* 4.6:1 on paper — small mono labels */
 
   /* Signal palette. Colour carries meaning here — it is never decoration.
      machine = what the agent does · human = where a person steps in
-     learn   = what the system improves · pass/fail = regression verdicts */
-  --c-machine: #6ec6ff;
-  --c-human: #ffb25c;
-  --c-learn: #b79bff;
-  --c-pass: #5fd79b;
-  --c-fail: #ff7a6b;
+     learn   = what the system improves · pass/fail = regression verdicts
+     Each hue comes at ink strength (type, marks, rules) and as a soft wash
+     (card tints, chip backgrounds). Both are checked against the paper. */
+  --c-machine: #0d4f78;
+  --c-human: #8a4c05;
+  --c-learn: #4a2f9c;
+  --c-pass: #14724c;
+  --c-fail: #9c2d1f;
 
-  /* the one light surface on the page */
-  --cream: #f2f1ec;
-  --cream-2: #e8e6df;
-  --cream-ink: #0c0c0d;
-  --cream-muted: #55555c;
-  --cream-line: rgba(12, 12, 13, 0.12);
+  --c-machine-soft: #e2eff9;
+  --c-human-soft: #fbeed8;
+  --c-learn-soft: #eae4fc;
+  --c-pass-soft: #dcf0e5;
+  --c-fail-soft: #fce3df;
+
+  /* Chart-fill strength for the same three hues. The ink versions above are
+     tuned for type and fail as fills (too dark, too little chroma); this triplet
+     passes all six checks on a white console surface — lightness band, chroma
+     floor, adjacent-pair CVD separation (ΔE 10.7 worst), normal-vision
+     separation and 3:1 contrast. Values are directly labelled wherever these
+     are used, so identity never rests on colour alone. */
+  --c-machine-mark: #3182ce;
+  --c-pass-mark: #12a074;
+  --c-human-mark: #c17505;
+
+  /* the one deeper band on the page: the product section */
+  --cream: #edeae2;
+  --cream-2: #e4e0d6;
+  --cream-ink: #0f1a22;
+  --cream-muted: #4a5b66;
+  --cream-line: rgba(12, 22, 30, 0.14);
 
   /* one shared beat for every animation on the page */
   --cycle: 24s; /* two hero scenes share it: chat, then behind the scenes */
@@ -50,6 +70,11 @@
   --color-learn: var(--c-learn);
   --color-pass: var(--c-pass);
   --color-fail: var(--c-fail);
+  --color-machine-soft: var(--c-machine-soft);
+  --color-human-soft: var(--c-human-soft);
+  --color-learn-soft: var(--c-learn-soft);
+  --color-pass-soft: var(--c-pass-soft);
+  --color-fail-soft: var(--c-fail-soft);
   --color-cream: var(--cream);
   --color-cream-2: var(--cream-2);
   --color-cream-ink: var(--cream-ink);
@@ -74,12 +99,12 @@ body {
 }
 
 ::selection {
-  background: #ffffff;
-  color: #000000;
+  background: var(--fg);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.7);
+  outline: 2px solid var(--c-machine);
   outline-offset: 3px;
 }
 
@@ -87,8 +112,8 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    linear-gradient(to right, rgba(12, 22, 30, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(12, 22, 30, 0.045) 1px, transparent 1px);
   background-size: 88px 88px;
   background-position: center top;
 }
@@ -98,14 +123,20 @@ body {
   mask-image: linear-gradient(to bottom, #000 0%, transparent 72%);
 }
 
+/* Two soft washes from the top — the layer hues, at the edge of visible. This
+   is where most of the page's warmth comes from, so it is tinted, not neutral. */
 .glow {
-  /* one soft neutral light from the top — no tinted gradients */
-  background: radial-gradient(
-    120% 70% at 50% -10%,
-    rgba(255, 255, 255, 0.06) 0%,
-    rgba(255, 255, 255, 0.02) 38%,
-    transparent 72%
-  );
+  background:
+    radial-gradient(
+      82% 58% at 6% -12%,
+      color-mix(in srgb, var(--c-machine) 13%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      74% 52% at 94% -8%,
+      color-mix(in srgb, var(--c-pass) 11%, transparent) 0%,
+      transparent 64%
+    );
 }
 
 /* accent wash for a card, driven by its own --accent */
@@ -117,18 +148,17 @@ body {
   border-radius: inherit;
   background: radial-gradient(
     72% 60% at 0% 0%,
-    color-mix(in srgb, var(--accent, #ffffff) 12%, transparent) 0%,
+    color-mix(in srgb, var(--accent, var(--fg)) 9%, transparent) 0%,
     transparent 62%
   );
 }
 
 .panel {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.035),
-    rgba(255, 255, 255, 0.012)
-  );
+  background: linear-gradient(180deg, #ffffff, var(--panel-2));
   border: 1px solid var(--line);
+  box-shadow:
+    0 1px 2px rgba(13, 42, 60, 0.04),
+    0 10px 30px -18px rgba(13, 42, 60, 0.18);
 }
 
 /* --- scroll reveal -------------------------------------------------------- */
@@ -297,7 +327,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(12, 22, 30, 0.42);
   animation: cwDot 1.1s ease-in-out infinite;
 }
 
@@ -329,11 +359,11 @@ body {
 
 @keyframes cwNote1 {
   0%,
-  17% {
+  15% {
     opacity: 0;
     transform: translateY(6px);
   }
-  20%,
+  17.5%,
   42% {
     opacity: 1;
     transform: none;
@@ -347,11 +377,11 @@ body {
 
 @keyframes cwNote2 {
   0%,
-  23% {
+  19% {
     opacity: 0;
     transform: translateY(6px);
   }
-  26%,
+  21.5%,
   42% {
     opacity: 1;
     transform: none;
@@ -365,11 +395,11 @@ body {
 
 @keyframes cwNote3 {
   0%,
-  29% {
+  23% {
     opacity: 0;
     transform: translateY(6px);
   }
-  32%,
+  25.5%,
   42% {
     opacity: 1;
     transform: none;
@@ -474,7 +504,7 @@ body {
   position: relative;
   height: 3px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(12, 22, 30, 0.08);
   overflow: hidden;
 }
 
@@ -570,14 +600,14 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(12, 22, 30, 0.12);
   animation: trCell var(--cycle) linear infinite;
 }
 
 @keyframes trCell {
   0%,
   66% {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(12, 22, 30, 0.12);
   }
   70%,
   92% {
@@ -585,7 +615,7 @@ body {
   }
   95%,
   100% {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(12, 22, 30, 0.12);
   }
 }
 
@@ -671,8 +701,11 @@ body {
 /* The brand kits ship these as mid-grey monochrome wordmarks, so they need no
    filtering to sit on black — only a lift on hover. */
 
+/* The kits ship these as mid-grey (#9b9b9c) wordmarks, so on paper they need
+   darkening rather than brightening to carry weight. */
 .brand-img {
-  opacity: 0.5;
+  opacity: 0.72;
+  filter: brightness(0.72);
   transition:
     opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
     filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
@@ -680,7 +713,7 @@ body {
 
 .brand:hover .brand-img {
   opacity: 1;
-  filter: brightness(1.7);
+  filter: brightness(0.42);
 }
 
 /* the logo wall moves: one continuous track, three copies, paused on hover */
@@ -717,9 +750,10 @@ body {
   }
 }
 
-/* --- the light surface ---------------------------------------------------- */
-/* One inverted section in the middle of the page: the product itself, shown
-   on a warm paper surface so it reads as software rather than marketing. */
+/* --- the product band ----------------------------------------------------- */
+/* The page is paper throughout, so this section separates itself by going one
+   step deeper rather than by inverting: the console screens read as software
+   pinned to a board. */
 
 .light {
   background: var(--cream);
@@ -845,28 +879,28 @@ body {
 }
 
 .chip-pass {
-  background: color-mix(in srgb, var(--c-pass) 20%, transparent);
-  color: #14724c;
+  background: var(--c-pass-soft);
+  color: var(--c-pass);
 }
 
 .chip-fail {
-  background: color-mix(in srgb, var(--c-fail) 22%, transparent);
-  color: #9c2d1f;
+  background: var(--c-fail-soft);
+  color: var(--c-fail);
 }
 
 .chip-human {
-  background: color-mix(in srgb, var(--c-human) 26%, transparent);
-  color: #7a4405;
+  background: var(--c-human-soft);
+  color: var(--c-human);
 }
 
 .chip-machine {
-  background: color-mix(in srgb, var(--c-machine) 22%, transparent);
-  color: #0d4f78;
+  background: var(--c-machine-soft);
+  color: var(--c-machine);
 }
 
 .chip-learn {
-  background: color-mix(in srgb, var(--c-learn) 24%, transparent);
-  color: #4a2f9c;
+  background: var(--c-learn-soft);
+  color: var(--c-learn);
 }
 
 .chip-neutral {

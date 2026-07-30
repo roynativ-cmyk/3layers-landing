@@ -1,8 +1,8 @@
 /**
  * Trusted by — a continuously moving logo wall.
  *
- * Monochrome wordmarks from each brand's own kit (grey #9b9b9c, so they sit on
- * the black surface as-is). Each one brightens on hover, which also pauses the
+ * Monochrome wordmarks from each brand's own kit (grey #9b9b9c, darkened in CSS
+ * to carry weight on paper). Each one deepens on hover, which also pauses the
  * track. Heights are set per mark so they carry the same optical weight rather
  * than the same pixel height.
  */

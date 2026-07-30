@@ -1,5 +1,10 @@
+import { Frame } from "@/components/Workspace";
+
 /**
- * The hero visual: two scenes on one 24s beat.
+ * The hero visual: the console itself, with a conversation running live.
+ *
+ * Two scenes share one 24s beat inside real console chrome, so the first thing
+ * on the page is the product rather than a diagram of it.
  *
  *   Scene A — the conversation, with each layer reporting what it did.
  *   Scene B — the same turn from behind: what was retrieved, what was checked,
@@ -66,10 +71,16 @@ function SceneHeader({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <span className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.2em] text-fg-dim">
+      <span
+        className="flex items-center gap-2.5 font-mono text-[10px] uppercase tracking-[0.16em]"
+        style={{ color: "var(--xv-muted)" }}
+      >
         {left}
       </span>
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg-dim">
+      <span
+        className="font-mono text-[10px] uppercase tracking-[0.16em]"
+        style={{ color: "var(--xv-faint)" }}
+      >
         {right}
       </span>
     </div>
@@ -91,14 +102,22 @@ function ChatScene() {
 
       <div className="mt-6 min-h-[126px] space-y-2.5">
         <p
-          className="cw-msg w-fit max-w-[88%] rounded-2xl rounded-bl-md bg-white/[0.07] px-3.5 py-2 text-[12.5px] leading-relaxed text-fg"
+          className="cw-msg w-fit max-w-[88%] rounded-2xl rounded-bl-md px-3.5 py-2 text-[12.5px] leading-relaxed"
+          style={{
+            background: "var(--xv-cust-bg)",
+            color: "var(--xv-cust-fg)",
+          }}
           data-i="1"
         >
           I want to cancel and get my money back.
         </p>
 
         <span
-          className="cw-typing ml-auto flex w-fit items-center gap-1 rounded-full border border-line px-2.5 py-2"
+          className="cw-typing ml-auto flex w-fit items-center gap-1 rounded-full px-2.5 py-2"
+          style={{
+            background: "var(--xv-surface-2)",
+            border: "1px solid var(--xv-border)",
+          }}
           aria-hidden
         >
           <i />
@@ -107,7 +126,12 @@ function ChatScene() {
         </span>
 
         <p
-          className="cw-msg ml-auto w-fit max-w-[94%] rounded-2xl rounded-br-md border border-line bg-white/[0.03] px-3.5 py-2 text-[12.5px] leading-relaxed text-fg-muted"
+          className="cw-msg ml-auto w-fit max-w-[94%] rounded-2xl rounded-br-md border px-3.5 py-2 text-[12.5px] leading-relaxed"
+          style={{
+            background: "var(--xv-ai-bg)",
+            color: "var(--xv-ai-fg)",
+            borderColor: "var(--xv-ai-border)",
+          }}
           data-i="2"
         >
           Of course — may I ask what&apos;s prompting it? If it&apos;s a
@@ -116,7 +140,10 @@ function ChatScene() {
         </p>
       </div>
 
-      <div className="mt-6 space-y-2.5 border-t border-line pt-5">
+      <div
+        className="mt-6 space-y-2.5 border-t pt-5"
+        style={{ borderColor: "var(--xv-border)" }}
+      >
         {NOTES.map((note, i) => (
           <div
             key={note.n}
@@ -134,8 +161,13 @@ function ChatScene() {
             >
               {note.n}
             </span>
-            <span className="min-w-0 text-[12px] leading-relaxed text-fg-muted">
-              <span className="font-medium text-fg">{note.label}</span>
+            <span
+              className="min-w-0 text-[12px] leading-relaxed"
+              style={{ color: "var(--xv-text-2)" }}
+            >
+              <span className="font-semibold" style={{ color: "var(--xv-text)" }}>
+                {note.label}
+              </span>
               {" — "}
               {note.text}
             </span>
@@ -166,7 +198,7 @@ function TraceScene() {
               >
                 {stage.k}
               </span>
-              <span className="text-[12px] font-medium tracking-[-0.01em]">
+              <span className="text-[12px] font-semibold tracking-[-0.01em]">
                 {stage.value}
               </span>
             </div>
@@ -187,12 +219,18 @@ function TraceScene() {
                     aria-hidden
                   />
                 ))}
-                <span className="ml-1 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-dim">
+                <span
+                  className="ml-1 font-mono text-[10px] uppercase tracking-[0.12em]"
+                  style={{ color: "var(--xv-faint)" }}
+                >
                   14 rules checked
                 </span>
               </div>
             ) : stage.detail ? (
-              <p className="mt-2 text-[11.5px] leading-relaxed text-fg-dim">
+              <p
+                className="mt-2 text-[11.5px] leading-relaxed"
+                style={{ color: "var(--xv-muted)" }}
+              >
                 {stage.detail}
               </p>
             ) : null}
@@ -205,9 +243,15 @@ function TraceScene() {
 
 export function LoopVisual() {
   return (
-    <div className="panel relative grid rounded-[20px] p-5 md:p-6">
-      <ChatScene />
-      <TraceScene />
-    </div>
+    <Frame
+      app="3layers.ai"
+      title="Live review"
+      meta={<span className="xv-chip xv-chip-good">1,284 today</span>}
+    >
+      <div className="grid p-5 md:p-6">
+        <ChatScene />
+        <TraceScene />
+      </div>
+    </Frame>
   );
 }

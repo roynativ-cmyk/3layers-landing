@@ -1,5 +1,16 @@
 import { Section, SectionHead } from "@/components/ui";
 import { Reveal } from "@/components/Reveal";
+import { SourcesFrame } from "@/components/Workspace";
+
+/* the palette walks down the six steps, so no two neighbours read the same */
+const HUES = [
+  "var(--c-machine)",
+  "var(--c-machine)",
+  "var(--c-pass)",
+  "var(--c-pass)",
+  "var(--c-human)",
+  "var(--c-learn)",
+];
 
 const steps = [
   {
@@ -33,6 +44,7 @@ export function Flow() {
   return (
     <Section id="how">
       <SectionHead
+        accent="var(--c-pass)"
         eyebrow="How 3Layers.ai works"
         title="From setup to launch."
         lead="You do not need to automate your entire support operation on day one. We start with the repetitive conversations that cost the most."
@@ -44,10 +56,13 @@ export function Flow() {
             key={step.k}
             as="li"
             delay={i * 70}
-            className="relative bg-ink p-7 md:p-8"
+            className="relative bg-panel p-7 md:p-8"
           >
             <div className="flex items-center gap-3">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-fg-dim">
+              <span
+                className="font-mono text-[10px] uppercase tracking-[0.2em]"
+                style={{ color: HUES[i] }}
+              >
                 step {i + 1}
               </span>
               <span aria-hidden className="flow-dash h-px flex-1 opacity-60" />
@@ -68,6 +83,23 @@ export function Flow() {
           channel, or one high-volume use case, with the savings measured from
           day one.
         </p>
+      </Reveal>
+
+      <Reveal delay={140} className="mt-14 md:mt-16">
+        <p className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <span
+            className="font-mono text-[10px] whitespace-nowrap uppercase tracking-[0.2em]"
+            style={{ color: "var(--c-pass)" }}
+          >
+            Step 2, on screen
+          </span>
+          <span className="text-[13px] font-medium tracking-[-0.01em]">
+            Everything the AI is allowed to know, and nothing else.
+          </span>
+        </p>
+        <div className="app-zoom-sm">
+          <SourcesFrame />
+        </div>
       </Reveal>
     </Section>
   );

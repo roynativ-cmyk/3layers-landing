@@ -23,7 +23,7 @@ const NAV: { label: string; glyph: RailGlyph; badge?: string }[] = [
   { label: "Settings", glyph: "settings" },
 ];
 
-function Frame({
+export function Frame({
   app,
   title,
   meta,
@@ -836,6 +836,317 @@ function ProposalFrame() {
   );
 }
 
+/* --- Where the money goes --------------------------------------------------
+   A composition question ("which layer resolved what, and at what cost"), so:
+   one stacked bar for the split, plus a labelled row per layer carrying the
+   numbers. Fills use the chart-strength hues; every value is directly labelled
+   and repeated in the rows below, so nothing here is encoded by colour alone.
+------------------------------------------------------------------------- */
+
+const COST_LAYERS = [
+  {
+    label: "AI Bot",
+    n: "01",
+    share: 71,
+    cost: "$0.04",
+    total: "$36",
+    mark: "var(--c-machine-mark)",
+  },
+  {
+    label: "Agent Assist",
+    n: "02",
+    share: 20,
+    cost: "$1.90",
+    total: "$488",
+    mark: "var(--c-pass-mark)",
+  },
+  {
+    label: "Your experts",
+    n: "03",
+    share: 9,
+    cost: "$4.60",
+    total: "$531",
+    mark: "var(--c-human-mark)",
+  },
+];
+
+export function CostFrame() {
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Cost report · July"
+      meta={<span className="xv-chip xv-chip-good">−38% vs June</span>}
+    >
+      <div className="flex flex-1 flex-col px-4 py-3.5">
+        <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
+          {[
+            { v: "1,284", k: "conversations" },
+            { v: "$0.82", k: "avg per conversation" },
+            { v: "$4,180", k: "saved this month" },
+          ].map((stat) => (
+            <span key={stat.k}>
+              <span className="block text-[21px] font-semibold tracking-[-0.02em] tabular-nums">
+                {stat.v}
+              </span>
+              <span
+                className="mt-0.5 block font-mono text-[10px] uppercase tracking-[0.12em]"
+                style={{ color: "var(--xv-muted)" }}
+              >
+                {stat.k}
+              </span>
+            </span>
+          ))}
+        </div>
+
+        {/* the split: 2px surface gaps between segments, ends anchored */}
+        <div
+          className="mt-4 flex h-[10px] gap-[2px] overflow-hidden rounded"
+          role="img"
+          aria-label="Resolved by layer: AI Bot 71%, Agent Assist 20%, your experts 9%"
+        >
+          {COST_LAYERS.map((layer) => (
+            <span
+              key={layer.label}
+              style={{ background: layer.mark, width: `${layer.share}%` }}
+            />
+          ))}
+        </div>
+
+        <ul className="mt-3.5">
+          {COST_LAYERS.map((layer) => (
+            <li
+              key={layer.label}
+              className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b py-2 last:border-b-0"
+              style={{ borderColor: "var(--xv-border)" }}
+            >
+              <span
+                aria-hidden
+                className="h-[9px] w-[9px] shrink-0 rounded-[2px]"
+                style={{ background: layer.mark }}
+              />
+              <span
+                className="font-mono text-[10.5px]"
+                style={{ color: "var(--xv-faint)" }}
+              >
+                {layer.n}
+              </span>
+              <span className="text-[12px] font-medium">{layer.label}</span>
+              <span
+                className="ml-auto text-[12px] font-semibold tabular-nums"
+                style={{ color: "var(--xv-text)" }}
+              >
+                {layer.share}%
+              </span>
+              <span
+                className="w-[54px] text-right text-[11.5px] tabular-nums"
+                style={{ color: "var(--xv-muted)" }}
+              >
+                {layer.cost}
+              </span>
+              <span
+                className="w-[52px] text-right text-[11.5px] tabular-nums"
+                style={{ color: "var(--xv-muted)" }}
+              >
+                {layer.total}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <div
+          className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-1 border-t pt-2.5 text-[11px]"
+          style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
+        >
+          <span>share of resolved · cost per conversation · month to date</span>
+          <span className="ml-auto font-mono text-[10.5px]">
+            same question, three prices
+          </span>
+        </div>
+      </div>
+    </Frame>
+  );
+}
+
+/* --- What the AI is allowed to know ---------------------------------------- */
+
+export function SourcesFrame() {
+  const sources = [
+    { name: "Help center", kind: "184 articles", state: "synced" },
+    { name: "Product & pricing pages", kind: "96 pages", state: "synced" },
+    { name: "Billing policies", kind: "41 documents", state: "agents only" },
+    { name: "Internal procedures", kind: "78 documents", state: "agents only" },
+    { name: "Community forum", kind: "not approved", state: "off" },
+  ];
+
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Knowledge sources"
+      meta={<span className="xv-chip">synced 09:12</span>}
+    >
+      <div
+        className="flex flex-wrap items-center gap-x-5 gap-y-1.5 border-b px-4 py-3 text-[11.5px]"
+        style={{ borderColor: "var(--xv-border)" }}
+      >
+        <span>
+          <strong className="text-[15px] font-semibold tabular-nums">412</strong>{" "}
+          <span style={{ color: "var(--xv-muted)" }}>approved passages</span>
+        </span>
+        <span>
+          <strong className="text-[15px] font-semibold tabular-nums">94%</strong>{" "}
+          <span style={{ color: "var(--xv-muted)" }}>
+            of last week had a source
+          </span>
+        </span>
+        <span className="xv-chip xv-chip-warn ml-auto">6% → knowledge gap</span>
+      </div>
+
+      <ul className="flex-1">
+        {sources.map((source) => (
+          <li
+            key={source.name}
+            className={`flex flex-wrap items-center gap-x-3 gap-y-1 border-b px-4 py-2.5 ${
+              source.state === "off" ? "opacity-55" : ""
+            }`}
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <span
+              aria-hidden
+              className="h-[7px] w-[7px] shrink-0 rounded-full"
+              style={{
+                background:
+                  source.state === "off"
+                    ? "var(--xv-faint)"
+                    : "var(--c-pass-mark)",
+              }}
+            />
+            <span className="text-[12px] font-medium">{source.name}</span>
+            <span className="text-[11px]" style={{ color: "var(--xv-muted)" }}>
+              {source.kind}
+            </span>
+            <span
+              className={`ml-auto xv-chip ${
+                source.state === "synced"
+                  ? "xv-chip-good"
+                  : source.state === "off"
+                    ? ""
+                    : "xv-chip-info"
+              }`}
+            >
+              {source.state}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div
+        className="border-t px-4 py-2.5 text-[11px]"
+        style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
+      >
+        You choose every source and who it answers for. If a claim is not in one
+        of them, the AI does not make it — it asks, or it escalates.
+      </div>
+    </Frame>
+  );
+}
+
+/* --- The rules the platform is held to ------------------------------------- */
+
+export function RulesFrame() {
+  const rules = [
+    {
+      when: "confidence < 0.75",
+      then: "hand to your team",
+      chip: "handoff",
+      tone: "handoff",
+    },
+    {
+      when: "topic · cancellation",
+      then: "ask the reason first, then your team",
+      chip: "handoff",
+      tone: "handoff",
+    },
+    {
+      when: "topic · legal, medical, tax",
+      then: "never answer",
+      chip: "blocked",
+      tone: "danger",
+    },
+    {
+      when: "customer asks for a person",
+      then: "hand over immediately",
+      chip: "handoff",
+      tone: "handoff",
+    },
+    {
+      when: "sentiment · hostile",
+      then: "route to your team lead",
+      chip: "priority",
+      tone: "warn",
+    },
+    {
+      when: "account action · refund",
+      then: "needs a human approval",
+      chip: "approval",
+      tone: "info",
+    },
+  ];
+
+  return (
+    <Frame
+      app="3layers.ai"
+      title="Escalation rules"
+      meta={<span className="xv-chip xv-chip-info">12 active</span>}
+    >
+      <div
+        className="border-b px-4 py-3 text-[11.5px]"
+        style={{ borderColor: "var(--xv-border)", color: "var(--xv-muted)" }}
+      >
+        Written in your words, checked on every single turn — the trace on each
+        conversation shows which of these fired.
+      </div>
+
+      <ul className="flex-1">
+        {rules.map((rule) => (
+          <li
+            key={rule.when}
+            className="flex flex-wrap items-center gap-x-3 gap-y-1 border-b px-4 py-2.5"
+            style={{ borderColor: "var(--xv-border)" }}
+          >
+            <span
+              className="font-mono text-[11px]"
+              style={{ color: "var(--xv-text-2)" }}
+            >
+              {rule.when}
+            </span>
+            <span aria-hidden style={{ color: "var(--xv-faint)" }}>
+              →
+            </span>
+            <span className="text-[12px] font-medium">{rule.then}</span>
+            <span className={`ml-auto xv-chip xv-chip-${rule.tone}`}>
+              {rule.chip}
+            </span>
+          </li>
+        ))}
+      </ul>
+
+      <div
+        className="flex flex-wrap items-center gap-2 border-t px-4 py-2.5"
+        style={{ borderColor: "var(--xv-border)" }}
+      >
+        <span className="xv-chip xv-chip-good">every decision logged</span>
+        <span className="xv-chip">editable by your team</span>
+        <span
+          className="ml-auto font-mono text-[10.5px]"
+          style={{ color: "var(--xv-faint)" }}
+        >
+          14 rules checked · 09:41
+        </span>
+      </div>
+    </Frame>
+  );
+}
+
 /* --- Layer 02: what the copilot handed the agent --------------------------- */
 
 function AssistFrame() {
@@ -1077,7 +1388,9 @@ export function ControlFrames() {
             Nothing ships until your own history passes.
           </span>
         </p>
-        <RegressionFrame />
+        <div className="app-zoom-sm flex flex-1 flex-col">
+          <RegressionFrame />
+        </div>
       </div>
       <div className="flex flex-col">
         <p className="mb-3 flex items-baseline gap-3">
@@ -1091,7 +1404,9 @@ export function ControlFrames() {
             The system proposes the fix; a person approves it.
           </span>
         </p>
-        <ProposalFrame />
+        <div className="app-zoom-sm flex flex-1 flex-col">
+          <ProposalFrame />
+        </div>
       </div>
     </div>
   );

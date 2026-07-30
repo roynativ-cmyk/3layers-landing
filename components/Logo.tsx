@@ -1,9 +1,9 @@
 /**
  * The mark: a mirrored 3 built from two stacked bowls — three strokes, two
  * turns — closing into a chat bubble with a tail, set inside a hairline
- * rounded tile. Everything is drawn in currentColor so the same glyph works on
- * the black page and on the console's light rail. app/icon.svg is the same
- * artwork as the site icon.
+ * rounded tile. Everything is drawn in currentColor so the same glyph works in
+ * the page's ink and on the console's rail. app/icon.svg is the same artwork as
+ * the site icon.
  */
 export function Mark({ className = "h-6 w-6" }: { className?: string }) {
   return (

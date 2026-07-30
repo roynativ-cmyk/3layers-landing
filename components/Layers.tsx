@@ -5,7 +5,9 @@ const layers = [
   {
     n: "01",
     accent: "var(--c-machine)",
-    name: "AI Bot: instant answers at the lowest cost",
+    soft: "var(--c-machine-soft)",
+    label: "AI Bot",
+    name: "Instant answers at the lowest cost",
     claim: "Resolve high-volume, low-complexity requests without using agent time.",
     body: "The AI Bot handles repetitive and common customer requests instantly, 24 hours a day. It learns from your website, help center, product information, internal procedures and approved support content — and it answers only from what you approved.",
     bullets: [
@@ -18,7 +20,9 @@ const layers = [
   {
     n: "02",
     accent: "var(--c-pass)",
-    name: "AI Agent Assist: make every agent faster",
+    soft: "var(--c-pass-soft)",
+    label: "AI Agent Assist",
+    name: "Make every agent faster",
     claim: "Your agents stop searching, typing and repeating the same work.",
     body: "When a human agent is needed, the AI copilot works alongside your team. It understands the conversation, searches your approved knowledge sources and recommends an accurate response in real time — with the summary and the next best action already prepared.",
     bullets: [
@@ -31,7 +35,9 @@ const layers = [
   {
     n: "03",
     accent: "var(--c-human)",
-    name: "Your Human Experts: escalation only when it is real",
+    soft: "var(--c-human-soft)",
+    label: "Your Human Experts",
+    name: "Escalation only when it is real",
     claim: "The AI knows when to stop — and hands the conversation to your own team.",
     body: "Some conversations need judgment, empathy, negotiation or deeper technical understanding. The platform recognises those cases — by confidence, topic, sentiment and your own rules — and escalates them to your support team, who arrive with the full history and a prepared summary instead of a cold ticket. The people in this layer are yours; what we provide is the intelligence that decides when they are genuinely needed.",
     bullets: [
@@ -59,6 +65,14 @@ export function Layers() {
             delay={i * 70}
             className="panel tint relative overflow-hidden rounded-2xl p-7 md:p-10"
           >
+            {/* the layer's hue, capping the card */}
+            <span
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-[3px]"
+              style={{
+                background: `linear-gradient(90deg, ${layer.accent}, color-mix(in srgb, ${layer.accent} 12%, transparent))`,
+              }}
+            />
             <div
               style={{ ["--accent" as string]: layer.accent }}
               className="relative grid gap-8 md:grid-cols-[7.5rem_minmax(0,1fr)] md:gap-12"
@@ -66,7 +80,7 @@ export function Layers() {
               <div>
                 <div
                   className="font-mono text-[clamp(2.5rem,5vw,3.75rem)] font-medium leading-none tracking-[-0.04em]"
-                  style={{ color: layer.accent, opacity: 0.85 }}
+                  style={{ color: layer.accent }}
                 >
                   {layer.n}
                 </div>
@@ -80,7 +94,13 @@ export function Layers() {
               </div>
 
               <div>
-                <h3 className="text-[clamp(1.3rem,2.4vw,1.8rem)] font-semibold leading-tight tracking-[-0.025em]">
+                <span
+                  className="inline-flex w-fit items-center rounded-full px-2.5 py-1 text-[11px] font-semibold tracking-[0.01em]"
+                  style={{ background: layer.soft, color: layer.accent }}
+                >
+                  {layer.label}
+                </span>
+                <h3 className="mt-4 text-[clamp(1.3rem,2.4vw,1.8rem)] font-semibold leading-tight tracking-[-0.025em]">
                   {layer.name}
                 </h3>
                 <p className="mt-3 max-w-[52ch] text-[15px] leading-relaxed text-fg">
