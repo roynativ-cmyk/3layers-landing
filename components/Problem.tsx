@@ -28,9 +28,9 @@ export function Problem() {
         lead="As your business grows, customer questions grow with it. You hire more agents, train more people, add more shifts and spend more time managing repetitive requests — while customers expect immediate, accurate and personal answers. Traditional support forces a choice between high costs and poor service."
       />
 
-      <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
+      <div className="mt-16 grid gap-12 md:grid-cols-3 md:gap-14">
         {gaps.map((gap, i) => (
-          <Reveal key={gap.title} delay={i * 80} className="bg-panel p-7 md:p-8">
+          <Reveal key={gap.title} delay={i * 80}>
             <span
               className="inline-flex h-7 w-7 items-center justify-center rounded-full font-mono text-[10px] font-semibold"
               style={{
@@ -40,10 +40,10 @@ export function Problem() {
             >
               {String(i + 1).padStart(2, "0")}
             </span>
-            <h3 className="mt-5 text-[17px] font-medium tracking-[-0.01em]">
+            <h3 className="mt-6 text-[19px] font-medium tracking-[-0.015em]">
               {gap.title}
             </h3>
-            <p className="mt-3 text-[13.5px] leading-relaxed text-fg-muted">
+            <p className="mt-3 max-w-[42ch] text-[14px] leading-relaxed text-fg-muted">
               {gap.body}
             </p>
           </Reveal>

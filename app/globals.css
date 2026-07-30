@@ -804,13 +804,35 @@ body {
   color: var(--xv-text);
 }
 
+/* The screens are the hero of this page, so they are lit like a product shot:
+   a hairline, a tight contact shadow, then a wide soft one that lifts the whole
+   frame off the surface. */
 .light-frame {
   background: var(--xv-surface);
   border: 1px solid var(--xv-border);
   box-shadow:
-    0 1px 2px rgba(13, 42, 60, 0.04),
-    0 6px 20px rgba(13, 42, 60, 0.06),
-    0 26px 60px -34px rgba(13, 42, 60, 0.3);
+    0 1px 2px rgba(13, 42, 60, 0.05),
+    0 10px 26px -10px rgba(13, 42, 60, 0.12),
+    0 44px 84px -44px rgba(13, 42, 60, 0.42);
+}
+
+/* --- the showcase band ----------------------------------------------------
+   One tinted full-bleed band where a screen is presented large and cropped at
+   the right edge instead of politely contained. Light, so the page stays light. */
+
+.showcase-band {
+  background:
+    radial-gradient(
+      88% 88% at 4% 8%,
+      color-mix(in srgb, var(--c-machine) 13%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      76% 82% at 98% 92%,
+      color-mix(in srgb, var(--c-pass) 12%, transparent) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, #f1f3f6, #eceff3);
 }
 
 /* console chip: rounded-full, 10px, token-coloured */

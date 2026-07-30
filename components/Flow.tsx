@@ -50,14 +50,9 @@ export function Flow() {
         lead="You do not need to automate your entire support operation on day one. We start with the repetitive conversations that cost the most."
       />
 
-      <ol className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      <ol className="mt-16 grid gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-14">
         {steps.map((step, i) => (
-          <Reveal
-            key={step.k}
-            as="li"
-            delay={i * 70}
-            className="relative bg-panel p-7 md:p-8"
-          >
+          <Reveal key={step.k} as="li" delay={i * 70} className="relative">
             <div className="flex items-center gap-3">
               <span
                 className="font-mono text-[10px] uppercase tracking-[0.2em]"
@@ -67,10 +62,10 @@ export function Flow() {
               </span>
               <span aria-hidden className="flow-dash h-px flex-1 opacity-60" />
             </div>
-            <h3 className="mt-5 text-[15px] font-medium tracking-[-0.01em]">
+            <h3 className="mt-5 text-[16px] font-medium tracking-[-0.015em]">
               {step.k}
             </h3>
-            <p className="mt-3 text-[13px] leading-relaxed text-fg-muted">
+            <p className="mt-3 max-w-[40ch] text-[13.5px] leading-relaxed text-fg-muted">
               {step.v}
             </p>
           </Reveal>

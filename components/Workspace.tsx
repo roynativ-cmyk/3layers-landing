@@ -1699,15 +1699,7 @@ export function Workspace() {
 
         {/* On a phone the frames need every pixel, so the dotted panel bleeds
             past the section padding and keeps only a hairline of its own. */}
-        <Reveal className="light-dots -mx-4 mt-12 rounded-2xl p-2 sm:mx-0 sm:p-4 md:mt-14 md:p-8">
-          <FrameCaption layer="Overview" accent="#4a2f9c">
-            The morning view — volume, where it was resolved, and what it cost,
-            all in one window.
-          </FrameCaption>
-          <div className="app-zoom-sm mb-8 md:mb-10">
-            <DashboardFrame />
-          </div>
-
+        <Reveal className="-mx-4 mt-14 p-2 sm:mx-0 sm:p-0 md:mt-20">
           <FrameCaption layer="Layer 01" accent="#0d4f78">
             AI Bot — every automated answer with the sources behind it, ready to
             review.

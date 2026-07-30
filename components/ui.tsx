@@ -1,10 +1,14 @@
 import type { ReactNode } from "react";
 
+/**
+ * Sections separate themselves with space, not with a rule. A divider is opt-in
+ * now, for the two places where the surface itself changes.
+ */
 export function Section({
   id,
   children,
   className = "",
-  divider = true,
+  divider = false,
 }: {
   id?: string;
   children: ReactNode;
@@ -16,7 +20,7 @@ export function Section({
       id={id}
       className={`${divider ? "border-t border-line" : ""} ${className}`}
     >
-      <div className="mx-auto w-full max-w-[1120px] px-6 py-20 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-[1120px] px-6 py-24 md:px-8 md:py-36">
         {children}
       </div>
     </section>

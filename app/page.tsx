@@ -4,6 +4,7 @@ import { TrustedBy } from "@/components/TrustedBy";
 import { Logos } from "@/components/Logos";
 import { Problem } from "@/components/Problem";
 import { Layers } from "@/components/Layers";
+import { Showcase } from "@/components/Showcase";
 import { Workspace } from "@/components/Workspace";
 import { Flow } from "@/components/Flow";
 import { Deploy } from "@/components/Deploy";
@@ -22,6 +23,7 @@ export default function Home() {
         <Logos />
         <Problem />
         <Layers />
+        <Showcase />
         <Workspace />
         <Flow />
         <Deploy />
